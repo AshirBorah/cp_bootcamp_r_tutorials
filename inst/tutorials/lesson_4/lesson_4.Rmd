@@ -1,7 +1,13 @@
 ---
 title: "Introduction to Tidyverse"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    theme: "lumen"
+    progressive: true
+    allow_skip: true
 runtime: shiny_prerendered
+description: >
+  Learn the tidyverse ecosystem and use this paradigm to explore data
 ---
 
 ```{r setup, include=FALSE}

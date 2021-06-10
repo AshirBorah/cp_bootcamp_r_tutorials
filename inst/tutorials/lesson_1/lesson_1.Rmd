@@ -1,7 +1,8 @@
 ---
 title: "Introduction"
-output:
+output: 
   learnr::tutorial:
+    theme: "lumen"
     progressive: true
     allow_skip: true
 runtime: shiny_prerendered

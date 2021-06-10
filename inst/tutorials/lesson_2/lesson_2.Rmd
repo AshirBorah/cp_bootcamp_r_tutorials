@@ -1,7 +1,13 @@
 ---
 title: "Functions"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    theme: "lumen"
+    progressive: true
+    allow_skip: true
 runtime: shiny_prerendered
+description: >
+  Learn what functions are, how are the useful and how to write them
 ---
 
 ```{r setup, include=FALSE}

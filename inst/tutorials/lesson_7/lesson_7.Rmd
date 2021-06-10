@@ -1,7 +1,13 @@
 ---
 title: "Further Topics"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    theme: "lumen"
+    progressive: true
+    allow_skip: true
 runtime: shiny_prerendered
+description: >
+  Learn about miscellaneous topics that didn't fit directly into a lesson in the main CP Bootcamp track
 ---
 
 ```{r setup, include=FALSE}

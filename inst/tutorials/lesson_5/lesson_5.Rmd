@@ -1,7 +1,13 @@
 ---
 title: "Data Vizualization"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    theme: "lumen"
+    progressive: true
+    allow_skip: true
 runtime: shiny_prerendered
+description: >
+  Learn how to make beautiful publication ready plots
 ---
 
 ```{r setup, include=FALSE}
