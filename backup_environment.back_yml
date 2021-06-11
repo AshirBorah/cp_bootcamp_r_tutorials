@@ -8,3 +8,5 @@ dependencies:
   - r-learnr
   - r-nycflights13
   - r-Lahman
+  - r-irkernel
+  - r-devtools
