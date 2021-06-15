@@ -34,7 +34,7 @@ tutorial_options(exercise.timelimit = 60)
 ### Why R specifically
 
 <center>
-<img src="../images/why_R.png" width="60%">
+<img src="images/why_R.png" width="60%">
 </center>
 
 - Free
@@ -108,7 +108,7 @@ Downsides?
 ### Key Tools 
 
 <center>
-<img src="../images/Rtools_car.png" width="80%">
+<img src="images/Rtools_car.png" width="80%">
 </center>
 
 
@@ -164,7 +164,7 @@ List of key math operations
 
 ### Logical operations
 
-```{r}
+```{r r_calculator, exercise = TRUE, exercise.eval = FALSE}
 1 + 1 == 2
 ```
 
@@ -181,14 +181,18 @@ List of key math operations
 
 - You can create new variables with `<-`
 
-```{r}
+```{r create_var, exercise = TRUE, exercise.eval = FALSE}
 x <- 3 * 4
+x
 ```
 
-- All object-creation statements have the form: 
+- All object-creation statements have the form: `object_name <- value`
 
-```{r eval = FALSE}
-object_name <- value
+```{r assignment, exercise = TRUE, exercise.eval = FALSE}
+color1 = 'red'
+color2 <- 'blue'
+color1
+color2
 ```
 
 - You can use `=`, but `<-` makes for better R code
@@ -202,22 +206,29 @@ object_name <- value
 
 ```{r, eval = FALSE}
 x <- 1
+print(x)
 x <- 1.592E-39
+print(x)
 ```
 
 - Strings (text)
 
 ```{r, eval = F}
 x <- 'abc'
+print(x)
 x <- "abc"
+print(x)
 ```
 
 - Logical (true/false)
 
 ```{r, eval = F}
 x <- TRUE
+print(x)
 x <- FALSE
+print(x)
 x <- T
+print(x)
 ```
 
 - Factors (categorical variables)
@@ -282,19 +293,19 @@ x <- T
 - Can hold numeric data
 
 <center>
-<img src="../images/vector2.png" width="40%">
+<img src="images/vector2.png" width="40%">
 </center>
 
 - Or text (strings)
 
 <center>
-<img src="../images/vector1.png" width="40%">
+<img src="images/vector1.png" width="40%">
 </center>
 
 - Or boolean data (TRUE/FALSE)
 
 <center>
-<img src="../images/vector5-logical.png" width="40%">
+<img src="images/vector5-logical.png" width="40%">
 </center>
 
 - **All data in a vector has to be the same type!**
@@ -304,20 +315,17 @@ x <- T
 
 Use 'combine' function `c()`
 
-```{r}
+```{r c_function, exercise = TRUE, exercise.eval = FALSE}
 num_vec <- c(1, 2, 3, 4)
 log_vec <- c(TRUE, TRUE, FALSE, F)
 str_vec <- c('this', 'is', 'a', 'vector', 'of', 'strings')
 ```
 
 Shorthand to create a sequence of integers
-```{r}
+```{r range, exercise = TRUE, exercise.eval = FALSE}
 1:4
 ```
 
-```{r}
-5:10
-```
 
 
 ### Missing values
@@ -326,7 +334,7 @@ Shorthand to create a sequence of integers
 
 - `NA` ('not available') is a special value for missing data that can be included in any type of vector
 
-```{r, eval = FALSE}
+```{r NA_intro, exercise = TRUE, exercise.eval = FALSE}
 c(1, 2, NA)
 c('a', 'b', NA)
 ```
@@ -336,7 +344,7 @@ c('a', 'b', NA)
 
 `c()` can also be used to add new elements to a vector
 
-```{r}
+```{r c_function_cont, exercise = TRUE}
 string_vec <- c("TP53", "PLEC", "DSPP", "PIK3CA")
 string_vec2 <- c(string_vec, "BRAF")
 string_vec2
@@ -344,15 +352,22 @@ string_vec2
 
 Adding to the beginning
 
-```{r}
+```{r insert_first_function-setup}
+string_vec <- c("TP53", "PLEC", "DSPP", "PIK3CA")
+string_vec2 <- c(string_vec, "BRAF")
+```
+
+```{r insert_first_function, exercise = TRUE}
 string_vec2 <- c("BRAF", string_vec)
 string_vec2
 ```
 
 Combining two vectors
 
-```{r, eval = FALSE}
-c(string_vec, another_string_vec)
+```{r combine_vec_function, exercise = TRUE, exercise.eval = FALSE, exercise.setup = "insert_first_function"}
+string_vec <- c("TP53", "PLEC", "DSPP", "PIK3CA")
+string_vec2 <- c("BRAF", "EGFR", "DUSP4")
+c(string_vec, string_vec2)
 ```
 
 
@@ -363,13 +378,13 @@ c(string_vec, another_string_vec)
 
 - Lists are basically like relaxed vectors, where elements don't have to be the same type
 
-```{r}
+```{r list_intro, exercise = TRUE, exercise.eval = FALSE}
 z <- list('a', 1, TRUE)
 ```
 
 - Add to lists the same way as vectors
 
-```{r, eval = FALSE}
+```{r add_into_list, exercise = TRUE, exercise.eval = FALSE}
 z <- c(z, 'morestuff')
 ```
 
@@ -382,7 +397,7 @@ z <- c(z, 'morestuff')
 - Like vectors, but arranged in 2d with rows and columns
 
 <center>
-<img src="../images/matrix.png" width="40%">
+<img src="images/matrix.png" width="40%">
 </center>
 
 - Examples: 
@@ -401,7 +416,7 @@ z <- c(z, 'morestuff')
 - Like an Excel table. 
 
 <center>
-<img src="../images/dataframe.png" width="40%">
+<img src="images/dataframe.png" width="40%">
 </center>
 
 

@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Intro to the tidyverse
 
-<img src="../images/tidyverse_website.png">
+<img src="images/tidyverse_website.png">
 
 https://ismayc.github.io/talks/ness-infer/slide_deck.html#13
 
@@ -56,7 +56,7 @@ gapminder
 
 ## Pipes
 
-<img src="../images/pipe.png">
+<img src="images/pipe.png">
 
 - Chain together multiple commands
 
@@ -393,14 +393,14 @@ gapminder %>%
   
 - Need to specify how you want it to handle matches
 
-<img src="../images/sql-joins.png">
+<img src="images/sql-joins.png">
 
 
 
 
 ## Recap
 
-<img src="../images/dplyr_visual.png" width="100%">
+<img src="images/dplyr_visual.png" width="100%">
 
 (google 'dplyr cheat sheet')
 [Cheat sheet](https://4.files.edl.io/b9e2/07/12/19/142839-a23788fb-1d3a-4665-9dc4-33bfd442c296.pdf)

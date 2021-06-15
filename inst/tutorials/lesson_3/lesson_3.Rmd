@@ -175,7 +175,7 @@ corner(counts_matrix)
 age <- c(15, 22, 45, 52, 73, 81)
 ```
 
-<img src="../images/vector-index.png">
+<img src="images/vector-index.png">
 
 ```{r}
 age[5]
@@ -203,7 +203,7 @@ age[idx]
 
 ---
 
-<img src="../images/vector-index.png">
+<img src="images/vector-index.png">
 
 ```{r}
 age > 50
@@ -217,7 +217,7 @@ age[log_idx]
 
 --- 
 
-<img src="../images/vector-index.png">
+<img src="images/vector-index.png">
 
 ```{r}
 age == 52

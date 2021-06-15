@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Overview
 
-<img src="../images/tidyverse_website.png">
+<img src="images/tidyverse_website.png">
 
 
 ## Refs
@@ -55,7 +55,7 @@ gp_4 <- gp_1 %>%
 
 ## Tidy data
 
-<img src="../images/tidy-1.png" width="100%">
+<img src="images/tidy-1.png" width="100%">
 
 1) Each variable forms a column.
 
@@ -147,7 +147,7 @@ head(gp_4)
   
   - The set of columns that represent values not variables
 
-<img src="../images/tidy-9.png" width="70%">
+<img src="images/tidy-9.png" width="70%">
 
 
 ## Gather {.smaller}
@@ -204,7 +204,7 @@ gp_2 %>%
   head(5)
 ```
 
-<img src="../images/tidy-8.png" width="60%">
+<img src="images/tidy-8.png" width="60%">
 
 
 ## separate

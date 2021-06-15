@@ -228,7 +228,7 @@ help(package = 'lubridate')
 - Bioconductor is another that has many useful bioinformatics related packages
 
 <center>
-<img src="../images/bioconductor_logo.png" width="40%">
+<img src="images/bioconductor_logo.png" width="40%">
 </center>
 
 ```{r, eval = FALSE}
