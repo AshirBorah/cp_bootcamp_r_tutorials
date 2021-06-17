@@ -16,11 +16,13 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
-## What are functions?
+## Functions
+
+### What are functions?
 
 - Self-contained modules of code that accomplish a specific task
 
-```{r, eval = FALSE}
+```{r function_syntax, exercise = TRUE}
 output <- do_the_thing(input1, input2)
 ```
 
@@ -31,10 +33,9 @@ output <- do_the_thing(input1, input2)
   - additional parameters that specify how the function acts (options)
 
 
-## Example functions
+### Example functions
 
-```{r}
-#Examples
+```{r function_example, exercise = TRUE}
 num_vec <- 1:10
 avg_of_vec <- mean(num_vec)
 print(avg_of_vec)
@@ -42,16 +43,18 @@ print(avg_of_vec)
 
 - Functions don't need to provide output, or take inputs
 
-```{r, eval = FALSE}
+```{r func_no_output, exercise = TRUE}
+##NO RUN
 save(object_to_save, file = 'data_file')
 ```
 
-```{r}
+```{r func_no_input, exercise = TRUE}
 getwd()
 ```
 
+## Built-in functions
 
-## Mathematical functions
+### Mathematical functions
 
 - Functions that operate on individual values:
 
@@ -69,18 +72,23 @@ getwd()
 **Practice**
 
 
-## Getting help 
+### Getting help 
 
 - Understanding how to get help effectively is the most important skill!
 
-```{r, eval = FALSE}
+```{r help_syntax, exercise = TRUE}
+##NO RUN
 ?my_function
+```
+
+```{r help_length, exercise = TRUE}
+?length()
 ```
 
 - Or use the `Help` tab in RStudio to search.
 
 
-## Function help
+### Function help
 
 Documentation is typically divided into sections.
 
@@ -99,13 +107,13 @@ Documentation is typically divided into sections.
 
 
 
-## Tips on using functions
+### Tips on using functions
 
 - Use tab-complete to quickly check function inputs.
 
 - Best to name arguments explicitly (at least the optional ones)
 
-```{r, eval = FALSE}
+```{r positional_arg_example, exercuse = FALSE}
 round(pi, digits = 2) #this is better
 round(pi, 2) #not as good
 ```
@@ -113,25 +121,23 @@ round(pi, 2) #not as good
 
 - See examples of function being used!
 
-```{r, eval = FALSE}
+```{r example_func, exercise = FALSE}
 example('round')
 ```
 
-
-
-## The 'combine' function
+### The 'combine' function
 
 What are the inputs and outputs?
 
-```{r}
+```{r combine_eg, exercise=T}
 glengths <- c(4.6, 3000, 580)
 ```
 
+## Creating a function
 
+### User-defined functions (a simple example)
 
-## User-defined functions (a simple example)
-
-```{r}
+```{r user_def_func, exercise=T}
 add_two_numbers <- function(num1, num2) {
   result <- num1 + num2
   return(result)
@@ -140,9 +146,10 @@ add_two_numbers(1, 2)
 ```
 
 
-## User-defined functions (the general pattern)
+### User-defined functions (the general pattern)
 
-```{r, eval = FALSE}
+```{r func_syntax, eval = FALSE}
+## NO RUN
 name_of_function <- function(argument1, argument2) {
     *statements or code that does something*
     return(some_data)
@@ -159,9 +166,9 @@ name_of_function <- function(argument1, argument2) {
 
 
 
-## Making 'optional' inputs
+### Making 'optional' inputs
 
-```{r}
+```{r optional_params, exercise=T}
 center_vec <- function(data_vec, midpoint = 0) {
   new_data_vec <- (data_vec - mean(data_vec)) + midpoint
   return(new_data_vec)
@@ -174,11 +181,11 @@ center_vec(test_vec)
 **Practice**
 
 
-## Returning values
+### Returning values
 
 - What does this do? 
 
-```{r}
+```{r ret_val, exercise=T}
 center_vec <- function(data_vec, midpoint = 0) {
   new_data <- (data_vec - mean(data_vec)) + midpoint
 }
@@ -187,30 +194,28 @@ center_vec <- function(data_vec, midpoint = 0) {
 
 ## Packages
 
+### What are packages?
+
 - Collections of functions, and data, designed to add specific functionality beyond 'base R'
 
 - Need to install before you can use (only do this once)
 
-```{r, eval = FALSE}
+```{r install_pkg, exercise = T}
 install.packages('tidyverse')
 ```
 
 - Load the package into your R session (do this every session)
 
-```{r, eval = FALSE}
-library(tidyverse)
-```
-
-```{r, include = FALSE}
+```{r load_pkg, exercise = T}
 library(tidyverse)
 ```
 
 
-## Getting help with packages
+### Getting help with packages
 
 - Use the `help` function
 
-```{r}
+```{r pkg_help, exercise = T}
 help(package = 'lubridate')
 ```
 
@@ -221,7 +226,7 @@ help(package = 'lubridate')
 **Practice**
 
 
-## Quick note on Bioconductor
+### Quick note on Bioconductor
 
 - CRAN is the default shop for R packages
 
@@ -231,19 +236,19 @@ help(package = 'lubridate')
 <img src="images/bioconductor_logo.png" width="40%">
 </center>
 
-```{r, eval = FALSE}
+```{r bioManager, exercise = T}
 install.packages("BiocManager")
 BiocManager::install("GenomicRanges")
 ```
 
 - Once installed they're just like other packages
 
-```{r, eval = FALSE}
+```{r biocmanager_pkg, exercise = FALSE}
 library(GenomicRanges)
 ```
 
 
-## Word of warning about function names
+### Word of warning about function names
 
 - Multiple packages can have the same names for different functions.
 
@@ -253,13 +258,18 @@ library(GenomicRanges)
 
 - When in doubt it's best to specify which package the function comes from:
 
-```{r, eval = FALSE}
-lubridate::here()
-here::here()
+```{r pkg_namespace-setup}
+library(lubridate)
+library(here)
+```
+
+```{r pkg_namespace, exercise = T}
+?lubridate::here()
+?here::here()
 ```
 
 
-## Getting more help
+### Getting more help
 
 - Pay attention to error messages and warning messages
 
@@ -274,11 +284,12 @@ here::here()
 
 **More function practice**
 
-## Key concepts recap
+### Key concepts recap
 
 - `output <- do_a_thing(input_obj, param1 = my_val)`
 
-```{r, eval = FALSE}
+```{r function_format_review, exercise = T}
+## NO RUN
 do_a_thing <- function(input_obj, param1) {
   **STUFF**
   return(result)

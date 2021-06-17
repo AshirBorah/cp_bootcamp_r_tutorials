@@ -12,6 +12,9 @@ description: >
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(magrittr)
+library(tidyverse)
+library(gapminder)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -519,7 +522,7 @@ gapminder %>%
 ## An example putting things together {.smaller}
 
 ```{r, include = FALSE}
-GO <- read_tsv(here::here('data', "gprofiler_results_Mov10oe.csv")) %>% select(term.id, term.name)
+GO <- read_tsv("data/gprofiler_results_Mov10oe.csv") %>% select(term.id, term.name)
 ```
 
 ```{r}

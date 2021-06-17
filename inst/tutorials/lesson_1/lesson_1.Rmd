@@ -207,6 +207,7 @@ color2
 ```{r, eval = FALSE}
 x <- 1
 print(x)
+
 x <- 1.592E-39
 print(x)
 ```
@@ -216,6 +217,7 @@ print(x)
 ```{r, eval = F}
 x <- 'abc'
 print(x)
+
 x <- "abc"
 print(x)
 ```
@@ -225,8 +227,10 @@ print(x)
 ```{r, eval = F}
 x <- TRUE
 print(x)
+
 x <- FALSE
 print(x)
+
 x <- T
 print(x)
 ```
@@ -317,8 +321,13 @@ Use 'combine' function `c()`
 
 ```{r c_function, exercise = TRUE, exercise.eval = FALSE}
 num_vec <- c(1, 2, 3, 4)
+print(num_vec)
+
 log_vec <- c(TRUE, TRUE, FALSE, F)
+print(log_vec)
+
 str_vec <- c('this', 'is', 'a', 'vector', 'of', 'strings')
+print(str_vec)
 ```
 
 Shorthand to create a sequence of integers
