@@ -173,7 +173,9 @@ List of key math operations
 - `>` Greater than, `<` less than
 - `>=` Greater than or equal to, etc.
 
-**PRACTICE**
+```{r r_calculator, exercise = TRUE, exercise.eval = FALSE}
+1 + 1 == 2
+```
 
 
 

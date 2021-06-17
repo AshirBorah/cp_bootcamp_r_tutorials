@@ -44,8 +44,7 @@ print(avg_of_vec)
 
 - Functions don't need to provide output, or take inputs
 
-```{r func_no_output, exercise = TRUE}
-##NO RUN
+```{}
 save(object_to_save, file = 'data_file')
 ```
 
@@ -77,8 +76,7 @@ getwd()
 
 - Understanding how to get help effectively is the most important skill!
 
-```{r help_syntax, exercise = TRUE}
-##NO RUN
+```{}
 ?my_function
 ```
 
@@ -149,8 +147,7 @@ add_two_numbers(1, 2)
 
 ### User-defined functions (the general pattern)
 
-```{r func_syntax, eval = FALSE}
-## NO RUN
+```{}
 name_of_function <- function(argument1, argument2) {
     *statements or code that does something*
     return(some_data)
@@ -289,8 +286,7 @@ library(here)
 
 - `output <- do_a_thing(input_obj, param1 = my_val)`
 
-```{r function_format_review, exercise = T}
-## NO RUN
+```{}
 do_a_thing <- function(input_obj, param1) {
   **STUFF**
   return(result)

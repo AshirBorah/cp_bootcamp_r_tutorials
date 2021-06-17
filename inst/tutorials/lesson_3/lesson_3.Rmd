@@ -17,7 +17,7 @@ tutorial_options(exercise.timelimit = 30)
 ```
 
 
-## Outline
+# Outline
 
 - Loading and inspecting data
 
@@ -36,18 +36,18 @@ tutorial_options(exercise.timelimit = 30)
 
 - Values for a given 'row' are typically separated by either a comma, or a tab
 
- Comma-separated values (.csv)
+### Comma-separated values (.csv)
  
-```{r, eval = FALSE}
+```{}
 name,age,member_since
 bob,20,2015
 frank,40,2015
 tammy,15,2016
 ```
 
-Tab-separated values (.tsv or .txt)
+### Tab-separated values (.tsv or .txt)
 
-```{r, eval = FALSE}
+```{}
 name  age  member_since
 bob  20  2015
 frank  40  2015
@@ -72,23 +72,23 @@ tammy  15  2016
 
 - For reading data tables use:
   - `read_csv`/`read_tsv` from the `readr` package (`tidyverse`)
-  
+
   - This avoids some very annoying default R behavior (changing names, making strings into factors)
 
 - For reading matrices, use:
- 
+
   - `read.csv`/`read.table` (baseR)
-  
+
   - This allows you to use rownames, which are very useful for working with matrices
-    
-    
+
+
 ## Which read function should I use? (new)
 
 - Always use `read_csv`/`read_tsv` from the `readr` package (`tidyverse`)
-  
-- For reading matrices, use the function `column_to_rownames` to specify which column should be treated as rownames 
- 
-  
+
+- For reading matrices, use the function `column_to_rownames` to specify which column should be treated as rownames
+
+
 ## Specifying where a file 'is' {.smaller}
 
 - Relative and absolute file 'paths'
@@ -97,7 +97,7 @@ tammy  15  2016
 getwd()
 ```
 
-- Organize project with a 'data' folder for data. 
+- Organize project with a 'data' folder for data.
 
 - Use the `here` function to specify the file path.
 
@@ -148,17 +148,17 @@ corner(counts_matrix)
 - Check for:
 
   - Column (always) and row (matrix only) names are correct
-  
+
   - Make sure data types of columns are correct
 
 - Dataframe:
   - `View(df)`: Open spreadsheet viewer
   - `head(df)`: Show top K (10) rows
-  - `glimpse(df)`: quick overview of a table 
+  - `glimpse(df)`: quick overview of a table
 
 - Matrix:
   - `useful::corner(mat)`: Show upper left corner of matrix
-  - `dim(mat)`: Number of rows and columns 
+  - `dim(mat)`: Number of rows and columns
   - `rownames(mat)`/`colnames(mat)`: extract row/column names
 
 **Practice**
@@ -216,7 +216,7 @@ age[log_idx]
 #same as age[age > 50]
 ```
 
---- 
+---
 
 <img src="images/vector-index.png">
 
@@ -254,7 +254,7 @@ age[c('Bob', 'Charlie')]
 
 ## Brief asside on NULL
 
-R has another special value `NULL` which represents 'the absence of a value'. 
+R has another special value `NULL` which represents 'the absence of a value'.
 
 For example
 ```{r}
@@ -333,7 +333,7 @@ counts_mat[3, ]
 
 ---
 
-- Or slice out a single column 
+- Or slice out a single column
 
 ```{r}
 counts_mat[, 3]
@@ -346,7 +346,7 @@ counts_mat[, 3]
 counts_mat[1:4, 2:3]
 ```
 
-## Using rownames and column names 
+## Using rownames and column names
 
 - Use `colnames(mat)` and `rownames(mat)` to get the column and rownames of a matrix.
 
@@ -356,7 +356,7 @@ counts_mat[1:4, 2:3]
 counts_mat[c('ENSMUSG00000000028', 'ENSMUSG00000000037'), ]
 ```
 
---- 
+---
 
 - Specifying columns and rows by name
 ```{r}
@@ -370,8 +370,8 @@ counts_mat['ENSMUSG00000000001', c('sample7', 'sample5')]
 - Check whether each element of vector1 is contained in the set vector2
 
 ```{r}
-A <- c(1, 2, 3, 4)   
-B <- c(3, 4, 5, 6)  
+A <- c(1, 2, 3, 4)
+B <- c(3, 4, 5, 6)
 
 A %in% B
 ```
@@ -381,8 +381,8 @@ A %in% B
 
 - Useful for restricting to the intersection of elements in two lists
 ```{r}
-A <- c(1, 2, 3, 4)   
-B <- c(3, 4, 5, 6)  
+A <- c(1, 2, 3, 4)
+B <- c(3, 4, 5, 6)
 
 A[A %in% B]
 ```
@@ -416,11 +416,11 @@ counts_mat <- as.matrix(counts_mat)
 ```
 
 ```{r, fig.width=5, fig.height = 4}
-x <- counts_mat['ENSMUSG00000081010',] 
+x <- counts_mat['ENSMUSG00000081010',]
 hist(x)
 ```
 
---- 
+---
 
 ```{r,  fig.width=5, fig.height = 4}
 y <- counts_mat['ENSMUSG00000000037',]
@@ -489,7 +489,7 @@ species <- c("ecoli", "human", "corn")
 glengths <- c(4.6, 3000, 50000)
 ```
 
-- Create a tibble (dataframe, table) using `tibble()` function. 
+- Create a tibble (dataframe, table) using `tibble()` function.
 
 - Input as many columns as you want (must have same length)
 
@@ -508,7 +508,7 @@ df
 ```
 
 
-## Quick note on new/old ways 
+## Quick note on new/old ways
 
 - `data.frame()` is the old way, gives a similar table
 
@@ -517,7 +517,7 @@ df <- data.frame(species = species, glengths = glengths)
 df
 ```
 
-- But it makes strings into 'factors', and has some other subtle differences. 
+- But it makes strings into 'factors', and has some other subtle differences.
 
 - Use `tibble()`
 
