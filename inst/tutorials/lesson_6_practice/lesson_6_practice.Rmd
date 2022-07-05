@@ -1,0 +1,496 @@
+---
+title: "Tidying and combining data"
+output: 
+  learnr::tutorial:
+    theme: "lumen"
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+description: >
+  Learn how to reformat and combine datasets
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(gapminder)
+library(knitr)
+library(kableExtra)
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+#beautify table printout
+pretty_table <- function(table, max_rows = 6, max_cols = 6) {
+  if (nrow(table) > max_rows) {
+    table <- table %>% head(max_rows)
+  } 
+  if (ncol(table) > max_cols) {
+    table <- table[, 1:max_cols]
+  }
+  kable(table) %>%
+  kable_styling(c('striped', 'hover'), full_width = F, position = 'left')
+}
+
+nba <- tibble(
+  player = c("James", "Durant", "Curry", "Harden", "Paul", "Wade"),
+  team = c("CLEOH", "GSWOAK", "GSWOAK", "HOUTX", "HOUTX", "CLEOH"),
+  day1points = c("25","23","30","41","26","20"),
+  day2points = c("24","25","33","45","26","23")
+)
+```
+
+
+## Tidy data recap 
+
+Recall the basic components that make a dataset tidy:
+
+<img src="images/tidy-1.png" width="100%">
+
+1) Each variable forms a column.
+
+2) Each observation forms a row.
+
+3) Each type of observational unit forms a table
+
+## NBA Example
+
+Here's a quick test dataset called `nba`
+(credit to this [site](https://www.r-exercises.com/2017/10/26/how-to-tidy-up-your-data-set-with-tidyr/))
+
+```{r}
+nba <- tibble(
+  player = c("James", "Durant", "Curry", "Harden", "Paul", "Wade"),
+  team = c("CLEOH", "GSWOAK", "GSWOAK", "HOUTX", "HOUTX", "CLEOH"),
+  day1points = c("25","23","30","41","26","20"),
+  day2points = c("24","25","33","45","26","23")
+)
+pretty_table(nba)
+```
+
+### pivot_longer
+
+Recall that to use `pivot_longer` you need to specify:
+  
+  - `cols`: The set of columns that represent values not variables
+
+  - `names_to`: The name of the variable whose values form column names 
+  
+  - `values_to`: The name of the variable whose values are spread over the cells (called the `value`)
+
+Use `pivot_longer` to make this `nba` dataset below into a 'tidy' one, call it `nba_tidy`. 
+
+```{r nba_pivot_longer, exercise = TRUE}
+nba_tidy <- nba %>% 
+  
+head(nba_tidy)  
+```
+
+Your `nba_tidy` table should look like this:
+
+```{r, echo = FALSE}
+nba_tidy <- nba %>% 
+  pivot_longer(cols = c('day1points', 'day2points'),
+               names_to = 'day',
+               values_to = 'points') 
+pretty_table(nba_tidy)
+```
+
+```{r nba_pivot_longer-solution}
+nba_tidy <- nba %>% 
+  pivot_longer(cols = c('day1points', 'day2points'),
+               names_to = 'day',
+               values_to = 'points')
+head(nba_tidy)  
+```
+
+
+### Fixing column names
+
+Now use `mutate` and the `str_replace` function to format the days as 'day1', 'day2', etc. 
+
+Note about `str_replace`: it takes as input a vector of strings, a text pattern to replace, and the text to replace it with. For example, here we replace the text `"_test"` with nothing (`""`) wherever it appears in the input vector.
+
+```{r}
+str_replace(c('boat_test', 'car', 'train_test'), '_test', '')
+```
+
+```{r nba_tidy_prep}
+nba_tidy <- nba %>% 
+  pivot_longer(cols = c('day1points', 'day2points'),
+               names_to = 'day',
+               values_to = 'points') 
+```
+
+```{r nba_tidy_cleandays, exercise = TRUE, exercise.setup = 'nba_tidy_prep'}
+nba_tidy <- nba_tidy %>% 
+  mutate(day = )
+head(nba_tidy)
+```
+
+```{r nba_tidy_cleandays-solution}
+nba_tidy <- nba_tidy %>% 
+  mutate(day = str_replace(day, 'points', ''))
+head(nba_tidy)
+```
+
+
+Your table should now look like this:
+
+```{r, echo = FALSE}
+nba_tidy <- nba_tidy %>% 
+  mutate(day = str_replace(day, 'points', ''))
+pretty_table(nba_tidy)
+```
+
+
+
+### pivot_wider
+
+To use `pivot_wider()` you need to specify:
+
+  - `names_from`: The column containing the variable names. 
+  
+  - `values_from`: The column containing the values from multiple variables (the `value` column). 
+
+Use `pivot_wider` to make the `nba_tidy` dataset back into what you started with. Remember you can use `rename` to rename the columns as needed.
+
+```{r nba_tidy_setup1}
+nba_tidy <- nba %>% 
+  pivot_longer(cols = c('day1points', 'day2points'),
+               names_to = 'day',
+               values_to = 'points') %>% 
+  mutate(day = str_replace(day, 'points', ''))
+```
+
+
+```{r nba_pivot_wider, exercise = TRUE, exercise.setup = 'nba_tidy_setup1'}
+nba_tidy %>% 
+```
+
+```{r nba_pivot_wider-solution}
+nba_tidy %>% 
+  pivot_wider(names_from = 'day', values_from = 'points') %>% 
+  rename(day1points = day1, day2points = day2) %>% 
+  head()
+```
+
+As a reminder, here's what the original table looked like:
+
+```{r, echo = FALSE}
+nba %>% head()
+```
+
+
+
+### Separate
+
+Use `separate` to split the `team` column of `nba` into one called `team` and one called `location`. The first 3 characters refer to the team, and the rest to the location (city or state).
+
+```{r nba_separate, exercise = TRUE}
+nba %>% 
+  separate(col = team, into = c('team', 'location'), sep = 3)
+```
+
+```{r nba_separate-hint}
+# sep = 3 
+```
+
+
+### Combining (part 1)
+
+Starting with the `nba_tidy` table we made above, use `group_by` and `summarise` to create a table called `team_bests` which contains the max points recorded from a given player for each team. 
+
+```{r nba_join_1, exercise = TRUE, exercise.setup = 'nba_tidy_setup1'}
+team_bests <- nba_tidy %>% 
+  
+```
+
+```{r nba_join_1-solution}
+team_bests <- nba_tidy %>% 
+  group_by(team) %>% 
+  summarise(team_max_points = max(points))
+```
+
+
+It should look like this:
+
+```{r, echo = FALSE}
+team_bests <- nba_tidy %>% 
+  group_by(team) %>% 
+  summarise(team_max_points = max(points))
+pretty_table(team_bests)
+```
+
+### Combining (part 2)
+
+
+```{r team_bests_setup}
+#prepare the nba_tidy and team_bests tables
+nba_tidy <- nba %>% 
+  pivot_longer(cols = c('day1points', 'day2points'),
+               names_to = 'day',
+               values_to = 'points') %>% 
+  mutate(day = str_replace(day, 'points', ''))
+team_bests <- nba_tidy %>% 
+  group_by(team) %>% 
+  summarise(team_max_points = max(points))
+```
+
+Now use a `left_join` to add this info into your `nba_tidy` table. Then make a new column called `is_team_max` which is TRUE if the point total for a given player is the overall max for that team and FALSE otherwise.
+
+```{r nba_join_2, exercise = TRUE, exercise.setup = 'team_bests_setup'}
+
+```
+
+```{r nba_join_2-hint-1}
+nba_tidy %>% 
+  left_join(team_bests, by = 'team') %>% 
+  ...
+```
+
+```{r nba_join_2-hint-2}
+  ... %>% 
+  mutate(is_team_max = points == team_max_points)
+```
+
+
+It should look like this:
+
+```{r, echo = FALSE}
+nba_tidy %>% 
+  left_join(team_bests, by = 'team') %>% 
+  mutate(is_team_max = points == team_max_points) %>% 
+  pretty_table()
+```
+
+### Combining (part 3)
+
+NOTE: as I recently learned, a more efficient way of doing this would be to use `group_by` in combination with `mutate` like this:
+
+```{r}
+nba_tidy %>% 
+  group_by(team) %>% 
+  mutate(team_max_points = max(points),
+         is_team_max = points == team_max_points) 
+```
+
+
+## WHO excercise
+
+The `who` table contains data from the WHO Global Tuberculosis Report. First inspect the table. You can also read about the dataset using `help(who)`
+
+```{r who_help, exercise = TRUE}
+
+```
+
+### Make data tidy
+
+All the columns from `new_sp_m014` onward are actually values. Use `pivot_longer()` to collect all these columns into a tidy table called `who_tidy`. Call the names column "Types" and the values column "Cases".
+Note, use the `values_drop_na=TRUE` option with pivot_longer to ignore rows with NA in the values column.
+
+```{r who_tidy1, exercise = TRUE}
+who_tidy <- who %>% 
+  
+head(who_tidy)
+```
+
+```{r who_tidy1-hint}
+cols = new_sp_m014:new_rel_f65 #this will pick the range of 'value columns'
+```
+
+```{r who_tidy1-solution}
+who_tidy <- who %>% 
+  pivot_longer(cols = new_sp_m014:newrel_f65, names_to = 'Types', values_to = 'Cases', values_drop_na = TRUE)
+head(who_tidy)
+```
+
+
+Your table should look like this:
+
+```{r, echo = FALSE}
+who_tidy <- who %>% 
+  pivot_longer(cols = new_sp_m014:newrel_f65, names_to = 'Types', values_to = 'Cases', values_drop_na = TRUE)
+pretty_table(who_tidy)
+```
+
+```{r who_tidy_setup1}
+who_tidy <- who %>% 
+  pivot_longer(cols = new_sp_m014:newrel_f65, names_to = 'Types', values_to = 'Cases', values_drop_na = TRUE)
+```
+
+```{r, ref.label="who_tidy_setup1", echo = FALSE}
+```
+
+
+### Separating column info
+
+Look at the names of the `Types` column. If you read about this dataset (`help(who)`) you will see that these names actually encode multiple different pieces of information: 
+
+  - The first piece "new" refers to a new diagnosis (same for all observation)
+  - The second piece ('rel', 'sn', 'sp', or 'ep') refers to the method of diagnosis
+  - The third piece has a code for gender ('f'/'m') and a code for age group (014=0-14, 1524 = 15-24 ages, etc). 
+  
+Let's split this variable into multiple columns that each encode one piece of info
+
+Use the following three steps to update the columns in your `who_tidy` table:
+
+1) First, notice that the 'rel' cases don't have a '_' after 'new', which we need to fix. Use `mutate` along with `str_replace` to replace any matches of `'newrel'` with `'new_rel'`
+
+2) Now each piece in the `Types` column is separated by a `_`. Use `separate()` to split the `Types` column into three columns, call them "obs_type", "diagnosis_meth" and "SexAge".
+
+3) Now use `separate()` again to spit the `SexAge` column into a column called "Sex" and one called "Age". (Here you can split by position, since the sex is always the first character)
+
+```{r who_tidy_cols, exercise = TRUE, exercise.setup = 'who_tidy_setup1'}
+who_tidy <- who_tidy %>% 
+
+```
+
+```{r who_tidy_cols-hint-1}
+who_tidy %>% 
+  mutate(Types = str_replace(Types, 'newrel', 'new_rel'))
+```
+
+```{r who_tidy_cols-hint-2}
+who_tidy %>% 
+  mutate(Types = str_replace(Types, 'newrel', 'new_rel')) %>% 
+  separate(Types, into = c('obs_type', 'diagnosis_meth', 'SexAge'), sep = '_')
+```
+
+```{r who_tidy_cols-solution}
+who_tidy %>% 
+  mutate(Types = str_replace(Types, 'newrel', 'new_rel')) %>% 
+  separate(Types, into = c('obs_type', 'diagnosis_meth', 'SexAge'), sep = '_') %>% 
+  separate(SexAge, into = c('Sex', 'Age'), sep = 1)
+```
+
+
+When you're done, `who_tidy` should look like this:
+
+```{r, echo = FALSE}
+who_tidy %>% 
+  mutate(Types = str_replace(Types, 'newrel', 'new_rel')) %>% 
+  separate(Types, into = c('obs_type', 'diagnosis_meth', 'SexAge'), sep = '_') %>% 
+  separate(SexAge, into = c('Sex', 'Age'), sep = 1) %>% 
+  pretty_table()
+```
+
+
+<!-- ```{r who_tidy_setup2, echo = FALSE} -->
+<!-- who_tidy <- who %>%  -->
+<!--   pivot_longer(cols = new_sp_m014:newrel_f65, names_to = 'Types', values_to = 'Cases', values_drop_na = TRUE) %>%  -->
+<!--   mutate(Types = str_replace(Types, 'newrel', 'new_rel')) %>% -->
+<!--   separate(Types, into = c('obs_type', 'diagnosis_meth', 'SexAge'), sep = '_') %>% -->
+<!--   separate(SexAge, into = c('Sex', 'Age'), sep = 1) -->
+<!-- ``` -->
+
+
+### Adding continent info
+
+Now let's aggregate data about total cases in each year by continent. 
+First we need to make a table that has info on which continent each country is in. We can do that by taking the gapminder table, and using the `distinct()`, like this:
+
+```{r}
+country_continents <- gapminder %>% 
+  distinct(country, continent)
+pretty_table(country_continents)
+```
+
+```{r country_continent_setup, echo = FALSE}
+who_tidy <- who %>% 
+  pivot_longer(cols = new_sp_m014:newrel_f65, names_to = 'Types', values_to = 'Cases', values_drop_na = TRUE) %>% 
+  mutate(Types = str_replace(Types, 'newrel', 'new_rel')) %>%
+  separate(Types, into = c('obs_type', 'diagnosis_meth', 'SexAge'), sep = '_') %>%
+  separate(SexAge, into = c('Sex', 'Age'), sep = 1)
+
+country_continents <- gapminder %>% 
+  distinct(country, continent)
+```
+
+```{r, ref.label="country_continent_setup", echo = FALSE}
+```
+
+Now add in the continent information in `country_continents` into the `who_tidy` table using an `inner_join` (this makes sure we only include data from countries where we also have the continent in our lookup table)
+
+Then calculate the total number of new *female* cases per year, continent, and diagnosis method. Restrict to years after 1990. Save the results into a new table called `tot_by_continent`
+
+```{r who_tot_by_continent, exercise = TRUE, exercise.setup = 'country_continent_setup'}
+tot_by_continent <- who_tidy %>% 
+  
+head(tot_by_continent)
+```
+
+```{r who_tot_by_continent-hint}
+tot_by_continent <- who_tidy %>%   
+  ... %>% 
+  group_by(year, continent, diagnosis_meth) %>% 
+  summarise(tot_cases = sum(Cases))
+```
+
+```{r who_tot_by_continent-solution}
+tot_by_continent <- who_tidy %>% 
+  inner_join(country_continents, by = 'country') %>%
+  filter(year > 1990, Sex == 'f') %>% 
+  group_by(year, continent, diagnosis_meth) %>% 
+  summarise(tot_cases = sum(Cases))
+head(tot_by_continent)
+```
+
+
+Your result should look like this:
+
+```{r, echo = FALSE}
+tot_by_continent <- who_tidy %>% 
+  inner_join(country_continents, by = 'country') %>%
+  filter(year > 1990, Sex == 'f') %>% 
+  group_by(year, continent, diagnosis_meth) %>% 
+  summarise(tot_cases = sum(Cases))
+pretty_table(tot_by_continent)
+```
+
+
+```{r tot_by_continent_setup, echo = FALSE}
+who_tidy <- who %>% 
+  pivot_longer(cols = new_sp_m014:newrel_f65, names_to = 'Types', values_to = 'Cases', values_drop_na = TRUE) %>% 
+  mutate(Types = str_replace(Types, 'newrel', 'new_rel')) %>%
+  separate(Types, into = c('obs_type', 'diagnosis_meth', 'SexAge'), sep = '_') %>%
+  separate(SexAge, into = c('Sex', 'Age'), sep = 1)
+
+country_continents <- gapminder %>% 
+  distinct(country, continent)
+
+tot_by_continent <- who_tidy %>% 
+  inner_join(country_continents, by = 'country') %>%
+  filter(year > 1990, Sex == 'f') %>% 
+  group_by(year, continent, diagnosis_meth) %>% 
+  summarise(tot_cases = sum(Cases))
+```
+
+```{r, ref.label="tot_by_continent_setup", echo = FALSE}
+```
+
+Use the `tot_by_continent` table to make a `ggplot` scatterplot (with lines connecting points) of the total number of TB cases over time. Encode continent by color. Only include `diagnosis_meth` of either "sn" or "sp", and use `facet_wrap` to make separate sub-plots by `diagnosis_meth`
+
+```{r who_plot, exercise = TRUE, exercise.setup = 'tot_by_continent_setup'}
+
+```
+
+```{r who_plot-hint-1}
+data_to_plot <- tot_by_continent %>% filter(diagnosis_meth %in% c('sn', 'sp'))
+```
+
+```{r who_plot-hint-2}
+facet_wrap(~diagnosis_meth)
+```
+
+
+Your plot should look like this:
+```{r, echo = FALSE}
+ggplot(tot_by_continent %>% filter(diagnosis_meth %in% c('sn', 'sp')), aes(year, tot_cases, color = continent)) + 
+  geom_point() + 
+  geom_line() + 
+  facet_wrap(~diagnosis_meth) +
+  labs(y = 'Total TB Cases')
+```
+
+
+

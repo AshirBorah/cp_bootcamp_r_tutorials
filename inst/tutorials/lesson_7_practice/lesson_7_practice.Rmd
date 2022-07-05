@@ -1,0 +1,931 @@
+---
+title: "Further Topics"
+output: 
+  learnr::tutorial:
+    theme: "lumen"
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+description: >
+  Learn about miscellaneous topics that didn't fit directly into a lesson in the main CP Bootcamp track
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(data.table)
+library(here)
+library(useful)
+library(tidyverse)
+library(gapminder)
+library(broom)
+library(ggrepel)
+library(knitr)
+library(kableExtra)
+
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+#beautify table printout
+pretty_table <- function(table, max_rows = 6, max_cols = 6) {
+  if (nrow(table) > max_rows) {
+    table <- table %>% head(max_rows)
+  } 
+  if (ncol(table) > max_cols) {
+    table <- table[, 1:max_cols]
+  }
+  kable(table) %>%
+  kable_styling(c('striped', 'hover'), full_width = F, position = 'left')
+}
+
+sample_info <- read_csv(here::here('data', 'sample_info.csv')) %>% 
+  select(DepMap_ID, lineage)
+RNAseq_mat <- fread(here('data', 'CCLE_expression_subset.csv')) %>% 
+  as_tibble() %>% 
+  column_to_rownames(var = 'V1')
+```
+
+
+These exercises are intended to help synthesize and reinforce the pieces we've covered previously, and get practice with a few new concepts, most notably:
+
+- for loops
+
+- conditional statements (if/else)
+
+- string manipulation
+
+- basic statistical modeling
+
+
+## Programming practice
+
+### For loops
+
+Recall the general pattern of for loops
+
+```{r, eval = FALSE}
+output <- **PREPARE OUTPUT**
+for (element in vector) {
+  ** DO STUFF WITH element**
+}
+```
+
+Write a for loop that computes the sum of squared elements in a vector, and apply it to the test_vector
+
+```{r for_loop_squares, exercise = TRUE}
+test_vector <- 1:10
+
+```
+
+```{r for_loop_squares-hint}
+result <- 0 #initialize
+for (num in test_vector) {
+  
+}
+```
+
+### Looping over columns
+
+We can also loop over the columns of a dataframe. Technically, dataframes are lists of columns so you can use `seq_along(df)` to create a vector from 1 to the number of columns to loop over, and the syntax `df[[i]]` will pull out the ith column as a vector.
+
+Write a loop that computes the average value for each column in the dataframe `iris_num`, and stores the result in `col_means`. 
+
+```{r echo = FALSE}
+iris[, 1:4] %>% head
+```
+
+
+```{r iris_loop_setup}
+iris_num <- iris[, 1:4]
+```
+
+
+```{r iris_loop, exercise = TRUE, exercise.setup = 'iris_loop_setup'}
+col_means <- vector('double', ncol(iris_num))
+
+```
+
+```{r iris_loop-solution}
+col_means <- vector('double', ncol(iris_num))
+for (i in seq_along(iris_num)) {
+  col_means[i] <- mean(iris_num[[i]])
+}
+```
+
+
+## If / else statements
+
+Recall the general pattern of for if / else statements
+
+```{r, eval = FALSE}
+if (condition_1) {
+    *STUFF*
+  else if (condition_2) {
+    *OTHER_STUFF*
+  } else {
+    *OR THIS*
+  }
+}
+```
+
+
+Use a loop to create a new vector `result` whose values are equal to those in `test_vec` if they are odd, and are squared for even values.
+
+NOTE: the `%%` operator 'modulus' is useful here, as `x %% 2` is 1 for odd numbers and 0 for even numbers
+
+```{r loop_if_else, exercise = TRUE}
+test_vec <- 1:10
+```
+
+```{r loop_if_else-hint-1}
+result <- vector('double', length(test_vec))
+for (i in seq_along(test_vec)) {
+  
+}
+```
+
+```{r loop_if_else-hint-2}
+result <- vector('double', length(test_vec))
+for (i in seq_along(test_vec)) {
+  if (test_vec[i] %% 2 == 0) {
+
+    } else {
+
+    }
+}
+```
+
+### If/else in a function
+
+Let's write a function that will adjust input strings to a target length (call it `K`).
+
+- If the string is the target length leave it as is. 
+
+- If the string is too long, keep only the first `K` characters
+
+- If the string is too short, add enough periods at the end to make it length `K`
+
+Complete the template and verify with the test cases. NOTE: `str_length(string)` will return the length of the string
+
+```{r norm_string, exercise = TRUE}
+norm_string <- function(input_string, target_length) {
+  if ( ) {
+    out_string <- str_sub()
+  } else if ( ) {
+    out_string <- str_pad()
+  } else {
+    out_string <- 
+  }
+  return(out_string)
+}
+norm_string('test', 4)
+norm_string('test', 3)
+norm_string('test', 5)
+```
+
+```{r norm_string-hint-1}
+#truncate a string to a target length
+out_string <- str_sub(input_string, start = 1, end = target_length)
+```
+
+```{r norm_string-hint-2}
+#expand a string to a target length by padding it on the end with periods
+out_string <- str_pad(input_string, target_length, side = 'right', pad = '.')
+```
+
+```{r norm_string-solution}
+norm_string <- function(input_string, target_length) {
+  if (str_length(input_string) > target_length) {
+    out_string <- str_sub(input_string, start = 1, end = target_length)
+  } else if (str_length(input_string) < target_length) {
+    out_string <- str_pad(input_string, target_length, side = 'right', pad = '.')
+  } else {
+    out_string <- input_string
+  }
+  return(out_string)
+}
+
+```
+
+
+
+<!-- ### Modifying a vector in a loop -->
+
+<!-- Use a for loop,  -->
+
+<!-- ```{r} -->
+
+<!-- ``` -->
+
+<!-- IFELSE -->
+<!-- ```{r} -->
+
+<!-- ``` -->
+
+
+## String manipulation practice
+
+### str_c
+
+Use the `str_c` function to do the following with the `test_vec` of strings:
+
+- add an 's' to each string
+
+- `collapse` the vector into a single string, where elements are separated by a comma and space (i.e. "dog, horse, pig")
+
+```{r str_c_test, exercise = TRUE}
+test_vec <- c('dog', 'horse', 'pig')
+```
+
+```{r str_c_test-solution}
+str_c(test_vec, 's')
+str_c(test_vec, collapse = ', ')
+```
+
+
+Let's practice using `str_c` with a table. Use string functions to add a new column to the table called `animal_string` so that it looks like this: 
+
+```{r, echo = FALSE}
+plural <- c('many', 'some')
+animal_df <- tibble(animal = c('dog', 'horse', 'pig', 'cow', 'chicken'), 
+       amount = c('a', 'many', 'some', 'one', 'one'))
+animal_df %>% 
+  mutate(animal_string = str_c(amount, animal, sep = ' '),
+         animal_string = ifelse(amount %in% plural, str_c(animal_string, 's'), animal_string),
+         animal_string = ifelse(str_length(animal) > 3, str_to_title(animal_string), animal_string))
+```
+
+You'll want to use the following string functions: `str_c`, `str_length` and `str_to_title`
+
+```{r animal_str, exercise = TRUE}
+plural <- c('many', 'some') #set of plural amounts
+animal_df <- tibble(animal = c('dog', 'horse', 'pig', 'cow', 'chicken'), 
+       amount = c('a', 'many', 'some', 'one', 'one'))
+```
+
+```{r animal_str-hint-1}
+mutate(animal_string = str_c(amount, animal, sep = ' '))
+
+```
+
+```{r animal_str-hint-2}
+mutate(animal_string = ifelse(amount %in% plural, str_c(animal_string, 's'), animal_string))
+```
+
+
+```{r animal_str-solution}
+plural <- c('many', 'some')
+animal_df <- tibble(animal = c('dog', 'horse', 'pig', 'cow', 'chicken'), 
+       amount = c('a', 'many', 'some', 'one', 'one'))
+animal_df <- animal_df %>% 
+  mutate(animal_string = str_c(amount, animal, sep = ' '),
+         animal_string = ifelse(amount %in% plural, str_c(animal_string, 's'), animal_string),
+         animal_string = ifelse(str_length(animal) > 3, str_to_title(animal_string), animal_string))
+```
+
+### Pattern matching
+
+We won't have time to get into pattern matching, but it's very helpful. See the [strings](https://r4ds.had.co.nz/strings.html) section of R4ds, or other regular expression [tutorials](https://medium.com/factory-mind/regex-tutorial-a-simple-cheatsheet-by-examples-649dc1c3f285). 
+
+Practice around a bit with pattern matching. You can use the `str_view(string_vec, pattern)` function to visualize where there are matches in the `string_vec` to a target `pattern'
+
+A few tips upfront: you can create sets with `'[]'`, so `'[Df3]'` will match one of the characters `D`, `f`, or `3`. `'[abc][def]'` would match one of 'a', 'b', or 'c' followed by one of 'd', 'e', or 'f', etc. The special symbols `^` and `$` represent the start and end of the string respectively.
+
+There are many more tricks like this, but see if you can match strings that end with a vowel. Then try using `str_subset` to extract those matching strings
+
+```{r str_view, exercise = TRUE}
+test_vec <- c('cow', 'horse', 'pig', 'dog', 'goat', 'sheep', 'jellyfish', 'squid', 'giraffe', 'elephant')
+
+```
+
+```{r str_view-solution}
+str_subset(test_vec, '[aeiou]$')
+```
+
+
+## Basic linear modeling
+
+Recall the general linear model fitting pattern: `mod <- lm(dep_var ~ indep_var, data = df)`, and that `summary(mod)` will print a summary of the linear model results
+
+Using the `gapminder` table again, test if life expectancy significantly varies with population for Asian countries
+
+```{r gap_lm_1, exercise = TRUE}
+
+```
+
+```{r gap_lm_1-hint}
+summary(mod) #prints summary stats from model
+```
+
+
+Now test if life expectancy varies significantly with population when accounting for gdpPercap, again for Asian countries
+
+```{r gap_lm_2, exercise = TRUE}
+
+```
+
+```{r gap_lm_2-hint}
+mod <- lm(lifeExp ~ pop + gdpPercap, data = gapminder %>% filter(continent == 'Asia'))
+```
+
+
+Write a loop that computes the linear regression slope of **average** lifeExp as a function of year, separately for each continent. 
+
+```{r cont_lm_loop, exercise = TRUE}
+unique_continents <- unique(gapminder$continent)
+```
+
+```{r cont_lm_loop-hint-1}
+cont_slopes <- vector('double', length(unique_continents))
+for (i in seq_along(unique_continents)) {
+  
+}
+```
+
+```{r cont_lm_loop-hint-2}
+cont_slopes <- vector('double', length(unique_continents))
+for (i in seq_along(unique_continents)) {
+      cont_by_year <- gapminder %>% 
+      filter(continent == unique_continents[i]) %>% 
+      group_by(year) %>% 
+      summarise(mean_lifeExp = mean(lifeExp))
+  mod <- lm()
+}
+```
+
+```{r cont_lm_loop-solution}
+unique_continents <- unique(gapminder$continent)
+cont_slopes <- vector('double', length(unique_continents))
+for (i in seq_along(unique_continents)) {
+    cont_by_year <- gapminder %>% 
+      filter(continent == unique_continents[i]) %>% 
+      group_by(year) %>% 
+      summarise(mean_lifeExp = mean(lifeExp))
+    mod <- lm(mean_lifeExp ~ year, data = cont_by_year)
+    cont_slopes[i] <- mod$coefficients[2]
+}
+```
+
+
+### ANOVA
+
+Fit a linear model with `lm` with lifeExpectancy as the dependent variable and continent as the independent variable. Let's verify that the model coefficients represent group means computed relative to the first group in the list (which gets assigned to the 'Intercept' term). 
+
+Compute a table of per-continent average lifeExp. Then compare these to the model coefficients with `plot(x,y)`. You can access the model coefficients as a vector using `mod$coefficients`. 
+
+
+```{r anova_test, exercise = TRUE}
+
+```
+
+```{r anova_test-solution}
+mod <- lm(lifeExp ~ continent, data = gapminder)
+
+cont_avgs <- gapminder %>% 
+  group_by(continent) %>% 
+  summarise(mean_lifeExp = mean(lifeExp))
+
+#this will add the first model coefficient to all the remaining values to convert back to 'absolute' group averages (rather than relative to the first)
+adj_coefs <- mod$coefficients
+adj_coefs[-1] <-  mod$coefficients[-1] + mod$coefficients[1] #[-1] subsets to all except the first element
+plot(adj_coefs, cont_avgs$mean_lifeExp)
+```
+
+
+### Challenge
+
+Now let's make a plot showing the significance of across-countinent differences in lifeExp as a function of year.
+
+- Use a for loop to iterate over the unique years in `gapminder`
+
+- for each year, fit an ANOVA model with `aov` of lifeExp as a function of continent
+
+- use the `tidy` function (already loaded from the `broom` package) to convert the model object into a tidy dataframe of stats (take a look at what it looks like for an example model fit)
+
+- pull out the p.value 
+
+- use `ggplot` to plot the -log10(p-value) of the ANOVA vs years.
+
+```{r aov_vs_year, exercise = TRUE}
+
+```
+
+```{r aov_vs_year-hint}
+p_vals[i] <- tidy(cur_aov) %>% 
+  filter(term == 'continent') %>% 
+  pull(p.value)
+```
+
+
+```{r aov_vs_year-solution}
+unique_years <- unique(gapminder$year)
+p_vals <- vector('double', length(unique_years))
+for (i in seq_along(unique_years)) {
+  cur_dat <- gapminder %>% 
+    filter(year == unique_years[i])
+  cur_aov <- aov(lifeExp ~ continent, data = cur_dat)
+  p_vals[i] <- tidy(cur_aov) %>% 
+    filter(term == 'continent') %>% 
+    pull(p.value)
+}
+tibble(year = unique_years, p_val = p_vals) %>% 
+  ggplot(aes(year, -log10(p_val))) + 
+  geom_line() + 
+  geom_point() 
+
+```
+
+
+Your plot should look like this:
+
+```{r, echo = FALSE}
+unique_years <- unique(gapminder$year)
+p_vals <- vector('double', length(unique_years))
+for (i in seq_along(unique_years)) {
+  cur_dat <- gapminder %>% 
+    filter(year == unique_years[i])
+  cur_aov <- aov(lifeExp ~ continent, data = cur_dat)
+  p_vals[i] <- broom::tidy(cur_aov) %>% 
+    filter(term == 'continent') %>% 
+    pull(p.value)
+}
+tibble(year = unique_years, p_val = p_vals) %>% 
+  ggplot(aes(year, -log10(p_val))) + 
+  geom_line() + 
+  geom_point() 
+
+```
+
+
+## More practice!
+
+Let's first load an example matrix of gene expression values from the DepMap. Row names are cell line IDs, column names are gene IDs. Note this is just a small subset of the data with a few hundred genes
+
+
+```{r}
+corner(RNAseq_mat)
+```
+
+### Finding gene identifiers
+
+The gene names in our expression matrix are formatted with symbols and numeric IDs, according to the pattern "HGNC_SYMBOL (ENTREZ_ID)". Let's make a function that takes as input an HGNC symbol (like "CREBBP") and returns the full identifier used in `RNAseq_mat` (e.g. "CREBBP (1387)"). 
+
+Fill in the blank below to make this function and test you get the right result with CREBBP. Use the `str_subset(string, pattern)` function which will look through a *vector* of `string`s and return any values that match the target `pattern` we're searching for. 
+
+Careful, in our case the pattern you want to use isn't quite just the gene name (e.g. if you searched for 'TP53' you might get 'TP53' and 'TP53RK' as hits). As a hint, the function `str_c` can add additional characters to a string.  
+
+Note also that you can use `RNAseq_mat` inside your function even though we're not providing it as one of the arguments. Here we're treating it as 'globally fixed' for the purposes of these analysis.
+
+```{r get_gene_id, exercise = TRUE}
+get_gene_id <- function(gene_symbol) {
+    
+}
+get_gene_id('CREBBP')
+get_gene_id('AR')
+```
+
+```{r get_gene_id-hint-1}
+str_c(gene_symbol, ' ') #add a space after the target gene symbol
+```
+
+```{r get_gene_id-hint-2}
+str_subset(colnames(RNAseq_mat), str_c(gene_symbol, ' '))
+```
+
+### Get expression range
+
+Write a function which, given a gene ID (as it appears in the RNAseq_mat column names), returns the difference between the largest and smallest gene expression values in `RNAseq_mat`
+
+Use 'if / else' syntax to test whether the smallest expression value for the gene is equal to 0. If it is 0, return 'NA' instead of the expression range. 
+
+```{r get_gene_range_setup}
+get_gene_id <- function(gene_symbol) {
+  return(str_subset(colnames(RNAseq_mat), paste0(gene_symbol, ' ')))
+}
+```
+
+
+```{r get_gene_range, exercise = TRUE, exercise.setup = 'get_gene_range_setup'}
+get_gene_range <- function(gene_id) {
+
+}
+
+## tests (remove comments when ready to test)
+#get_gene_range('CREBBP (1387)') #
+#get_gene_range('CD79B (974)')
+```
+
+```{r get_gene_range-hint-1}
+min_val <- min(RNAseq_mat[gene_id,])
+```
+
+```{r get_gene_range-hint-2}
+if (minval == 0) {
+  exp_diff <- NA
+} else {
+  exp_diff <- max_val - min_val
+}
+```
+
+
+
+```{r loop_setup, include = FALSE}
+get_gene_range <- function(gene_id) {
+    max_val <- max(RNAseq_mat[, gene_id])
+    min_val <- min(RNAseq_mat[, gene_id])
+    if (min_val == 0) {
+      exp_diff <- NA
+    } else {
+      exp_diff <- max_val - min_val
+    }
+    return(exp_diff)
+}
+```
+
+```{r, ref.label="loop_setup", echo = FALSE}
+```
+
+Your function should work like this:
+```{r}
+get_gene_range('CREBBP (1387)')
+get_gene_range('CD79B (974)')
+```
+
+
+Now use your `get_gene_range` function to finish writing this 'for loop' to iterate over genes and compute the range of expression levels for each gene, storing the results in `gene_ranges_loop`
+
+
+```{r finish_loop, exercise = TRUE, exercise.setup = 'loop_setup'}
+gene_id_list <- colnames(RNAseq_mat)
+gene_ranges_loop <- vector('numeric', length(gene_id_list)) #let's initialize an empty numeric vector to hold the medians for the genes
+names(gene_ranges_loop) <- gene_id_list #lets make it a named vector
+
+#fill in the rest
+for (cur_gene in gene_id_list) {
+  
+}
+head(gene_ranges_loop)
+```
+
+```{r finish_loop-hint}
+gene_ranges_loop[cur_gene] <- get_gene_range(cur_gene) 
+```
+
+
+You should get something that looks like this
+
+```{r, echo = FALSE}
+gene_id_list <- colnames(RNAseq_mat)
+gene_ranges_loop <- vector('numeric', length(gene_id_list)) #let's initialize an empty numeric vector to hold the medians for the genes
+names(gene_ranges_loop) <- gene_id_list #lets make it a named vector
+
+#fill in the rest
+for (cur_gene in gene_id_list) {
+  gene_ranges_loop[cur_gene] <- get_gene_range(cur_gene)
+}
+head(gene_ranges_loop) #look at the beginning of the resulting vector
+```
+
+
+Now use `map_dbl()` to do the same thing (more efficiently).
+
+This function takes as input a list and a function, and applies the function to each element in the list. the "_dbl" part in the function name means that it will return a 'double' or 'numerical' vector as the result. (Note for functions that take multiple inputs, the values being looped over will be provided as the first input to the function by default)
+
+```{r gene_ranges_map, exercise = TRUE, exercise.setup = 'loop_setup'}
+gene_ranges_map <- map_dbl()
+```
+
+```{r gene_ranges_map-hint}
+map_dbl(colnames(RNAseq_mat), get_gene_range)
+```
+
+```{r gene_range_avg_setup}
+get_gene_range <- function(gene_id) {
+    max_val <- max(RNAseq_mat[, gene_id])
+    min_val <- min(RNAseq_mat[, gene_id])
+    if (min_val == 0) {
+      exp_diff <- NA
+    } else {
+      exp_diff <- max_val - min_val
+    }
+    return(exp_diff)
+}
+gene_ranges_map <- map_dbl(colnames(RNAseq_mat), get_gene_range)
+```
+
+
+What's the average expression range across genes?
+
+```{r gene_ranges_avg, exercise = TRUE, exercise.setup = 'gene_range_avg_setup'}
+
+```
+
+```{r gene_ranges_avg-hint}
+na.rm=TRUE #optional parameter
+```
+
+
+
+<!-- ## Exercise 2: Making a volcano plot -->
+
+<!-- Here's a final exercise which should bring together a lot of the difference concepts you've learned to generate an analysis/plot that is a very common genomics-style analysis. We're going to perform a simple 'differential expression' comparison between two groups of cell lines. -->
+
+
+<!-- ### Define lineage groups -->
+
+<!-- The table sample_info contains the lineage of each of the cell line IDs, corresponding to the matrix of gene expression data. -->
+<!-- ```{r} -->
+<!-- sample_info %>% pretty_table() -->
+<!-- ``` -->
+
+<!-- First, get two lists containing the DepMap_IDs of cell lines that are breast lineage and skin lineage respectively. You should have 83 IDs in the `breast_lines` vector, and 116 in the `skin_lines` vector. -->
+
+<!-- ```{r get_cl_lists, exercise = TRUE} -->
+<!-- breast_lines <- sample_info %>%  -->
+
+<!-- skin_lines <- sample_info %>%  -->
+<!-- ``` -->
+
+<!-- ```{r get_cl_lists-hint} -->
+<!--   ... %>%  -->
+<!--   pull(DepMap_ID) #pulls just the DepMap_ID column as a vector -->
+<!-- ``` -->
+
+
+<!-- ```{r line_def_setup, echo = FALSE} -->
+<!-- breast_lines <- sample_info %>%  -->
+<!--   filter(lineage == 'breast') %>%  -->
+<!--   pull(DepMap_ID) -->
+
+<!-- skin_lines <- sample_info %>%  -->
+<!--   filter(lineage == 'skin') %>%  -->
+<!--   pull(DepMap_ID) -->
+<!-- ``` -->
+
+<!-- ```{r, ref.label="line_def_setup", echo = FALSE} -->
+<!-- ``` -->
+
+<!-- ### Write t-test function -->
+
+<!-- Finish writing a function `get_t_test()` which takes a gene id as input, and two groups of cell line IDs, and computes a `t.test` comparing the mean expression of that gene is different between the two cell line groups. It should return a tibble with stats for the comparison. -->
+
+<!-- ```{r write_t_test, exercise = TRUE, exercise.setup = 'line_def_setup'} -->
+<!-- get_t_test <- function(gene_id, group1, group2) { -->
+<!--   t_res <-  -->
+<!--   result <- tibble(GeneID = gene_id, -->
+<!--                    t_stat = t_res$statistic, -->
+<!--                    p_val = t_res$p.value, -->
+<!--                    mean_diff = t_res$estimate[2] - t_res$estimate[1]) -->
+<!--   return(result) -->
+<!-- } -->
+<!-- get_t_test('TP53 (7157)', breast_lines, skin_lines) #check that it works -->
+<!-- ``` -->
+
+<!-- ```{r write_t_test-hint-1} -->
+<!-- RNAseq_mat[group1, GeneID] #values of target gene expression from group 1 -->
+<!-- ``` -->
+
+<!-- ```{r write_t_test-hint-2} -->
+<!-- t.test(RNAseq_mat[group1, GeneID], RNAseq_mat[group2, GeneID]) -->
+<!-- ``` -->
+
+<!-- You should get an output like this: -->
+
+<!-- ```{r t_test_setup, echo = FALSE} -->
+<!-- breast_lines <- sample_info %>%  -->
+<!--   filter(lineage == 'breast') %>%  -->
+<!--   pull(DepMap_ID) -->
+
+<!-- skin_lines <- sample_info %>%  -->
+<!--   filter(lineage == 'skin') %>%  -->
+<!--   pull(DepMap_ID) -->
+
+<!-- get_t_test <- function(GeneID, group1, group2) { -->
+<!--   t_res <- t.test(RNAseq_mat[group1, GeneID], RNAseq_mat[group2, GeneID]) -->
+<!--   result <- tibble(GeneID = GeneID, -->
+<!--                    t_stat = t_res$statistic, -->
+<!--                    p_val = t_res$p.value, -->
+<!--                    mean_diff = t_res$estimate[2] - t_res$estimate[1]) -->
+<!--   return(result) -->
+<!-- } -->
+<!-- get_t_test('TP53 (7157)', breast_lines, skin_lines) #check that it works -->
+<!-- ``` -->
+
+<!-- ```{r, ref.label="t_test_setup", echo = FALSE} -->
+<!-- ``` -->
+
+<!-- Use `map_dfr()` with the `get_t_test()` function you wrote to compute these statistics for all genes in the RNAseq dataset, and compile the results into a dataframe (by row). -->
+
+<!-- Note: if you're applying a function with more than one input to map_dfr, you can include the additional inputs like this: `map_dfr(list, function_to_apply, additional_input1, additional_input2)` -->
+
+<!-- ```{r t_test_map, exercise = TRUE, exercise.setup = 't_test_setup'} -->
+<!-- all_t_tests <- map_dfr() -->
+<!-- ``` -->
+
+<!-- ```{r t_test_map-hint} -->
+<!-- map_dfr(colnames(RNAseq_mat), get_t_test, breast_lines, skin_lines) -->
+<!-- ``` -->
+
+
+<!-- Your resulting table should look like this: -->
+
+<!-- ```{r t_test_res_setup, echo = FALSE} -->
+<!-- breast_lines <- sample_info %>%  -->
+<!--   filter(lineage == 'breast') %>%  -->
+<!--   pull(DepMap_ID) -->
+
+<!-- skin_lines <- sample_info %>%  -->
+<!--   filter(lineage == 'skin') %>%  -->
+<!--   pull(DepMap_ID) -->
+
+<!-- get_t_test <- function(GeneID, group1, group2) { -->
+<!--   t_res <- t.test(RNAseq_mat[group1, GeneID], RNAseq_mat[group2, GeneID]) -->
+<!--   result <- tibble(GeneID = GeneID, -->
+<!--                    t_stat = t_res$statistic, -->
+<!--                    p_val = t_res$p.value, -->
+<!--                    mean_diff = t_res$estimate[2] - t_res$estimate[1]) -->
+<!--   return(result) -->
+<!-- } -->
+<!-- all_t_tests <- map_dfr(colnames(RNAseq_mat), get_t_test, breast_lines, skin_lines) -->
+<!-- pretty_table(all_t_tests) -->
+<!-- ``` -->
+
+<!-- ```{r, ref.label="t_test_res_setup", echo = FALSE} -->
+<!-- ``` -->
+
+<!-- Use `mutate` with the function `p.adjust` to add a column to this table (called `FDR`) containing the adjusted p-values correcting for multiple hypothesis testing (using the default 'BH' method). -->
+
+<!-- ```{r add_p_adjust, exercise = TRUE, exercise.setup = 't_test_res_setup'} -->
+<!-- all_t_tests <- all_t_tests %>%  -->
+<!-- ``` -->
+
+<!-- ```{r add_p_adjust-hint} -->
+<!-- mutate(FDR = p.adjust(p_val)) -->
+<!-- ``` -->
+
+
+<!-- ```{r t_test_res_setup2, echo = FALSE} -->
+<!-- breast_lines <- sample_info %>%  -->
+<!--   filter(lineage == 'breast') %>%  -->
+<!--   pull(DepMap_ID) -->
+
+<!-- skin_lines <- sample_info %>%  -->
+<!--   filter(lineage == 'skin') %>%  -->
+<!--   pull(DepMap_ID) -->
+
+<!-- get_t_test <- function(GeneID, group1, group2) { -->
+<!--   t_res <- t.test(RNAseq_mat[group1, GeneID], RNAseq_mat[group2, GeneID]) -->
+<!--   result <- tibble(GeneID = GeneID, -->
+<!--                    t_stat = t_res$statistic, -->
+<!--                    p_val = t_res$p.value, -->
+<!--                    mean_diff = t_res$estimate[2] - t_res$estimate[1]) -->
+<!--   return(result) -->
+<!-- } -->
+<!-- all_t_tests <- map_dfr(colnames(RNAseq_mat), get_t_test, breast_lines, skin_lines) %>%  -->
+<!--   mutate(FDR = p.adjust(p_val)) -->
+<!-- ``` -->
+
+<!-- ```{r, ref.label="t_test_res_setup2", echo = FALSE} -->
+<!-- ``` -->
+
+<!-- Now make a table `top_t_tests` that has the top 20 genes (ranked in descending order by the MAGNITUDE of the `mean_diff`) after excluding any genes where the t-test had an FDR of less than 0.1 (not significant in the t-test) -->
+
+<!-- ```{r top_t_tests, exercise = TRUE, exercise.setup = 't_test_res_setup2'} -->
+<!-- top_t_tests <- all_t_tests %>%  -->
+<!-- ``` -->
+
+<!-- Your table should look like this: -->
+
+<!-- ```{r, echo = FALSE} -->
+<!-- top_t_tests <- all_t_tests %>%  -->
+<!--   filter(FDR < 0.1) %>%  -->
+<!--   arrange(desc(abs(mean_diff))) %>%  -->
+<!--   head(20) -->
+<!-- pretty_table(top_t_tests) -->
+<!-- ``` -->
+
+<!-- ```{r t_test_plot_setup, echo = FALSE} -->
+<!-- breast_lines <- sample_info %>%  -->
+<!--   filter(lineage == 'breast') %>%  -->
+<!--   pull(DepMap_ID) -->
+
+<!-- skin_lines <- sample_info %>%  -->
+<!--   filter(lineage == 'skin') %>%  -->
+<!--   pull(DepMap_ID) -->
+
+<!-- get_t_test <- function(GeneID, group1, group2) { -->
+<!--   t_res <- t.test(RNAseq_mat[group1, GeneID], RNAseq_mat[group2, GeneID]) -->
+<!--   result <- tibble(GeneID = GeneID, -->
+<!--                    t_stat = t_res$statistic, -->
+<!--                    p_val = t_res$p.value, -->
+<!--                    mean_diff = t_res$estimate[2] - t_res$estimate[1]) -->
+<!--   return(result) -->
+<!-- } -->
+<!-- all_t_tests <- map_dfr(colnames(RNAseq_mat), get_t_test, breast_lines, skin_lines) %>%  -->
+<!--   mutate(FDR = p.adjust(p_val)) -->
+
+<!-- top_t_tests <- all_t_tests %>%  -->
+<!--   filter(FDR < 0.1) %>%  -->
+<!--   arrange(desc(abs(mean_diff))) %>%  -->
+<!--   head(20) -->
+
+<!-- ``` -->
+
+<!-- ```{r, ref.label="t_test_plot_setup", echo = FALSE} -->
+<!-- ``` -->
+
+<!-- ### Plotting the results -->
+
+<!-- Finally, use `ggplot` to create a volcano plot of the results. -->
+<!-- This should be a scatterplot with `mean_diff` on the x-axis and `-log10(p_val)` on the y-axis. Color the points by whether or not FDR < 0.1.  -->
+
+<!-- Use `scale_color_manual` with `values = my_colors` to specify the colors for each group. -->
+
+<!-- Try also adding a vertical dashed line at x=0 using `geom_vline()` -->
+
+<!-- You can also add gene labels for the top genes using `geom_label_repel()` from the ggrepel package.  -->
+<!-- To restrict labels to the top genes, use the `top_t_tests` table as the `data` input to `geom_label_repel()`. -->
+
+<!-- ```{r make_volcano, exercise = TRUE, exercise.setup = 't_test_plot_setup'} -->
+<!-- my_colors <- c(`FALSE` = 'darkgray', `TRUE` = 'darkred') -->
+<!-- ggplot(all_t_tests, mapping = ) -->
+<!-- ``` -->
+
+<!-- Your plot should look like this: -->
+
+<!-- ```{r, echo = FALSE} -->
+<!--  ggplot(all_t_tests, aes(mean_diff, -log10(p_val), color = FDR < 0.1)) + geom_point() +  -->
+<!--   geom_vline(xintercept = 0, linetype = 'dashed') +  -->
+<!--   scale_color_manual(values = c(`FALSE` = 'gray', `TRUE` = 'darkred')) + -->
+<!--   geom_label_repel(data = top_t_tests, aes(label = GeneID)) -->
+<!-- ``` -->
+
+<!-- ## Exercise 3: Quick ANOVA -->
+
+<!-- For the last exercise, let's do some quick statistical tests using these data. -->
+
+<!-- First, let's do an ANOVA to test whether gene expression levels of TP53 are significantly different across lineages. (Note, we're using log-transformed TPM values throughout these analyses). -->
+
+<!-- Make a tibble that has the DepMap_ID and TP53 gene expression levels for each cell line. Then use a `left_join` to combine the lineage info from the `sample_info` table -->
+
+<!-- ```{r tp53_anova, exercise = TRUE} -->
+<!-- targ_gene <- 'TP53 (7157)' -->
+
+<!-- ``` -->
+
+<!-- ```{r tp53_anova-hint-1} -->
+<!-- mod <- aov(gene_exp ~ lineage, data = my_gene_table) -->
+<!-- ``` -->
+
+<!-- ```{r tp53_anova-hint-2} -->
+<!-- my_gene_table <- tibble(DepMap_ID = rownames(RNAseq_mat), -->
+<!--                          gene_exp = RNAseq_mat[, targ_gene]) -->
+<!-- ``` -->
+
+<!-- ```{r tp53_anova-solution} -->
+<!-- targ_gene <- 'TP53 (7157)' -->
+<!-- my_gene_table <- tibble(DepMap_ID = rownames(RNAseq_mat), -->
+<!--                          gene_exp = RNAseq_mat[, targ_gene]) %>%  -->
+<!--   left_join(sample_info, by = 'DepMap_ID') -->
+<!-- mod <- aov(gene_exp ~ lineage, data = my_gene_table) -->
+<!-- summary(mod) -->
+<!-- ``` -->
+
+
+<!-- running `summary(mod)` on your anova model should give you something like this:  -->
+
+<!-- ```{r, echo = FALSE} -->
+<!-- targ_gene <- 'TP53 (7157)' -->
+<!-- my_gene_table <- tibble(DepMap_ID = rownames(RNAseq_mat), -->
+<!--                          gene_exp = RNAseq_mat[, targ_gene]) %>%  -->
+<!--   left_join(sample_info, by = 'DepMap_ID') -->
+<!-- mod <- aov(gene_exp ~ lineage, data = my_gene_table) -->
+<!-- summary(mod) -->
+<!-- ``` -->
+
+<!-- Now let's do a test of whether TP53 expression significantly depends on MDM2 expression, when accounting for lineage as a covariate. This means we want to build a linear model that includes MDM2 expression and lineage as covariates. -->
+
+<!-- ```{r lm_covariates, exercise=TRUE} -->
+<!-- targ_gene <- 'TP53 (7157)' -->
+<!-- cov_gene <- 'MDM2 (4193)' -->
+
+<!-- ``` -->
+
+<!-- ```{r lm_covariates-hint} -->
+<!-- mod <- lm(gene_exp ~ cov_exp + lineage, data = my_gene_table) -->
+<!-- ``` -->
+
+
+
+<!-- Your results table should look like this: -->
+
+<!-- ```{r, echo = FALSE} -->
+<!-- targ_gene <- 'TP53 (7157)' -->
+<!-- cov_gene <- 'MDM2 (4193)' -->
+<!-- my_gene_table <- tibble(DepMap_ID = rownames(RNAseq_mat), -->
+<!--                          gene_exp = RNAseq_mat[, targ_gene], -->
+<!--                          cov_exp = RNAseq_mat[, cov_gene]) %>%  -->
+<!--   left_join(sample_info, by = 'DepMap_ID') -->
+<!-- mod <- lm(gene_exp ~ cov_exp + lineage, data = my_gene_table) -->
+<!-- summary(mod)$coefficients %>% head -->
+<!-- ``` -->
+
+

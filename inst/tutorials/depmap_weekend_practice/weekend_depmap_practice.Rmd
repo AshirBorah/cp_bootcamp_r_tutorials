@@ -1,0 +1,35 @@
+---
+title: "DepMap TP53 weekend practice"
+tutorial:
+  id: "cp_bootcamp_2021_weekend2_hw"
+  version: 1.0
+output: 
+  learnr::tutorial:
+    theme: "lumen"
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+description: >
+  Learn how to use DepMap data to look into TP53
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+```
+
+# Introduction
+In this tutorial you’ll work with several different cancer cell line datasets from DepMap, practicing combining and manipulating these data to answer typical types of questions. This notebook tries to bring together all the core skills we’ve worked on in a realistic applied setting, including:
+- Data loading
+- Combining and manipulating tabular data
+- Writing and using functions
+- Data viz using ggplot
+
+# To get started:
+Please download and unzip this [project folder](https://cds.team/CP_R_bootcamp/others/depmap_weekend_practice.zip). This includes the input data files you’ll need, as well as a template R Markdown Notebook “DepMap_TP53.Rmd”. As we discussed, it’s best to create an Rstudio Project within this folder. Then you can open up the DepMap_TP53.Rmd file and work on it directly fill-in-the-blank style. 
+
+In this case especially you’re very much encouraged to experiment around with other analyses and visualizations: using this template as a launching pad. Note that the files used here are bite-sized versions of the real thing (which you can download here [depmap.org/portal/download](https://depmap.org/portal/download/), but it shouldn’t be much different to download and work with the full files. 
+
+Once you’ve worked through the whole doc, use the ‘knit’ button in Rstudio to compile it all into an html report.
+
+# Solution
+This [archive](https://cds.team/CP_R_bootcamp/others/depmap_TP53_solution.zip) contains the solutions for this assignment

@@ -1,0 +1,264 @@
+---
+title: "Intro practice with Differential expression analysis"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: spacelab
+    highlight: tango
+---
+
+```{r setup, include=FALSE}
+#Boilerplate stuff
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Background
+
+This tutorial covers basics of differential expression analysis with RNA-Seq data. It is adapted from the wonderful tutorial paper by Law et al. [RNA-seq analysis is easy as 1-2-3 with limma, Glimma and edgeR](https://f1000research.com/articles/5-1408/v3)
+
+The dataset used is from [Sheridan et al.](https://bmccancer.biomedcentral.com/articles/10.1186/s12885-015-1187-z) and consists of 3 mouse mammary gland cell populations (basal, luminal progenitor: LP, and mature luminal: ML), each RNA-Seq profiled in triplicate across three batches (different sequencing lanes).
+
+Our goal here will be to identify genes that are differentially expressed in the basal cells compared to the other two cell types. NOTE: we will use a simplified version of this analysis pipeline for practice purposes. Using the 'real deal' isn't too much more difficult. See [OTHER TUTORIAL] for more details
+
+Additional key refs:
+
+* [RNAseq123 R package](https://www.bioconductor.org/help/workflows/RNAseq123/)
+* [Glimma vignette](https://bioconductor.org/packages/release/bioc/vignettes/Glimma/inst/doc/limma_edger.html)
+
+# Setup
+
+## Packages
+
+We will be using the package `edgeR`. To install this, you need to use a slightly different approach than `install.packages`. Run the following code to install.
+```
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("edgeR")
+```
+
+## Create Project
+
+Create a folder for this project, with a 'data' folder to store the data files you'll use.
+
+Create an Rstudio Project
+
+## Data
+
+There are three data files we'll need
+
+* `rnaseq_counts.csv`: this is a matrix of gene-level read counts. Rows are genes and columns are samples. The genes are labeled by their Entrez IDs, which are unique numeric identifiers for each gene.
+
+* `rnaseq_sample_info.csv`: contains metadata for each sample. 
+
+* `gene_info`: table with additional information for each gene in the read counts matrix. 
+
+Download the files and put them in your project data folder
+
+
+# Analysis
+
+You'll want to 'fill in the blanks' in each code chunk, and run them in sequence. Remember that you can run all the code in a given chunk by clicking on the green arrow in the top right of the code chunk.
+
+## Load packages
+
+Run this code chunk to load all the packages we'll be using.
+```{r}
+library(tidyverse)
+library(edgeR) #also loads limma
+library(useful) #helper function corner
+library(data.table) #for fread
+library(here)
+```
+
+## Load data
+
+Use the `fread` function to load `rnaseq_counts.csv`, and the `read_csv` function to load `rnaseq_sample_info.csv` and `gene_info.csv`. 
+
+Remember that if you create an Rstudio 'Project' you can use the `here` function to specify the file locations like: `here('data', 'my_file.csv')`
+
+```{r}
+counts_mat <- 
+  
+sample_info <- 
+
+gene_info <- 
+```
+
+Inspect these datasets. Notice that the counts_mat data is loaded as a 'data.table', and the gene IDs are being read as numeric values. Also, R has given this gene ID column a weird name because it was blank in the input file. 
+
+```{r}
+
+```
+
+We want to fix counts_mat into a matrix of read counts, with the gene IDs as rownames.
+
+- First, use the `as_tibble` function to convert it into a tibble (rather than data.table, you can ignore these distinctions and just treat this as part of the matrix-loading recipe)
+
+- Then, use the `column_to_rownames` function to make this Gene ID column into the rownames
+
+- Finally use `as.matrix` to convert it into a matrix (everything here will work if you dont do this, but it's best practice)
+```{r}
+
+```
+
+
+Let's make sure the data in these 3 variables are properly aligned. The sample names in `counts_mat` should be identical to the sample names in the `sample_info` table, and should appear in the same order. 
+Use the `all.equal` function to ensure test that this is true.
+```{r}
+
+```
+
+Same for the gene info. The rownames of the counts matrix should be identical to the entrez gene ids in the gene info table.
+Test this with the `all.equal` function and note that something isn't quite right. which you can fix.
+Hint: the `as.character` function will be helpful.
+```{r}
+
+```
+
+
+## Remove lowly expressed genes
+
+For genes with very few reads in most/all samples we won't be able to detect any significant differences, and we'll just be hurting our statistical power by performing unnecessary tests, so it's best to exclude them.
+
+First find out how many genes have 0 reads across all samples.
+
+Use the `rowSums` function to create a vector that contains the total reads across samples for each gene. Then calculate how many values (genes) are 0.
+
+HINT: remember that R treats logical TRUE as 1 and FALSE as 0 for the purposes of math operations..
+```{r}
+
+```
+
+Let's make a function called `get_usable_genes` that identifies the genes in a read count matrix that are sufficiently expressed to include in the analysis. The function should take as input the counts matrix and return a vector of boolean values which indicates whether each gene in the dataset shows sufficient expression. Don't forget to `return()` the output at the end of the function
+
+This function will also have two additional parameters:
+- `min_cpm`: which is the minimum counts-per-million (cpm) expression level for a gene to be considered expressed in a given sample. A typical threshold for `min_cpm` is 1.
+- `min_expressed_samples` which is the minimum number of samples a gene must be 'expressed' in to be included in analysis. 
+
+Make your function take these two input parameters `min_cpm` and `min_expressed_samples` as inputs, and include default values of 1 and 3 respectively.
+
+```{r}
+get_usable_genes <- function(counts_mat, *FILL_IN*) {
+  counts_per_million <- cpm(counts_mat) #normalize by total counts (to give units of 'counts-per-million')
+  
+}
+
+```
+
+Use your function to calculate how many genes are expressed (with the default values)
+
+```{r}
+usable_genes <- get_usable_genes(counts_mat)
+sum(usable_genes)
+```
+
+How much would the number of expressed genes change if we increased the `min_expressed_samples` parameter to 6?
+```{r}
+
+```
+
+Use your function to find which genes are expressed above `min_cpm` in at least 3 but fewer than 6 samples 
+```{r}
+
+```
+
+Now let's use the default values to determine the list of genes we'll include in analysis.
+Use this boolean vector returned from your function to create filtered versions of the `counts_mat` and `gene_info` table called `used_counts_mat` and `used_gene_info` respectively. 
+```{r}
+usable_genes <- get_usable_genes(counts_mat)
+used_counts_mat <- 
+used_gene_info <- 
+```
+
+## Perform differential expression analysis
+
+Now we want to test which genes are differentially expressed in basal samples compared to other cell types.
+
+First, let's make a new column in the sample info table called `is_basal` which is true if the sample is group Basal, and FALSE otherwise. You can add a new column to a table like this: `df[['new_column']] <- new_vector`
+```{r}
+
+```
+
+### Package the data
+
+Now let's group all our data into a single compact data object. The `DGEList` is a useful tool (from the `edgeR` package) for storing RNA-seq datasets. It will take the counts matrix, sample info, and gene info tables as inputs and package them up in a single object. 
+Make an object called `dge` that stores all our data, using the `DGEList` function. Remember to provide the `used_counts_mat` and `used_gene_info` as inputs.
+```{r}
+dge <- DGEList()
+
+print(dim(dge)) # We see that the data has 27k rows and 9 columns
+
+head(dge$counts)
+```
+
+
+
+### Make the model
+
+(Treating as boilerplate. You'll learn more about this later)
+
+The efit object will contain the info needed to explore our differential expression results.
+
+```{r}
+dge <- calcNormFactors(dge, method = "TMM") #compute size normalization factors
+mod_matrix <- model.matrix(~is_basal, dge$samples) #define the comparisons we want to make. 
+colnames(mod_matrix)[2] <- 'is_basal'
+v <- voom(dge, mod_matrix) #this operates on the normalized counts data
+vfit <- lmFit(v, mod_matrix) #fits the model
+efit <- eBayes(vfit) #This step allows the model to 'pool' information across genes and gain statistical power
+```
+
+
+### Summary of results
+
+Now we can start looking at the results of the model. This shows the overall numbers of significantly up- and down-regulated genes for each comparison. By default it uses FDR adjusted p-value of 0.05 as the threshold.
+
+Note that the 'intercept' column represents the average expression among non-basal (reference) samples. So, the p-values are not meaningful (they're testing whether the average expression is different from 0)
+
+```{r}
+summary(decideTests(efit))
+```
+
+### Top differentially expressed genes
+
+The `topTable` function generates a table of top differentially expressed genes in basal vs non-basal samples. Inspect the table
+
+```{r}
+basal_de <- topTable(efit, coef = 'is_basal', n=Inf, genelist = dge$genes) 
+
+```
+
+How many genes have logFC magnitude greater than 1 and adjusted p-value less than 0.01? (HINT: you should get 3964 genes)
+
+```{r}
+
+```
+
+Make a new column in the `basal_de` results table called `neg_log_p` which gives the negative log10 p-value. 
+
+```{r}
+
+```
+
+Now make a simple 'volcano' plot of the logFC vs neg-log-p value across genes using the `plot` function
+
+```{r}
+
+```
+
+Create a vector with the names of the top 10 overexpressed genes (highest magnitude logFC value) in basal compared to other cell types.
+HINT: the `order` function is useful for this.
+
+```{r}
+
+```
+
+### Saving results
+Save your table of differential expression results to a 'comma-separated' (csv) file called 'basal_DE_practice_res.csv' in the 'results' folder in your project.
+```{r}
+
+```
+
+

@@ -1,0 +1,302 @@
+---
+title: "Introduction to Tidyverse"
+tutorial:
+  id: "cp_bootcamp_2021_chp4_practice"
+  version: 1.0
+output: 
+  learnr::tutorial:
+    theme: "lumen"
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+description: >
+  Learn the tidyverse ecosystem and use this paradigm to explore data
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+tutorial_options(exercise.timelimit = 120, exercise.blanks = "___+")
+
+library(gapminder)
+gapminder$country <- as.character(gapminder$country)
+gapminder$continent <- as.character(gapminder$continent)
+data("mtcars")
+```
+
+
+## Prep
+
+We'll first load the gampinder data and then fix it so that the `country` and `continent` columns are text instead of 'factors'
+```{r}
+library(gapminder)
+gapminder$country <- as.character(gapminder$country)
+gapminder$continent <- as.character(gapminder$continent)
+```
+
+For this practice, try to use the pipe (`%>%`) wherever possible to chain together operations, with the general pattern
+
+```
+input_data %>% 
+  operation_1 %>% 
+  operation_2
+```
+
+If you want to capture the result of the chain of operations and assign it to a new variable (rather than say printing out the result to the console), you can do:
+
+```
+result <- input_data %>% 
+  operation_1 %>% 
+  ...
+```
+
+## Filter 
+
+Recall that the `filter` function is useful for extracting a subset of rows from a data table. Each input to `filter` (in addition to the data table itself) specifies a logical condition that will be applied to select rows. If you provide multiple inputs `filter(data, A, B)` this selects for 'A AND B'. You can use `A | B` to specify 'A OR B'.
+
+Let's practice some filtering. Use the `filter` function (and the `%>%`) to extract the specified set of rows from the `gapminder` table.
+
+The first 5 rows where continent is equal to `Asia` and life expectancy is greater than 35 yrs
+```{r filter1, exercise = TRUE}
+
+```
+
+```{r filter1-solution}
+gapminder %>%
+  filter(continent == "Asia", lifeExp > 35) %>%
+  head(5)
+```
+
+
+All rows where the country begins with 'A' 
+(hint: the `>` and `<` operators also work on strings to compare alphabetical order)
+```{r filter2, exercise = TRUE}
+
+```
+
+```{r filter2-solution}
+gapminder %>%
+  filter(lifeExp < 'B')
+```
+
+
+All rows where the continent is `Oceania` OR the country is one of Turkey, Uruguay, or Taiwan
+```{r filter3, exercise = TRUE}
+
+```
+
+```{r filter3-solution}
+# gapminder %>% 
+#   filter(continent == "Oceania" | country %in% c('Turkey', 'Uruguay', 'Taiwan'))
+```
+
+
+
+## Arrange/Select
+
+Recall that `arrange` sorts the rows of a data table based on the values in one or more columns. 
+
+`select` allows you to select a subset of columns from a table as: `select(col1, col2, col3)`.
+
+Sort the rows of the `gapminder` table alphabetically using the continent and country columns. First by continent, then by country
+```{r arrange1, exercise = TRUE}
+
+```
+
+```{r arrange1-solution}
+gapminder %>%
+  arrange(continent, country)
+```
+
+
+What were the top 5 years with the highest life expectancy in China? Use the `select` function to create a table that contains only the year and lifeExp for these top 5 entries.
+```{r arrange2, exercise = TRUE}
+
+```
+
+```{r arrange2-solution}
+gapminder %>%
+  filter(country == "China") %>%
+  arrange(desc(lifeExp)) %>%
+  head(5) %>%
+  select(year,lifeExp)
+```
+
+
+
+## Mutate
+
+Recall that `mutate` allows you to add new columns to a table. The new columns can also be generated as a function of existing columns in the table (e.g. `in_data %>% mutate(col12_sum = old_col1 + old_col2)`).
+
+Add a new variable to the gapminder table called `GDP` which has the total GDP for each country
+```{r mutate1, exercise = TRUE}
+
+```
+
+```{r mutate1-solution}
+gapminder <- gapminder %>%
+  mutate(GDP = pop * gdpPercap)
+```
+
+
+```{r gdp_setup, include = FALSE, echo = FALSE}
+#adding GDP to gapminder so the rest will work
+gapminder <- gapminder %>%
+  mutate(GDP = lifeExp * gdpPercap)
+```
+
+```{r, ref.label="gdp_setup", echo = FALSE}
+```
+
+Add a column called `high_GDP` to gapminder which has value TRUE if the `GDP` is higher than the overall average, and FALSE otherwise. (It's easiest to do this in two steps).
+
+```{r mutate2, exercise = TRUE, exercise.setup='gdp_setup'}
+
+```
+
+```{r mutate2-solution}
+mean_gdp <- mean(gapminder$GDP) #first calculate the overall avg GDP
+gapminder %>%
+  mutate(high_GDP = GDP > mean_gdp)
+```
+
+
+
+## Group-by/summarise
+
+Recall that `summarise` allows you to compute summary statistics across rows of a table. Use `summarise` to compute the mean and median GDP for counties in Asia after 1980. Your result should be a table with a single row and two columns called `mean_gdp` and `median_gdp`
+
+```{r summarise1, exercise = TRUE, exercise.setup='gdp_setup'}
+
+```
+
+```{r summarise1-solution}
+gapminder %>%
+  filter(continent == 'Asia', year >= 1980) %>%
+  summarise(mean_gdp = mean(GDP),
+            median_gdp = median(GDP))
+```
+
+
+Recall that `group_by` allows you to group rows by a variable or combinations of variables, which is typically used in combination with `summarise` to compute summary statistics for each group in a table.
+
+Make a table with the mean, median, max, and min life expectancies for Asian countries in the 1970's.
+```{r group_by1, exercise = TRUE, exercise.setup='gdp_setup'}
+
+```
+
+```{r group_by1-solution}
+gapminder %>%
+  filter(continent == "Asia", year>=1970, year<1980) %>%
+  group_by(country) %>%
+  summarise(mean_life_exp = mean(lifeExp),
+            median_life_exp = median(lifeExp),
+            max_life_exp = max(lifeExp),
+            min_life_exp = min(lifeExp))
+```
+
+
+Make a table with the mean lifeExp by country and year
+```{r group_by2, exercise = TRUE, exercise.setup='gdp_setup'}
+
+```
+
+```{r group_by2-solution}
+gapminder %>%
+  group_by(country, year) %>%
+  summarise(mean_life_exp = mean(lifeExp))
+```
+
+
+*Challenge*: Make a table with the mean lifeExp by country and decade. (Hint: you can use the `floor` function to round numbers down to an integer)
+```{r group_by3, exercise = TRUE, exercise.setup='gdp_setup'}
+# # The floor function will always round down. So when we divide the year by 10 , floor and then multiply back, this is equavalent to stripping it's unit digit. This gives the decade
+
+```
+
+```{r group_by3-solution}
+gapminder %>%
+  mutate(decade = floor(year/10)*10) %>%
+  group_by(country, decade) %>%
+  summarise(mean_life_exp = mean(lifeExp))
+```
+
+
+## More practice
+
+### more with gapminder
+
+Find the five entries in gapminder that had the highest ratio of GDP to life expectancy, using only countries in Asia for years after 1980
+```{r comb_practice1, exercise = TRUE, exercise.setup='gdp_setup'}
+
+```
+
+```{r comb_practice1-solution}
+gapminder %>%
+  mutate(gpd_to_lifeexp = GDP/lifeExp) %>%
+  filter(continent == "Asia", year > 1980) %>%
+  arrange(desc(gpd_to_lifeexp)) %>%
+  head(5)
+```
+
+
+*Challenge*: Make a table which lists the number of samples where each continent had a mean lifeExpectancy greater than 60. 
+```{r group_by4, exercise = TRUE, exercise.setup='gdp_setup'}
+
+```
+
+```{r group_by4-solution}
+gapminder %>%
+  group_by(continent, year) %>%
+  summarise(mean_life_exp = mean(lifeExp)) %>%
+  filter(mean_life_exp > 60) %>%
+  group_by(continent) %>%
+  summarise(number_of_samples = n())
+```
+
+
+
+### mtcars
+
+Some additional practice (optional) using the `mtcars` dataset which contains info about cars. This practice is taken from the HBC course [here](https://hbctraining.github.io/Training-modules/Tidyverse_ggplot2/lessons/tidyverse_exercise.html)
+
+```{r}
+head(mtcars)
+```
+
+
+```{r mtcar_setup, echo = FALSE}
+# Turn row name to column and convert to tibble
+mtcars_tb <- mtcars %>% 
+  rownames_to_column(var = "car") %>% 
+  as_tibble()
+```
+
+```{r, ref.label="mtcar_setup", echo = FALSE}
+```
+
+Perform the following data wrangling steps using `mtcars_tb` as the starting point. Name the final variable as mtcars_final.
+
+- One of the columns is `am`. It indicates transmission status, where 0 refers to automatic, and 1 refers to manual. Extract cars with manual transmission status.
+
+- We are only interested in these five columns: `car`, `mpg`, `cyl`, `wt`, `am`. Select only these five columns for further analysis.
+
+- Some column names are not intuitive. Rename the `cyl` to cylinder, `wt` to weight, and `am` to transmission.
+
+- We want to order our data. Arrange the data first by cylinder in ascending order, and then by mpg in descending order.
+
+Check your result: if you finish the data wrangling successfully, the mtcars_final should have 13 entries with 5 features. The first entry should be Toyota Corolla, and the last entry should be Maserati Bora.
+
+```{r mtcars_practice, exercise = TRUE, exercise.setup='mtcar_setup'}
+
+```
+
+```{r mtcars_practice-solution}
+mtcars_final <- mtcars_tb %>%
+  select(car, mpg, cylinder = cyl, weight = wt, transmission = am) %>%   filter(transmission == 1) %>%
+  arrange(cylinder, desc(mpg))
+mtcars_final
+```
+
+

@@ -1,0 +1,387 @@
+---
+title: "Introduction to R"
+tutorial:
+  id: "cp_bootcamp_2021_chp1_practice"
+  version: 1.0
+output: 
+  learnr::tutorial:
+    theme: "lumen"
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+description: >
+  A tutorial to introduce users to the goals of this course, giving a general idea of R and getting started with the curriculum
+---
+
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.timelimit = 60, exercise.blanks = "___+")
+```
+
+## Testing 1-2-3
+
+To start, familiarize yourself with the interactive R console widget. This allows you to run chunks of R code in your web browser, which is great for interactive tutorials.
+
+In some cases these exercises will be pre-populated with some R code you can modify or just run. For example, try running this chunk of code. Note, you can reset one of these code chunks with the 'start over' button (so don't worry about playing around you can always reset to the initial state)
+
+You can also run a selected code chunk with the `Cmd+Return` hotkey
+
+```{r init_test, exercise = TRUE}
+some_text <- 'this is a test'
+print(some_text)
+```
+
+Now try writing something yourself and see what happens
+
+```{r blank_slate, exercise = TRUE}
+
+```
+
+When you're ready to move on click the 'Next Topic' button. Note that you can also use the Table of Contents menu on the left to jump to a topic.
+
+
+## R as a calculator
+
+First play around with using R as a fancy calculator. 
+
+Recall the key math operations
+
+- `*`: multiplication
+- `/`: division
+- `+`: addition
+- `-`: subtraction
+- `^`: 'raise to the power'
+
+```{r r_calc, exercise = TRUE}
+
+```
+
+Try testing some mathematical relationships with logical operators
+
+- `==` equals
+- `!=` not equals
+- `>` greater than, `<` less than
+- `>=` greater than or equal to, etc.
+- `x|y` x OR y is true
+- `x&y` x AND y are true
+
+```{r logicals, exercise = TRUE}
+2 == 1+1
+```
+
+
+`## Creating variables
+
+Make a variable called `x` by assigning it a value with `<-`. The `print(x)` line will print the value stored in `x` to the console (so will just entering the variable name). Note: you have to assign `x` a value before the `print(x)` line for this to work. Check what happens when you `print(x)` before assigning it a value.
+
+If you're stuck try the 'hint' button.
+
+
+```{r create_vars, exercise = TRUE}
+
+print(x)
+```
+
+```{r create_vars-hint-1}
+## Remember that  <- is the assignment operator
+```
+
+```{r create_vars--solution}
+x <- 5
+print(x)
+```
+
+
+Make two numeric variables named (`x` and `y`) , add them together, and assign the results to a variable called `result`.  
+Test what happens if you change the value of one of the variables after creating `result`. Does it automatically update the value of result? 
+
+```{r add_vars, exercise = TRUE}
+
+print(result)
+```
+
+```{r add_vars-hint-1}
+x <- 1
+
+print(result)
+```
+
+```{r add_vars-solution}
+x <- 1
+y <- 4
+result <- x+y
+print(result)
+```
+
+
+Test whether R variable names are case-sensitive. 
+
+```{r case_sens, exercise = TRUE}
+
+```
+
+```{r case_sens-hint}
+Myvar1 <- 1
+print(myvar1)
+## It is case sensitive! These are not the same variable
+```
+
+
+### Variable types
+
+Recall the core types of variables in R:
+
+- **Numeric**: Numbers
+
+- **Strings** (text): Any set of characters bounded by single OR double quotes is treated as a text value
+
+- **Logical** (TRUE/FALSE)
+
+- **Factors** (ordered categorical variables like 'bad', 'good', 'great'). Let's ignore these for now
+
+
+#### String practice
+
+Try making some strings, and assigning them to a variable `my_string`.
+
+```{r string_test, exercise = TRUE, exercise.blanks = "___+"}
+my_string <- ___
+print(my_string)
+```
+
+What happens if you apply a mathematical operation to strings (i.e. adding two together)?
+```{r add_strings, exercise = TRUE}
+
+```
+
+```{r add_strings-solution}
+a <- 1+1
+b <- '1'+'1'
+print(a)
+print(b)
+```
+
+#### Logicals
+
+Note that logical TRUE and FALSE are treated specially in R. These values are given by all-caps *without any quotes* so they are not strings. See what happens if you try different permutations of TRUE, like `TRUE`, True, true, T.
+
+The last one is a bit of a trick! The values T and F actually are treated by R as the same as TRUE and FALSE (can be a useful short-hand but avoid doing this at first as it can cause confusion)
+
+```{r log_test, exercise = TRUE}
+x <- TRUE
+isTRUE(x)
+```
+
+Observe what happens here as well. Note that the numeric values 1 and 0 are also treated as equivalent to TRUE and FALSE respectively.
+
+```{r log_num, exercise = TRUE}
+0 == FALSE
+1 == TRUE
+2 == TRUE
+```
+
+Create two logical variables `x` and `y` and then try combining them with the logical AND and OR operators `&` and `|` 
+
+```{r and_or, exercise = TRUE}
+
+```
+
+
+## Creating vectors
+
+Recall that vectors are essentially just ordered collections of values. Like a sequence of 'buckets'
+
+They can hold data of these various types we've just explored:
+
+- Numeric
+
+<center>
+<img src="images/vector2.png" width="40%">
+</center>
+
+- Text (strings)
+
+<center>
+<img src="images/vector1.png" width="40%">
+</center>
+
+- Or boolean (TRUE/FALSE)
+
+<center>
+<img src="images/vector5-logical.png" width="40%">
+</center>
+
+
+Remember that you can use the `c()` function to combine values into a vector
+
+**Note that all data in a vector has to be the same type!**
+
+Try creating a vector called `vec` that holds the values `'a'` and `'b'`
+```{r create_vec, exercise=TRUE}
+
+print(vec)
+```
+
+
+```{r create_vec-solution}
+vec <- c('a', 'b')
+vec
+```
+
+What happens if you make a vector with a mix of numeric and string values?
+
+```{r vec_diff, exercise = TRUE}
+
+
+```
+
+```{r vec_diff-solution}
+c(1, 'c')
+```
+
+
+You can also use the `c()` function to add more values to an existing vector. Try adding another number to `vec`
+
+```{r add_to_vec, exercise=TRUE,  exercise.blanks = "___+"}
+vec <- c(1, 2)
+vec <- ___
+print(vec)
+
+```
+
+```{r add_to_vec-solution}
+vec <- c(1, 2)
+vec <- c(vec, 3)
+print(vec)
+```
+
+
+You can also combine together vectors using `c()` (it's quite a flexible function!). Try combining the two vectors
+
+```{r combine_vec, exercise=TRUE,  exercise.blanks = "___+"}
+vec1 <- c(1, 2)
+vec2 <- c(3, 4)
+vec3 <- ___
+print(vec3)
+
+```
+
+```{r combine_vec-solution}
+vec1 <- c(1, 2)
+vec2 <- c(3, 4)
+vec3 <- c(vec1, vec2)
+print(vec3)
+```
+
+What happens if you concatenate a string to a vector of numeric values?
+
+```{r concat_vec_string_num, exercise=TRUE}
+vec <- c(1, 2)
+print(vec)
+```
+
+```{r concat_vec_string_num-solution}
+vec <- c(1, 2)
+vec <- c(vec, 'cat')
+print(vec)
+## All the elements turn to string
+```
+
+There are a number of specialized functions for making numeric vectors efficiently. For example, you can make a numeric sequence from `x` to `y` using `x:y`.
+
+Try creating a vector containing all integers between 100 and 150, followed by those between -40 and -10.
+```{r seq_vector, exercise=TRUE}
+
+```
+
+```{r seq_vector-hint}
+c(1:10)
+```
+
+```{r seq_vector-solution}
+c(100:150,-40:-10)
+```
+
+
+What happens if you use the `a:b` approach to make a vector, but the first number is larger than the second?
+```{r dec_seq, exercise = TRUE}
+
+```
+
+```{r dec_seq-solution}
+c(40:10)
+## You get a decreasing series of numbers
+```
+
+
+What happens if you apply a math operation (e.g. add/subtract a number) to a vector of numbers?
+```{r math_vec, exercise = TRUE}
+vec <- 1:10
+```
+
+```{r math_vec-solution}
+vec <- 1:10
+vec+2
+vec*2
+## The operation is carried out element wise
+```
+
+
+Create a logical vector indicating which integers between 1 and 10 are divisible by 3 (Hint, `%%` is the 'modulus' function. `4 %% 2` is 0 because 4 is evenly divided by 2)
+```{r vector_mod, exercise=TRUE}
+
+```
+
+```{r vector_mod-hint}
+## Check if 6 is divisible by 3
+6%%3==0
+```
+
+```{r vector_mod-solution}
+c(1:10)%%3==0
+```
+
+
+
+
+## List practice
+
+Recall that lists are basically like relaxed vectors, where the elements don't have to be the same type. You can create them with the `list()` function, and combine them with the `c()` function.
+
+Make a list that includes a string, a number, and a vector as entries
+```{r create_list, exercise=TRUE, exercise.blanks = "___+"}
+my_list <- ___
+print(my_list)
+```
+
+```{r create_list-hint}
+list('a',1, c(1,2,3))
+```
+
+Add some more elements to the beginning or end of the following list
+```{r add_to_list, exercise = TRUE, exercise.blanks = "___+"}
+my_list <- list('a',1, c(1,2,3))
+my_list <- ___
+print(my_list)
+```
+
+```{r add_to_list-solution}
+my_list <- list('a',1, c(1,2,3))
+my_list <- list('cat', 'dog', my_list)
+print(my_list)
+```
+
+
+Now let's make a list of lists! Create a list `a` with two lists inside it. 
+```{r list_of_lists, exercise=TRUE}
+a <- 
+a
+a[1]
+a[2]
+```
+
+```{r list_of_lists-solution}
+a <- list(list(1,2), list('a','b'))
+```

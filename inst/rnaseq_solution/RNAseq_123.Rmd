@@ -1,0 +1,358 @@
+---
+title: "Differential expression analysis demo"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: spacelab
+    code_folding: show
+    highlight: tango
+---
+
+This tutorial covers basics of differential expression analysis with RNA-Seq data. It is lightly adapted from the wonderful tutorial paper by Law et al. [RNA-seq analysis is easy as 1-2-3 with limma, Glimma and edgeR](https://f1000research.com/articles/5-1408/v3)
+
+The dataset used is from [Sheridan et al.](https://bmccancer.biomedcentral.com/articles/10.1186/s12885-015-1187-z) and consists of 3 mouse mamary gland cell populations (basal, luminal progenitor: LP, and mature luminal: ML), each RNA-Seq profiled in triplicaate across three batches (different sequencing lanes)
+
+Additional key refs:
+
+* [RNAseq123 R package](https://www.bioconductor.org/help/workflows/RNAseq123/)
+* [Glimma vignette](https://bioconductor.org/packages/release/bioc/vignettes/Glimma/inst/doc/limma_edger.html)
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+#IF YOU NEED TO INSTALL ANY PACKAGES YOU CAN DO E.G.
+#install.packages('DT')
+#BiocManager::install("biomaRt")
+#BiocManager::install("Glimma")
+
+library(tidyverse)
+library(edgeR) #also loads limma
+library(biomaRt) #query ensemble database
+library(cowplot) #for combining plots in a grid
+library(ggrepel)
+library(DT)
+library(Glimma)
+library(gplots)
+library(data.table)
+library(here)
+```
+
+### Load data
+
+There are two data files:
+
+* `counts_mat`: this is a matrix of gene-level read counts. Rows are genes and columns are samples. The genes are labeled by their entrez IDs.
+
+* `sample_info`: contains metadata for each sample. 
+
+```{r}
+#load counts_mat and convert into matrix with gene IDs as rownames and sample IDs as column names
+counts_mat <- fread(here('data', 'rnaseq_counts.csv')) %>% 
+  as_tibble() %>% 
+  column_to_rownames(var = 'V1') %>% 
+  as.matrix() 
+
+sample_info <- read_csv(here('data', 'rnaseq_sample_info.csv'))
+
+```
+
+### Add gene information
+Get gene symbols for each EntrezID. 
+
+We'll fetch gene info using the biomaRt package. You'll need an internet connection to fetch this info. Some basics of using this very useful package [here](https://www.r-bloggers.com/2015/04/some-basics-of-biomart/)
+
+The basic idea is that with the `getBM` function you can query the database in different ways. In this case we'll get a set of features for each gene that appears in the counts matrix. We select which gene attributes we want to retreive in the `attributes` input (you can see what attributes are available by doing `listAttributes(mouse)`). We specify the genes we want info for using the filters and values pieces. In this case we want to filter genes by their entrez ID, and grab info for the ones listed in our counts matrix.
+```{r}
+mouse = useMart("ensembl", dataset = "mmusculus_gene_ensembl")
+searchDatasets(mart = mouse, pattern = "mmusculus_gene_ensembl") #list version of mouse genome used
+
+BM_genes <- getBM(attributes = c("mgi_symbol",'entrezgene_id', "chromosome_name"), filters = 'entrezgene_id', values = rownames(counts_mat), mart = mouse, uniqueRows = TRUE) %>% 
+  mutate(entrezgene_id = as.character(entrezgene_id)) %>% 
+  distinct(entrezgene_id, .keep_all=TRUE) #just one row per gene
+
+#now make a data table of info where each row corresponds to one of the rows in the counts matrix, in the same order
+gene_info <- tibble(entrezgene_id = rownames(counts_mat)) %>% 
+  left_join(BM_genes, by = 'entrezgene_id')
+
+gene_info %>% head %>% DT::datatable()
+
+write_csv(gene_info, 'data/gene_info.csv')
+```
+
+Now let's group all our data in a nice package. The `DGEList` is a useful tool (from the `edgeR` package for storing RNAseq datasets. It will take the counts matrix and sample info 
+```{r}
+#make sure that the samples are ordered in the counts mat (by column) in the same order they appear in the rows of the sample info matrix.
+all.equal(colnames(counts_mat), sample_info$sample)
+#same for the gene info
+all.equal(rownames(counts_mat), gene_info$entrezgene_id)
+
+#package data into dge object
+dge <- DGEList(counts = counts_mat, samples = sample_info, genes = gene_info)
+
+print(dim(dge)) # We see that the data has 27k rows and 9 columns
+
+head(dge$counts)
+
+```
+
+
+
+### Filtering out lowly expressed genes
+
+For genes with very few reads in most/all samples we won't be able to detect any significant differences, and we'll just be hurting our statistical power by performing unnecessary tests, so it's best to exclude them.
+
+A typical threshold to use is 1 count-per-million (cpm) in at least some fraction of the samples (here at least 3).
+
+Here we can see the distribution of read counts across samples before and after filtering out these low-read genes.
+
+```{r, fig.width = 8, fig.height = 6}
+table(rowSums(dge$counts)==0) #fraction of genes with no counts in any sample
+
+dge_cpm <- cpm(dge) #normalize by total counts (to give units of 'counts-per-million')
+min_cpm <- 1 #minimum counts per million to consider gene expressed
+min_expressed_samples <- 3 #minimum number of samples with gene expressed 
+expressed_genes <- rowSums(dge_cpm>min_cpm)>=min_expressed_samples #these are genes to include
+
+g1 <- cpm(dge, log=TRUE) %>% #logCPM
+    as_tibble() %>% 
+    pivot_longer(cols = everything(), names_to = 'Sample', values_to = 'lCPM') %>% #convert to long-form 
+    ggplot(aes(lCPM, color = Sample)) + #make a separate density plot for each sample
+        geom_density() +
+        xlab('log CPM')
+#repeat this after excluding genes with insufficient counts
+g2 <- cpm(dge[expressed_genes, , keep.lib.sizes = FALSE], log=TRUE) %>% 
+    as_tibble() %>% 
+    pivot_longer(cols = everything(), names_to = 'Sample', values_to = 'lCPM') %>% #convert to long-form (
+    ggplot(aes(lCPM, color = Sample)) + 
+        geom_density() +
+        xlab('log CPM')
+plot_grid(g1, g2, ncol = 1)
+```
+
+After filtering we retain 14k genes
+
+```{r}
+dge <- dge[expressed_genes,, keep.lib.sizes=FALSE] #keep.lib.sizes = FALSE will recompute library sizes
+dim(dge)
+```
+
+### Normalize reads per sample
+
+In this case the distributions of expression for different samples are similar, but there could be 'global' differences in expression due to systematic biases such as batch effects or extreme outliers. 'TMM' normalization is the standard here. It's an improvement on just dividing by the total reads per sample, but achieves a similar effect.
+
+```{r}
+dge <- calcNormFactors(dge, method = "TMM")
+dge$samples$norm.factors
+```
+
+### Log transform the read counts for analysis. 
+
+This makes the data more normally distributed and nicer for analyses ('noise' variance is less sensitive to mean expression level)
+
+```{r, fig.width=12, fig.height = 6}
+lcpm <- cpm(dge, log=TRUE) 
+lcpm_tidy <- lcpm %>% 
+  as_tibble(rownames = 'Gene') %>% 
+  pivot_longer(cols = -c('Gene'), names_to = 'Sample', values_to = 'lCPM')
+
+g1 <- ggplot(lcpm_tidy, aes(2^lCPM)) + xlab('CPM') + geom_histogram() + ggtitle('CPM')
+g2 <- ggplot(lcpm_tidy, aes(lCPM)) + xlab('log CPM') + geom_histogram() + ggtitle('Log CPM')
+plot_grid(g1, g2, ncol=2)
+```
+
+### Checking for outliers
+
+Multi-dimensional scaling, and principal components analysis, are methods that allow us to visualize the relationship of each sample's expression profile in 2d/3d plots. This is useful for getting a sense of the general structure in the data, and particularly for identifying potential outliers.
+
+The function plotMDS is quite useful for this, and allows us to highlight different sample annotations to get a rough sense of how different the expression of different groups of samples is.
+
+```{r, fig.width = 8, fig.height = 6}
+
+plotMDS(lcpm, labels=dge$samples$group)
+plotMDS(lcpm, labels=dge$samples$lane)
+
+```
+
+Make an interactive version easily using the Glimma package!
+
+```{r}
+glimmaMDS(dge)
+```
+
+
+
+### Make the 'design' matrix
+
+We need to make a matrix with the relevant sample info that we feed into the model fitting function. In this case we're interested in testing differences among sample groups and sequencing lanes. We use R's 'formula' notation, along with the function 'model.matrix' to encode this info in a form that can be used in the model fitting functions.
+
+There are generally a handful of different ways of doing this, but I find it easiest, when working with 'categorical' variables (different sample groupings), to use the format `~ 0 + group_var1 + group_var2`, which gives a separate column of 0's and 1's to each grouping variable. 
+
+If we're interested in 'interactions' between groups, we can do something like this to define all 'combinations' of the groups:
+
+```
+Treat <- factor(paste(x$samples$group1, x$samples$group2, sep = '.'))
+design <- model.matrix(~0+Treat)
+```
+
+For more info, check out this [tutorial](http://bioconductor.org/packages/release/workflows/vignettes/RNAseq123/inst/doc/designmatrices.html) on making design matrices: 
+
+```{r}
+design <- model.matrix(~0 + group + lane, dge$samples)
+colnames(design) <- str_replace(colnames(design), "group", "")
+design
+```
+
+### Make 'contrasts'
+
+This is where we specify the comparisons we're interested in. If you define the design matrix as above, it's pretty intuitive.
+
+```{r}
+contr.matrix <- makeContrasts(
+   BasalvsLP = Basal - LP, 
+   BasalvsML = Basal - ML, 
+   LPvsML = LP - ML, 
+   levels = colnames(design))
+contr.matrix
+```
+
+### Fit the model
+
+Use 'voom' function to account for the fact that measurements are more precise for more highly expressed genes.
+This is where the math gets a bit tricky, but it's easy to simply use out of the box.
+
+Here we include a plot of the initial relationship between residual (noise) variance and average expression. This red trend line is what the `voom` function is trying to account for.
+
+```{r, fig.width = 10, fig.height = 6}
+v <- voom(dge, design, plot=TRUE) #this operates on the normalized counts data
+vfit <- lmFit(v, design) #fits the model
+vfit <- contrasts.fit(vfit, contrasts=contr.matrix) #extracts the info we need for the comparisons we're interested in
+efit <- eBayes(vfit) #This step allows the model to 'pool' information across genes and gain statistical power
+
+```
+
+This plot compares the residual variance(y-axis) against the average expression level (x-axis) of each gene after applying the voom correction. It should be relatively flat.
+
+```{r}
+plotSA(efit, main="Final model: Mean−variance trend")
+```
+
+
+### Summary of results
+
+Now we can start looking at the results of the model. This shows the overall numbers of significantly up- and down-regulated genes for each comparison. By default it uses FDR adjusted p-value of 0.05 as the threshold.
+
+```{r}
+summary(decideTests(efit))
+```
+
+### Top differentially expressed genes
+
+For a particular comparison (which we defined above using the make.contrasts function) we can ask for a table of the top differentially expressed genes using topTable.
+Here I pass the resulting dataframe into the DT::datable function. This is a great (and easy to use) way to make nice interactive tables when using RMarkdown (or Shiny)
+
+```{r}
+topTable(efit, coef = 'BasalvsLP', n=100, genelist = dge$genes) %>% 
+    DT::datatable()
+```
+
+
+### Stricter tests for differentially expressed genes
+
+We can also us the functions `treat` and `topTreat` to do similar tests for significant differences, but where instead of testing for genes where the difference is more than 0, we can test for genes where the difference is greater than a specified log-fold-change threshold. Useful if you want to focus on biologically, not just statistically, significant results. 
+
+```{r}
+tfit <- treat(vfit, lfc=1) 
+dt <- decideTests(tfit)
+summary(dt)
+topTreat(tfit, coef = 'BasalvsLP', genelist = dge$genes) %>% 
+  DT::datatable()
+```
+
+### Make a Venn Diagram
+
+Easy-to-use function for making venn diagram comparisons of the sets of differentially expressed genes for different comparisons
+
+```{r}
+vennDiagram(dt[,1:3], circle.col=c("turquoise", "salmon", 'green'))
+```
+
+### Plotting the results
+
+```{r, fig.width = 6, fig.height = 6}
+plotMD(tfit, column=1, status=dt[,1], main=colnames(tfit)[1], 
+       xlim=c(-8,13))
+
+```
+
+Make an interactive version with Glimma!
+
+The plots created are automatically embedded into Rmarkdown reports, but having many interactive plots can significantly slow down the page. Let's save these interactive tools as their own html files and then link to them in the doc. We'll do this for each comparison
+
+```{r}
+htmlwidgets::saveWidget(glimmaMA(tfit, dge = dge, coef = 'BasalvsLP'), "BasalvsLP-ma-plot.html")
+htmlwidgets::saveWidget(glimmaMA(tfit, dge = dge, coef = 'BasalvsML'), "BasalvsML-ma-plot.html")
+htmlwidgets::saveWidget(glimmaMA(tfit, dge = dge, coef = 'LPvsML'), "LPvsML-ma-plot.html")
+```
+
+Click here to launch an interactive MA plot for each comparison:
+
+* [BasalvsLP MA](BasalvsLP-ma-plot.html)
+* [BasalvsML MA](BasalvsML-ma-plot.html)
+* [LPvsML MA](LPvsML-ma-plot.html)
+
+*Note* this assumes that the html files created above are in the same directory as the html rendered by the rmarkdown.
+
+We can also make a similar plot using ggplot
+```{r}
+de_table <- topTreat(tfit, coef = 'BasalvsLP', n=Inf, genelist = dge$genes) 
+ggplot(de_table, aes(logFC, -log10(adj.P.Val))) + 
+    geom_point(alpha = 0.5) + 
+    geom_text_repel(data = de_table %>% 
+                      arrange(desc(abs(logFC))) %>% 
+                      head(30), 
+                    aes(label = mgi_symbol)) +
+  geom_vline(xintercept = c(-1, 1), linetype = 'dashed')
+```
+
+Heatmap of top DE genes
+
+```{r, fig.width=6, fig.height=8}
+library(ComplexHeatmap)
+
+basal.vs.lp.topgenes <- de_table %>% 
+  head(100) %>% 
+  pull(entrezgene_id)
+top_gene_locs <- which(v$genes$entrezgene_id %in% basal.vs.lp.topgenes)
+
+Heatmap(lcpm[top_gene_locs,], 
+        row_labels = v$genes$mgi_symbol[top_gene_locs],
+        row_names_gp = gpar(fontsize = 5),
+        column_labels = dge$samples$group, 
+        heatmap_legend_param = list(title = 'logFC'))
+```
+
+### Saving results
+```{r}
+de_table %>% 
+  write_csv(here('results', 'BasalvsLP_DE.csv'))
+```
+
+
+### ANOVA-like testing
+We can also test for genes showing most differential expression across the three groups (like an ANOVA). We just don't specify the 'contrasts', and then when extracting stats from the 'topTable' function, give it the range of coefficients for all the covariates you want to test association with (in our case, all thee categories: Basal, LP, and ML, which are coefs 1:3). The results will then be sorted by an F-stat rather than a t-stat.
+
+```{r}
+vfit_F <- lmFit(v, design) #fits the model
+efit_F <- eBayes(vfit_F) #This step allows the model to 'pool' information across genes and gain statistical power
+
+topTable(efit_F, coef = 1:3, n=100, sort.by = 'F', genelist = dge$genes) %>% 
+    DT::datatable()
+```
+
+### session Info
+```{r}
+sessionInfo()
+```
+

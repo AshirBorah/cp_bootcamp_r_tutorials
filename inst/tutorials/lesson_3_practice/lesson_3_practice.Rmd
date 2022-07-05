@@ -1,0 +1,437 @@
+---
+title: "Basics of Data Wrangling in Rstudio"
+tutorial:
+  id: "cp_bootcamp_2021_chp3_practice"
+  version: 1.0
+output: 
+  learnr::tutorial:
+    theme: "lumen"
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+description: >
+  Learn how to work with dataframes, imput, load, summarize and explore data
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+knitr::opts_chunk$set(echo = T, message=F, error=F)
+tutorial_options(exercise.timelimit = 60, exercise.blanks = "___+")
+```
+
+
+## Setting up an Rstudio project
+
+### Creating a project folder
+
+For the first part of this tutorial we're going to walk through setting up a new Rstudio project on your computer.
+
+To start, we first want to create a project folder. 
+
+- Make a folder on your computer (wherever you want) called `Lesson3_practice`. 
+
+- Add (at least) two folders within `Lesson3_practice`:
+  - `data`: where you will store the data used for the project
+  - `results`: where you can put the 'outputs' of your analysis
+
+- Download the data [zipped data files](https://cds.team/CP_R_bootcamp/others/practice_3_data.zip), extract the files, and put them in your `data` folder. 
+
+### Setting up the Rstudio project
+
+Now that our project folder is set up, let's create an Rstudio project
+
+- Open Rstudio
+
+- Make a new 'Project' in your `Lesson3_practice` folder
+
+  - Click on the R icon in the top-right corner of your Rstudio browser, and select "New Project" from the drop-down menu (you can also make a new project from the 'File' drop-down)
+
+  - You'll be given a few options, choose "Existing Directory" to create the project inside the `Lesson3_practice` folder we just created.
+  
+  - Select the `Lesson3_practice` folder and click "Create Project".
+  
+  - You should now have this new project open in Rstudio. You can verify that the name of your new project appears in the top-right corner of Rstudio.
+
+### Set up a new R notebook
+
+Now that we've set up our project folder and have created an Rstudio project, let's try creating an R markdown notebook. Recall that there are two main ways people write R code. One is an "R script" (.R file) which is basically just a text file with R code. The other is "Rmarkdown" (.Rmd file), which is more like a 'lab notebook' for coding. We highly recommend you get comfortable using Rmarkdown notebooks to write R code first, as it encourages better practices. It's also generally a great way to write one-off analysis scripts that you can share with colleagues (including future you).  
+
+Let's create a new Rmarkdown file. You can read more about Rmarkdown [here](https://rmarkdown.rstudio.com/articles_intro.html)
+
+  - **Create a new Rmd document**: Select "New File" -> "R Markdown" from the "File" drop down menu ("R Notebooks" are similar, but also allow you to preview the output as you go)
+
+  - **Give it a title** like "Lesson 3 Markdown Practice". (Don't worry about the other options at this point. The default output format is .html, but you can output your document into all sorts of other formats: for example, the slides and interactive lessons used in this course!)
+  
+  - **Save the file** Once you create the doc it will open up in your Rstudio text editor. You'll see it has some default text in it already. You'll also see at the top of the doc it's listed as "Untitled". Go ahead and save the doc in your `Lesson3_practice` folder and give it a name (it will automatically get the .Rmd suffix)
+
+  - **Read through the Rmarkdown intro**: Take a look at the template text in your initial doc. You can ignore the boilerplate first ten lines for our purposes (stuff above "## Rmarkdown"). Read through the rest of the intro, and practice running each of the code chunks (remember you can run a code chunk by clicking the green 'play' arrow in the top right of the chunk). 
+
+- **Try 'knitting' the document** (the 'knit' button should be towards the top of your text editor window in Rstudio) and see what happens. Notice also that this will create an .html file with the same name in your project folder, which you can open later, and share with others.
+
+### Practice editing the Markdown doc
+
+- You can create a new section header at the bottom of the doc, e.g. "## My Practice Section"
+  
+- Try adding an R code chunk in your new section. You can do this by clicking the "Insert Chunk" button on the toolbar (green c icon). Note there is also a useful hotkey (on mac, Cmd+Option+I).
+
+- Try adding the code "x + 1" in your R chunk. What happens when you 'knit' your doc now?
+  
+- What would you need to do to fix this? 
+  
+- You can also play around with adding nicely formatted text to your doc
+
+More on how to make nicely formatted text using markdown [here](https://www.markdownguide.org/getting-started/)
+
+## Practice loading and saving data
+
+For the following practice, you'll want to follow along in your newly created Rmarkdown doc (rather than by running the code directly on this website), as it's better to practice data loading and saving as it happens 'in the field'. 
+
+You can leave the default template stuff in your doc, or start fresh (leave the stuff above "##R Markdown").
+
+For each piece, create a new code chunk. **It's best to test running each code chunk as you go**, using the green arrow in the top-right corner of the code chunk. Only worry about 'knitting' the doc once you think you're done editing it.
+
+#### Loading packages
+
+It's best to load packages at the beginning of your Markdown doc (make it your first chunk).
+
+First let's load the `tidyverse` package. We're also going to load a few additional packages. You may need to install `here` and `useful` before you can load them. e.g. running `install.packages('here')`. `data.table` should be pre-installed.
+
+```{r, echo = TRUE}
+library(tidyverse)
+library(useful)
+library(here)
+library(data.table)
+```
+
+Now try loading the following datasets. Recall that you can use the `here` function to specify the location of a file in your project's data folder like this: `here('data', 'my_file')`
+
+### mouse_exp_design.csv
+
+This is a table with metadata from an experiment. Load it and assign it to a variable named `sample_info`. Then try using tools like `View`, `head`, and `glimpse` to inspect the table.
+
+### mouse_exp_design2.csv
+
+Now try loading the file `mouse_exp_design2.csv` (another metadata table), and inspect it. What's different? What's wrong? (Hint look at the data type of each column). No need to fix this yet, just showing the little 'gotchas' that can arise when loading data.
+
+
+### mouse_exp_design.xlsx
+
+`mouse_exp_design.xlsx` (same table as above but stored as an Excel file). Use the function `read_excel`.
+(How does the result differ from when you loaded the same data in .csv format?). Note: there's only one sheet in this .xlsx, so you don't have to worry about specifying which sheet to load here.
+
+### normalized_counts2.txt
+
+Now lets load a matrix of data: `normalized_counts2.txt` (normalized read counts from an RNA-seq experiment, with genes as rows and samples as columns). Use the approach described in the lesson to load this file and convert it into a matrix with gene names as the rownames.
+
+Recall these steps:
+  - you'll want to use the `fread` function from the `data.table` package to load the file.
+  - Convert it to a tibble with `as_tibble`
+  - Make a column into the rownames using `column_to_rownames`
+  - Make it into a matrix using `as.matrix`
+  
+Once you're down take a look at a piece of it using the `corner` function from the `useful` package.
+
+You should see something like this:
+
+```{r, echo = FALSE, eval = TRUE}
+counts_mat <- fread(here('data', 'normalized_counts2.txt')) %>% 
+  as_tibble() %>% 
+  column_to_rownames('Gene') %>% 
+  as.matrix()
+corner(counts_mat)
+```
+
+### Saving data
+
+- Try loading the file `mouse_exp_design2.csv` again. 
+
+- Then, make a new column called `bad_quality` which is TRUE if the `quality_score` is less than 1 and FALSE otherwise.
+
+- Then use the `write_csv` function to save this new table to a file called `mouse_exp_design_new.csv` in your `results` folder. Recall that you can use `here('results', 'file_name.csv')`.
+
+
+### Generating the report
+
+Now try knitting your document and check out the result!
+
+
+## Vector manipulation
+
+Let us explore some vector manipulation. **For the rest of this practice we're going to use the website rather than working in Rstudio locally**.
+
+### alphabet
+
+```{r vector_alpha_setup}
+alphabet <- c('C', 'D', 'X', 'L', 'F')
+
+```
+
+```{r, ref.label="vector_alpha_setup"}
+```
+
+Use the associated positional indices along with `[ ]` to extract the following elements from the vector `alphabet`:
+
+- extract C, D and F
+
+```{r alph_extract1, exercise = TRUE, exercise.setup='vector_alpha_setup'}
+
+```
+
+```{r alph_extract1-hint-1}
+alphabet[1]
+```
+
+```{r alph_extract1-hint-2}
+alphabet[c(1,2)]
+```
+
+```{r alph_extract1-solution}
+alphabet[c(1,2,5)]
+```
+
+
+- extract the vector F, D, C (in that order)
+
+```{r alph_extract2, exercise = TRUE, exercise.setup='vector_alpha_setup'}
+
+```
+
+```{r alph_extract2-solution}
+alphabet[c(5,2,1)]
+```
+
+- extract all except X
+
+```{r alph_extract3, exercise = TRUE, exercise.setup='vector_alpha_setup'}
+
+```
+
+```{r alph_extract3-solution}
+alphabet[-3]
+```
+
+### nums
+
+```{r num_setup}
+nums <- 5:21
+```
+
+```{r, ref.label="num_setup"}
+```
+
+Use positional indices, and logical indices, to extract the following from the vector `nums`
+
+- Select the first 5 elements
+
+```{r nums_extract1, exercise = TRUE, exercise.setup='num_setup'}
+
+```
+
+```{r nums_extract1-solution}
+nums[1:5]
+```
+
+- Select the even elements. Hint: `x %% 2` will compute the remainder of each element of x when divided by 2
+
+```{r nums_extract2, exercise = TRUE, exercise.setup='num_setup'}
+
+```
+
+```{r nums_extract2-solution}
+nums[1:length(nums)%%2==0]
+```
+
+- Select the elements in the even positions. Hint: it's useful to first create a vector `idx` which has the index positions of each element of `nums`. You can do this with the function `seq_along`.
+
+```{r nums_extract3, exercise = TRUE, exercise.setup='num_setup'}
+
+```
+
+### ages
+
+```{r age_setup}
+ages <- c(Greg = 30, Alice = 15, Bob = 22, Fran = 18, Dan = 52, Charlie = 45)
+```
+
+```{r, ref.label="age_setup"}
+```
+
+Use the named vector `ages` below to do the following
+
+- Use named indexing to pull out a vector containing Bob and Fran's ages.
+
+```{r extract_ages1, exercise = TRUE, exercise.setup = 'age_setup'}
+
+```
+
+```{r extract_ages1-solution}
+ages[c('Bob', 'Fran')]
+```
+
+- Make a vector `ages_ordered` that reorders the elements by alphabetical order of the names. Hint: the `sort` function works on character vectors too
+
+```{r extract_ages2, exercise = TRUE, exercise.setup = 'age_setup'}
+ages_ordered <- ___
+```
+
+```{r extract_ages2-solution}
+ages_ordered <- ages[sort(names(ages))]
+```
+
+
+## Matrix indexing
+
+Let's load an RNA-Seq expression matrix (genes as rows and samples as columns, with each value representing the normalized expression level). We'll also load a table of sample information.
+
+```{r rnaseq_setup}
+counts_mat <- fread(here::here('data','counts_rpkm.csv'))
+counts_mat <- as_tibble(counts_mat)
+counts_mat <- as.matrix(column_to_rownames(counts_mat, var = 'Gene'))
+metadata <- read_csv(here::here('data','mouse_exp_design.csv'))
+```
+
+```{r, ref.label="rnaseq_setup"}
+```
+
+Inspect `counts_mat` using `corner()`, and `dim()`, and check out `metadata` using `glimpse()`
+```{r inspect_rnaseq, exercise = TRUE, exercise.setup='rnaseq_setup'}
+
+```
+
+Use the following list of important genes to extract the counts data for these genes (subset the matrix `counts_mat` to only the rows corresponding to these genes)
+```{r counts_subset, exercise = TRUE, exercise.setup='rnaseq_setup'}
+ important_genes <- c("ENSMUSG00000083700", "ENSMUSG00000080990", "ENSMUSG00000065619", "ENSMUSG00000047945", "ENSMUSG00000081010", 	"ENSMUSG00000030970")
+
+```
+
+```{r counts_subset-solution}
+counts_mat[important_genes,]
+```
+
+
+
+Use the `%in%` function, along with `all()` to verify that all samples in the counts_mat dataset (you can get the list of samples with: `colnames(counts_mat)`) have entries in the metadata table
+```{r samples_check, exercise = TRUE, exercise.setup='rnaseq_setup'}
+
+```
+
+```{r samples_check-solution}
+all(metadata$sample %in% colnames(counts_mat))
+```
+
+
+Reorder the columns of `counts_mat` to be in the same order as samples appear in the metadata table
+```{r reorder_mat, exercise = TRUE, exercise.setup='rnaseq_setup'}
+
+```
+
+```{r reorder_mat-solution}
+counts_mat[,metadata$sample]
+```
+
+
+BONUS: Now use the `t.test` function to test whether the mean expression of gene 'ENSMUSG00000081010' is different in `typeA` samples compared to `typeB` samples
+```{r ttest, exercise = TRUE, exercise.setup='rnaseq_setup'}
+
+```
+
+```{r ttest-hint}
+#If you reorder the samples in counts_mat to align with metadata, you can access data for the typeA samples like this
+counts_mat[, metadata$celltype == 'typeA']
+```
+
+
+```{r ttest-solution}
+counts_mat <- counts_mat[,metadata$sample]
+typeA_exp <- counts_mat['ENSMUSG00000081010', metadata$celltype=='typeA']
+typeB_exp <- counts_mat['ENSMUSG00000081010', metadata$celltype=='typeB']
+
+t.test(typeA_exp, typeB_exp)
+```
+
+
+
+## List manipulation
+
+Use the list `people` to do the following:
+
+```{r people_setup}
+people <- list(
+  Allice = list(age = 20, height = 50, school = 'MIT'),
+  Bob = list(age = 10, height = 30, school = 'Harvard'),
+  Charlie = list(age = 40, height = 60, school = 'BU'),
+  Frank = list(age = 10, height = 2)
+  )
+```
+
+```{r, ref.label="people_setup"}
+```
+
+Extract the data corresponding to Charlie
+```{r extract_charlie, exercise = TRUE, exercise.setup='people_setup'}
+
+```
+
+```{r extract_charlie-solution}
+people$Charlie
+```
+
+
+Pull out Charlie's school and assign it to a variable `charlie_school`
+```{r charlie_school, exercise = TRUE, exercise.setup='people_setup'}
+
+```
+
+```{r charlie_school-solution}
+charlie_school <- people$Charlie$school
+```
+
+
+What happens if you run `people$frank`? Why?
+```{r people_frank, exercise = TRUE, exercise.setup='people_setup'}
+
+```
+
+```{r people_frank-solution}
+## Gives an error as R is case sensitive
+```
+
+
+
+BONUS: Create a named list that specifies for each of your academic degrees, the year and place you got it.
+```{r self_list, exercise = TRUE}
+
+```
+
+
+## Dataframe basics
+
+Create a tibble that describes the last few places you've lived in (3 is enough). You could include the city, state, and first year there, for example
+```{r self_df, exercise = TRUE}
+
+```
+
+Here's a table of information about different cars
+
+```{r mtcars_setup}
+data("mtcars")
+```
+
+
+```{r mtcars-display}
+data("mtcars")
+head(mtcars)
+```
+
+Subset the table to only the `cyl`, `hp`, and `wt` columns
+```{r mtcars_sub, exercise = TRUE, exercise.setup='mtcars_setup'}
+mtcars_sub <- mtcars[___]
+head(mtcars_sub)
+```
+
+```{r mtcars_sub-solution}
+mtcars_sub <- mtcars[,c('cyl', 'hp', 'wt')]
+head(mtcars_sub)
+```
+

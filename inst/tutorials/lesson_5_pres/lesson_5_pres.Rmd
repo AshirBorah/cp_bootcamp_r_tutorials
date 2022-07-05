@@ -1,0 +1,812 @@
+---
+title: "Data Vizualization"
+tutorial:
+  id: "cp_bootcamp_2021_chp5_pres"
+  version: 1.0
+output:
+  ioslides_presentation:
+    transition: faster
+    highlight: haddock
+    widescreen: true
+    self_contained: true
+runtime: shiny_prerendered
+description: >
+  Learn how to make beautiful publication ready plots
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gapminder)
+library(ggrepel)
+library(tidyverse)
+
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.align="center", fig.width = 5, fig.height = 4)
+tutorial_options(exercise.timelimit = 60, exercise.blanks = "___+", exercise.eval=T)
+
+#no factors please
+gapminder <- gapminder %>% 
+  mutate(country = as.character(country),
+         continent = as.character(continent))
+
+gap_92 <- gapminder %>% 
+  filter(year == 1992) %>% 
+  mutate(gdp = gdpPercap * pop / 1e9) 
+
+df <- gapminder %>% 
+  filter(country == 'Romania')
+```
+
+
+
+## BaseR plotting 
+
+- Don't look as good
+
+- Hard to build more complex plots, and fine-tune 
+
+```{r base_plot, exercise=F}
+plot(gapminder$gdpPercap, gapminder$lifeExp)
+```
+
+
+## Grammar of graphics
+
+- Wilkinson (2005) laid out "Grammar of Graphics"
+
+<img src="images/grammar_graphics.jpg" width="30%">
+
+## ggplot2
+
+- Hadley Wickham implemented grammar in R package `ggplot2`
+
+<img src="images/ggplot2_hex.png" width="15%">
+
+What is a statistical graphic?
+
+- Take variables from a `dataset`
+
+- `map` them to `aes()`thetic attributes
+
+- of `geom_`etric objects
+
+
+## Example with Gapminder data
+
+How are variables mapped to aesthetic attributes of points?
+
+```{r ggplot_gapminder_example, echo = FALSE}
+gapminder %>% 
+  filter(year == 1992) %>% 
+  mutate(gdp = gdpPercap * pop / 1e9) %>% 
+  ggplot(aes(gdp, lifeExp)) + 
+  geom_point(aes(color = continent, size = pop)) + 
+  scale_x_log10() +
+  xlab('Gross Domestic Product (Billions $)') +
+  ylab('Life Expectancy at birth (years)') +
+  ggtitle('Gapminder for 1992')
+```
+
+## How to use it?
+
+Construct a graphic by adding modular pieces
+
+- `ggplot(data, mapping)`
+
+- Define aesthetic mappings with `aes()` function
+
+  - e.g. `aes(x = var1, y = var2)`
+
+- Add 'layers' of geometric objects
+
+  - e.g. `geom_point()`
+
+- Adjustments to axis scales, colors, labels, aesthetic mods
+
+- "Chaining" together ggplot components (use `+` rather than `%>%`)
+  - `+` rather than `%>%` is unfortunate and hard to remember!
+
+## Using ggplot
+
+The key is to understand the concepts and basic mechanics
+
+The details for any given plot type, or attribute are easy to look up
+
+
+## Let's try a scatterplot
+
+```{r gapminder_1992_plot, exercise=F, fig.width = 5, fig.height = 4}
+gap_92 <- gapminder %>% 
+  filter(year == 1992) %>% 
+  mutate(gdp = gdpPercap * pop / 1e9) 
+gap_92 %>% head(4)
+```
+
+## Let's try a scatterplot
+
+```{r gapminder_plot, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gap_92, mapping = aes(x = gdp, y = lifeExp)) + 
+  geom_point()
+```
+
+## Scales 
+
+```{r gapminder_scale, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gap_92, mapping = aes(x = gdp, y = lifeExp)) + 
+  geom_point() +
+  scale_x_log10() 
+```
+
+## Scales
+
+- Change how data values are translated to visual properties
+
+  - `scale_x_log10()`, `scale_y_reverse()`
+
+- Change limits of axes:
+
+  - `xlim(0, 10)`
+  
+- Applies to other attributes as well
+
+  - Fine-tune color, shape, size aesthetics.
+
+## Adding more aesthetic mappings (shape)
+
+```{r add_shape, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gap_92, mapping = aes(x = gdp, y = lifeExp, shape = continent)) + 
+  geom_point() +
+  scale_x_log10() 
+```
+
+## Adding more aesthetic mappings (color)
+
+```{r add_color, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gap_92, mapping = aes(x = gdp, y = lifeExp, color = continent)) + 
+  geom_point() +
+  scale_x_log10() 
+```
+
+  
+## Labels {.smaller}
+
+`labs` function adds custom axis labels and titles
+
+```{r add_label, exercise=F, fig.width = 4.5, fig.height = 3.5}
+ggplot(gap_92, mapping = aes(x = gdp, y = lifeExp)) + 
+  geom_point() +
+  scale_x_log10() +
+  labs(x = 'Gross Domestic Product (Billions $)',
+       y = 'Life Expectancy at birth (years)',
+       title = 'Gapminder for 1992')
+```
+
+
+## Key geoms {.smaller}
+
+- Comparing 2 continuous variables
+  
+  - Scatterplot: `geom_point()`
+
+  - Line graph: `geom_line()`
+
+  - Smoothing functions: `geom_smooth()` 
+
+- Summarizing distribution of a single variable
+
+  - Histogram: `geom_histogram()`
+  
+  - Density: `geom_density()`
+
+- Discrete vs continuous
+
+  - Boxplot: `geom_boxplot`
+
+  - Bar graph: `geom_col()`
+  
+  - Violin plot: `geom_violin()` 
+  
+And many more...
+
+
+# Comparing 2 continuous variables
+
+## geom_line 
+
+
+```{r geom_line, exercise=F, fig.width = 5, fig.height = 4}
+df <- gapminder %>% 
+  filter(country == 'Romania') 
+ggplot(df, mapping = aes(x = year, y = lifeExp)) + 
+  geom_line()
+```
+
+## Layering geoms {.smaller}
+
+We can add as many geoms to a plot as we want, stacked on as 'layers' in order
+
+```{r layering, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(df, mapping = aes(x = year, y = lifeExp)) + 
+  geom_line() +
+  geom_point()
+```
+
+---
+
+What if we had multiple data points per year?
+
+```{r aesthetic_intro, exercise=F, fig.width = 5, fig.height = 4}
+df <- gapminder %>% 
+  filter(country %in% c('Romania', 'Thailand'))
+ggplot(df, mapping = aes(x = year, y = lifeExp)) + 
+  geom_line() +
+  geom_point()
+```
+
+--- 
+
+Need to separate them by country (`group` aesthetic)
+
+```{r grouping, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(df, mapping = aes(x = year, y = lifeExp, group = country)) + 
+  geom_line() +
+  geom_point()
+```
+
+--- 
+
+Often useful to color lines by group, use `color` aesthetic with a categorical variable and it automatically groups
+
+```{r color, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(df, mapping = aes(x = year, y = lifeExp, color = country)) + 
+  geom_line() +
+  geom_point()
+```
+
+## Multiple aesthetic mappings
+
+- Set overall mapping in `ggplot()` but can override this for individual 'geoms'
+
+```{r multiple_mapping, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(df, mapping = aes(x = year, y = lifeExp)) + 
+  geom_line(mapping = aes(color = country)) +
+  geom_point()
+```
+
+## Multiple aesthetic mappings
+
+- You can 'hard-code' aesthetic properties for each geom
+
+```{r hard_coding_aes, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(df, mapping = aes(x = year, y = lifeExp, color = country)) + 
+  geom_line(linetype = 'dashed', size = 0.5) +
+  geom_point(color = 'black', size = 3, alpha = 0.75)
+```
+
+
+## Plotting trendlines {.smaller}
+
+How to depict the 'average' relationship between noisy variables?
+```{r log_scale, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gap_92, mapping = aes(x = gdp, y = lifeExp)) + 
+  geom_point() + 
+  scale_x_log10() +
+  labs(x = 'Gross Domestic Product (Billions $)', y = 'Life Expectancy at birth (years)') 
+
+```
+
+
+## Plotting trendlines {.smaller}
+
+`geom_line()` doesn't work!
+
+```{r trendline_1, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gap_92, mapping = aes(x = gdp, y = lifeExp)) + 
+  geom_line() +
+  geom_point() + 
+  scale_x_log10() +
+  labs(x = 'Gross Domestic Product (Billions $)', y = 'Life Expectancy at birth (years)') 
+```
+
+
+## geom_smooth {.smaller}
+
+`geom_smooth()` shows the average ('smoothed') relationship
+```{r smooth_fitting, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gap_92, mapping = aes(x = gdp, y = lifeExp)) + 
+  geom_point() + 
+  geom_smooth() +
+  scale_x_log10() +
+  labs(x = 'Gross Domestic Product (Billions $)', y = 'Life Expectancy at birth (years)') 
+```
+
+## geom_smooth {.smaller}
+
+Can be used to show a linear trendline
+
+```{r smooth_fitting_linear, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gap_92, mapping = aes(x = gdp, y = lifeExp)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm') +
+  scale_x_log10() +
+  labs(x = 'Gross Domestic Product (Billions $)', y = 'Life Expectancy at birth (years)') 
+```
+
+## geom_smooth to simplify plots
+
+Can be very helpful to condense down relationships from complicated data
+
+```{r simplify_plots_1, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gapminder, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) + 
+  geom_point() +
+  scale_x_log10() 
+```
+
+
+## geom_smooth to simplify plots
+
+Can be very helpful to condense down relationships from complicated data
+
+```{r simplify_plots_2, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gapminder, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) + 
+  geom_smooth(method = 'lm') +
+  scale_x_log10() 
+```
+
+
+## Types of plots
+
+- Above were all examples based around plotting 2 continuous variables (other 'aesthetics' can encode additional variables
+
+- Other common scenarios are:
+
+  - Plot distribution of a single variable (continuous or discrete)
+  
+  - Plot the distribution of a continuous variable against a discrete variable
+
+# Plotting a single variable
+
+## geom_bar {.smaller}
+
+Given a single discrete variable we can plot its distribution as a 'bar plot' using `geom_bar()` 
+
+```{r bar_plot, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gapminder, mapping = aes(x = continent)) +
+  geom_bar()
+```
+
+
+## geom_histogram {.smaller}
+
+For a single continuous variable, we can generate a histogram using `geom_histogram` which bins the values and then makes a bar plot
+
+```{r hist_plot, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gapminder, mapping = aes(x = gdpPercap)) +
+  geom_histogram() 
+```
+
+--- 
+
+We can adjust the axis scale and other features as usual
+```{r cust_hist, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gapminder, mapping = aes(x = gdpPercap)) +
+  geom_histogram() +
+  scale_x_log10()
+```
+
+## geom_histogram {.smaller}
+
+We can change the number of bins (can also specify details of bin positions)
+
+```{r hist_change_bins, exercise=F, fig.width = 5, fig.height = 4}
+  ggplot(gapminder, aes(gdpPercap)) +
+  geom_histogram(bins = 100) +
+  scale_x_log10()
+```
+
+
+## geom_histogram {.smaller}
+
+Can also encode different continents in different colors by stacking the histograms
+
+```{r hist_change_bins_aes_mapping, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gapminder, mapping = aes(x = gdpPercap, color = continent)) +
+  geom_histogram() +
+  scale_x_log10()
+```
+
+
+## fill vs color {.smaller}
+
+```{r col_vs_fill, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gapminder, mapping = aes(x = gdpPercap, fill = continent)) +
+  geom_histogram() +
+  scale_x_log10()
+```
+
+
+## geom_density {.smaller}
+
+Density plots are another way to depict the distribution of a continuous variable. They are just a smoothed histogram
+
+```{r density_plots, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gapminder, mapping = aes(x = gdpPercap)) +
+  geom_density() +
+  scale_x_log10()
+```
+
+
+## geom_density {.smaller}
+
+Separate by continent and give spearate `fill` colors
+
+```{r density_fill, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gapminder, mapping = aes(x = gdpPercap, fill = continent)) +
+  geom_density(alpha = 0.5) +
+  scale_x_log10()
+```
+
+# 1 continuous var vs 1 discrete
+
+## geom_boxplot {.smaller}
+
+The boxplot is the most common choice for showing the distribution of a continuous variable broken down by a categorical variable 
+
+```{r boxplot, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gapminder, mapping = aes(x = continent, y = gdpPercap)) +
+  geom_boxplot() +
+  scale_y_log10()
+```
+
+## geom_violin {.smaller}
+
+The violin plot is similar, but shows the distribution as a density plot, rather than a box.
+
+```{r violin_plot, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(gapminder, mapping = aes(x = continent, y = gdpPercap)) +
+  geom_violin() +
+  scale_y_log10()
+```
+
+## Geom_beeswarm
+
+Another useful option is a 'dotplot' or 'beeswarm' plot.
+
+```{r beeswarm, exercise=F, fig.width = 5, fig.height = 4}
+library(ggbeeswarm)
+ggplot(gapminder, mapping = aes(x = continent, y = gdpPercap)) +
+  geom_beeswarm(size = 0.5, alpha = 0.75, cex = 1) +
+  scale_y_log10()
+```
+
+## What if I want to control the order? 
+
+- By default x-axis values ordered alphabetically
+
+- Need to use the idea of a `factor`
+
+- Factors used to encode categorical variables, specify the possible 'levels', and optionally an ordering
+
+```{r change_order, echo = T, exercise=F}
+cont_order <- c('Oceania', 'Europe', 'Americas', 'Asia', 'Africa')
+gap_cat <- gapminder %>% 
+  mutate(continent = factor(continent, levels = cont_order))
+head(gap_cat)
+```
+
+## What if I want to control the order? 
+
+
+```{r change_order_plot, fig.width = 5, fig.height = 4}
+ggplot(gap_cat, mapping = aes(x = continent, y = gdpPercap)) +
+  geom_boxplot() +
+  scale_y_log10()
+```
+
+## What if I want to control the order? 
+
+[forcats](https://forcats.tidyverse.org/) package has lots of useful helper functions for changing order of factor variables.
+
+```{r, fig.width = 4, fig.height = 3.5}
+gap_cat <- gap_cat %>% 
+  mutate(continent = fct_reorder(continent, gdpPercap, median))
+ggplot(gap_cat, mapping = aes(x = continent, y = gdpPercap)) +
+  geom_boxplot() +
+  scale_y_log10()
+```
+
+
+<!-- ```{r change_order_plot, exercise=F, exercise.setup='change_order', fig.width = 5, fig.height = 4} -->
+<!-- ggplot(gap_cat, mapping = aes(x = continent, y = gdpPercap)) + -->
+<!--   geom_boxplot() + -->
+<!--   scale_y_log10() -->
+<!-- ``` -->
+
+
+## geom_col {.smaller}
+
+If you want to plot a single value for each of a continuous variable, use `geom_col`
+
+```{r col_plot, exercise=F, fig.width = 5, fig.height = 4}
+gap_82 <- gapminder %>% 
+  filter(year == 1982, continent == 'Americas')
+
+ggplot(gap_82, mapping = aes(x = country, y = gdpPercap)) + 
+  geom_col()
+```
+
+
+## theme
+
+- You can customize MANY details of the plot using the `theme` function
+
+- It's a bit complicated at first, but most common changes are easy to google.
+
+
+## Saving your plots
+
+- `ggsave`
+
+```{r, eval = FALSE}
+ggplot(gapminder, mapping = aes(x = continent, y = gdpPercap)) +
+  geom_violin() +
+  scale_y_log10()
+ggsave(filename = here::here('results', 'my_fig.png'))
+```
+
+- Using the Rstudio GUI
+
+
+## Key practical tips
+
+- You don't need to remember the details, just the basic mechanics. You can quickly look up the details (check out this useful ggplot [cheat sheet](https://www.maths.usyd.edu.au/u/UG/SM/STAT3022/r/current/Misc/data-visualization-2.1.pdf))
+
+- Find example plots online that you like and just copy/paste as a template. Browse the ggplot [gallery](https://www.r-graph-gallery.com/) 
+
+## Additional Resources/References
+
+- [ggplot function reference](https://ggplot2.tidyverse.org/reference/)
+
+- [Chester Ismay DataCamp](https://ismayc.github.io/talks/ness-infer/slide_deck.html#54)
+
+# Additional material
+
+## Some notes on using color
+
+If we map a continuous variable to color it won't group automatically
+
+```{r color_continuous, exercise=F, fig.width = 5, fig.height = 4}
+ggplot(df, mapping = aes(x = year, y = lifeExp, color = gdpPercap)) +
+  geom_line() +
+  geom_point(size = 3)
+```
+
+## Some notes on using color
+
+We need to specify group manually
+
+```{r color_continuous_cont, exercise=F, fig.width = 4.5, fig.height = 3.5}
+ggplot(df, mapping = aes(x = year, y = lifeExp,
+                         group = country, color = gdpPercap)) +
+ geom_line() +
+  geom_point(size = 3)
+```
+
+## Some notes on using color {.smaller}
+
+- Assume continuous map for numeric data, discrete map for strings
+
+- Make numeric data into factors if you want discrete colors
+
+```{r convert_to_factor, exercise=F, fig.width = 4.5, fig.height = 3.5}
+my_df <- gapminder %>%
+  filter(year %in% c(1957, 1977, 1997))
+ggplot(my_df, mapping = aes(x = gdpPercap, y = lifeExp, color = factor(year))) +
+  geom_point() +
+  scale_x_log10() +
+  labs(color = 'year')
+```
+
+
+
+## Color palettes {.smaller}
+
+We can use `scale_color_manual` to set the color of each group manually
+
+```{r set_colors, exercise=F, fig.width = 4.5, fig.height = 3.5}
+my_cols <- c(Romania = 'green', Thailand = 'orange')
+
+ggplot(df, mapping = aes(x = year, y = lifeExp, color = country)) +
+  geom_line() +
+  scale_color_manual(values = my_cols)
+```
+
+---
+
+`scale_color_brewer` offers some useful default color schemes
+
+```{r color_brewer, exercise=F, fig.width = 4.5, fig.height = 3.5}
+ggplot(df, mapping = aes(x = year, y = lifeExp, color = country)) +
+  geom_line() +
+  scale_color_brewer(palette = 'Dark2')
+```
+
+## Rcolorbrewer {.smaller}
+
+<img src="images/rcolorbrewer.png" width="40%">
+
+https://www.r-bloggers.com/a-detailed-guide-to-ggplot-colors/
+
+
+
+## Facets {.smaller}
+
+Facets allow you to easily break a single plot into multiple plots based on variable.
+
+```{r facet_setup}
+gap_early <- gapminder %>%
+  filter(year < 1970)
+```
+
+```{r, ref.label="facet_setup"}
+```
+
+```{r facets, exercise=F, exercise.setup='facet_setup', fig.width = 4.5, fig.height = 3.5}
+
+ggplot(gap_early, mapping = aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  scale_x_log10() +
+  facet_wrap(~continent)
+```
+
+---
+
+
+
+
+Or based on multiple variables
+
+```{r facet_multiple, exercise=F, exercise.setup='facet_setup', fig.width = 5, fig.height = 4}
+ggplot(gap_early, mapping = aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  scale_x_log10() +
+  facet_grid(year ~ continent)
+```
+
+
+## geom_text {.smaller}
+
+```{r setup_text, fig.width = 4.5, fig.height = 3.5}
+gap_df <- gapminder %>%
+  filter(year == 1992, continent == 'Americas') %>%
+  mutate(gdp = gdpPercap * pop / 1e9) %>%
+  head(20)
+```
+
+
+
+You can add text labels to the points with `geom_text`
+
+```{r add_text_plot, exercise=F, exercise.setup='setup_text', fig.width = 4.5, fig.height = 3.5}
+ggplot(gap_df, mapping = aes(x = gdp, y = lifeExp, label = country)) +
+  geom_text() +
+  geom_point() +
+  geom_smooth(method = 'lm', se = FALSE) +
+  scale_x_log10() +
+  labs(x = 'Gross Domestic Product (Billions $)', y = 'Life Expectancy at birth (years)')
+```
+
+---
+
+Or with `geom_label`
+```{r add_label_plot, exercise=F, exercise.setup='setup_text', fig.width = 4.5, fig.height = 3.5}
+ggplot(gap_df, mapping = aes(x = gdp, y = lifeExp, label = country)) +
+  geom_label() +
+  geom_point() +
+  geom_smooth(method = 'lm', se = FALSE) +
+  scale_x_log10() +
+  labs(x = 'Gross Domestic Product (Billions $)', y = 'Life Expectancy at birth (years)')
+```
+
+
+## ggrepel {.smaller}
+- Text labels are often not placed optimally
+
+- ggrepel is a very useful package that will automatically find good positioning for labels
+```{r ggrepel-setup, eval = FALSE}
+library(ggrepel)
+```
+
+```{r ggrepel, exercise=F, exercise.setup='ggrepel-setup', fig.width = 4.5, fig.height = 3.5}
+ggplot(gap_df, mapping = aes(x = gdp, y = lifeExp)) +
+  geom_point() +
+  geom_smooth(method = 'lm', se = FALSE) +
+  scale_x_log10() +
+  labs(x = 'Gross Domestic Product (Billions $)', y = 'Life Expectancy at birth (years)') +
+  geom_label_repel(aes(label = country), size = 2.5)
+```
+
+
+## Beautification
+
+There are lots of ways to add aesthetic improvements to your figures relatively easily
+
+```{r plot_beauty_setup, include = FALSE, fig.width = 4.5, fig.height = 3.5}
+my_plot <- ggplot(gap_92, aes(gdp, lifeExp)) + 
+  geom_point(aes(color = continent, size = pop)) + 
+  scale_x_log10() +
+  xlab('Gross Domestic Product (Billions $)') +
+  ylab('Life Expectancy at birth (years)') +
+  ggtitle('Gapminder for 1992')
+```
+
+```{r, fig.width = 4.5, fig.height = 3.5, echo = FALSE}
+my_plot
+```
+
+---
+
+There are a number of pre-packaged 'themes' you can apply
+
+```{r plot_beauty, exercise=F, exercise.setup='plot_beauty_setup', fig.width = 5, fig.height = 4}
+my_plot + theme_minimal()
+```
+
+- See more at [ggtheme](https://ggplot2.tidyverse.org/reference/ggtheme.html)
+
+## Tip for making nice scatterplots {.smaller}
+
+Set the marker shape to one that can be 'filled' (pch = 21 is a filled circle), then use a thin white border around a filled shape to help distinguish overlaps.
+
+```{r plot_beauty_2, exercise=F, fig.width = 4.5, fig.height = 3.5}
+ggplot(gap_92, aes(gdp, lifeExp)) + 
+  geom_point(pch = 21, stroke = 0.5, alpha = 0.8, size = 2.5, color = 'white', aes(fill = continent)) + 
+  scale_x_log10() +
+  labs(x = 'Gross Domestic Product (Billions $)', y = 'Life Expectancy at birth (years)', title = 'Gapminder for 1992') +
+  theme_minimal()
+```
+
+## ggpubr {.smaller}
+
+Add stats directly to your figures
+
+```{r ggpubr, exercise=F, fig.width = 4.5, fig.height = 3.5}
+library(ggpubr)
+my_comparisons <- list( c("Africa", "Asia"), c('Europe', 'Oceania'))
+ggplot(gapminder, mapping = aes(x = continent, y = gdpPercap)) +
+  geom_violin() +
+  scale_y_log10() +
+  stat_compare_means(method = 'wilcox.test', comparisons = my_comparisons)
+```
+
+## ggpubr {.smaller}
+
+Easily add correlation coefficients
+
+```{r add_corr, exercise=F, fig.width = 4.5, fig.height = 3.5}
+ggplot(gap_92, mapping = aes(x = lifeExp, y = gdpPercap)) +
+  geom_point() +
+  scale_y_log10() +
+  geom_smooth(method = 'lm') +
+  stat_cor()
+```
+
+
+## cowplot {.smaller}
+
+Great tool for combining multiple 'panels' into one plot
+
+```{r cowplot_exemple, exercise=F, fig.width = 4.5, fig.height = 3.5}
+library(cowplot)
+
+p1 <- ggplot(mtcars, aes(disp, mpg)) + 
+  geom_point()
+p2 <- ggplot(mtcars, aes(qsec, mpg)) +
+  geom_point()
+plot_grid(p1, p2, labels = c('A', 'B'))
+```
+
+## complexheatmap
+
+Great tool for making heatmaps. See VERY detailed documentation with examples [here](https://jokergoo.github.io/ComplexHeatmap-reference/book/more-examples.html#add-more-information-for-gene-expression-matrix)

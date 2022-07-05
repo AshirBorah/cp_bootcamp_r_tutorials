@@ -1,0 +1,191 @@
+---
+title: "Final R Tips"
+author: "James McFarland"
+date: "8/22/2021"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(gapminder)
+```
+
+
+# Overview
+
+- General advice
+
+- Useful tips
+
+
+## Google is your friend
+
+- Pay attention to error messages 
+
+- 'Googling' error messages will very often prove useful
+
+- How do I XX in R
+
+
+## Rstudio
+
+### Rstudio Projects
+
+- Set up an Rstudio 'project' for each project.
+
+- These are just folders that Rstudio adds some extra info to.
+
+- Make separate folders for project-specific `data`, `code` and `results` 
+
+- You can switch between projects using the project tab in the upper-right corner of Rstudio.
+
+
+### Rstudio bells and whistles
+
+
+
+## Functions
+
+- If you're redoing the same thing many times, use a function
+
+- `help(my_function)` or `?my_function` to pull up help documentation for a function
+
+```{r}
+help(median)
+```
+
+
+## Loading data {.smaller}
+
+### Loading tables
+
+- Use `read_csv`, `read_tsv` to read common text file formats into tibbles
+
+- You can tell which to use by the type of file:
+  
+  - `read_csv`: for .csv files (comma-separated)
+  
+  - `read_tsv`: for .tsv files (tab-separated)
+  
+  - For .txt files `read_table` is a good bet
+
+
+### Loading matrices
+
+- You can use the same functions as above to load matrices as tibbles
+
+- For matrices, it's helpful to have one column be the 'rownames'.
+
+  - You can convert a tibble `df` to a matrix `mat` like this:
+  
+```{r, eval = FALSE}
+mat <- df %>% 
+  column_to_rownames(var = 'row_col') %>% 
+  as.matrix()
+```
+
+### Check your data after loading!
+
+- Always inspect data after loading it to make sure that the data type of each field is correct and the column names look right
+
+- For tibbles:
+
+```{r, eval = FALSE}
+glimpse(gapminder)
+head(gapminder)
+```
+
+- For matrices, the `corner` function from the `useful` package is nice, it just shows the upper-left portion of the matrix
+
+```{r, eval = FALSE}
+useful::corner(my_mat)
+```
+
+### File paths
+
+- When you have an Rproject loaded, if you've organized your project folder as above, you can easily load data from that project's data folder without having to worry about file 'paths': `read_csv(data/my_data.csv)`
+  
+- To load data from elsewhere you need to specify the full 'path', e.g. `read_csv(~/my_stuff/general_data/my_data.csv)` 
+
+- You can read more about file paths, e.g. [here](https://datacarpentry.org/shell-genomics/02-the-filesystem/index.html)
+
+- As an easy fall-back, you can always use the [`Import Dataset`](https://support.rstudio.com/hc/en-us/articles/218611977-Importing-Data-with-the-RStudio-IDE) tool in Rstudio. 
+
+
+
+## Literate coding 
+
+- Write analysis like an experiment notebook
+
+- Emphasis on clarity and communication
+
+- Write text to describe what you're doing and why, embed code and results
+
+- Encourages reproducibility, clarity, and robustness
+
+- ALSO use in-line comments with your code using `#`
+
+- [read more](http://ross.net/funnelweb/tutorial/intro_what.html)
+
+
+### With Rmarkdown
+
+- Rmarkdown naturally facilitates literate coding ([more]((https://annakrystalli.me/rrresearchACCE20/literate-programming-in-rmarkdown.html)))
+
+- Intersperse code chunks with explanatory text, and embed results
+
+- Easily output as pdf, html, and other formats
+
+- Look for examples you like (e.g. [gallery](https://rmarkdown.rstudio.com/gallery.html)) and use as templates
+
+- See the [RMarkdown cheatsheet](https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) for more tips
+
+
+## Tidyverse tips {.smaller}
+
+- `tidy` data provides a consistent framework that works with `tidyverse` tools
+
+- Making plots: `ggplot` -- Look for examples [online](https://www.r-graph-gallery.com/index.html) and copy the code!
+
+- tidyverse [cheat sheet](https://www.datacamp.com/community/blog/tidyverse-cheat-sheet-beginners)
+
+- Many more cheat sheets [here](https://www.rstudio.com/resources/cheatsheets/)
+
+
+## Version control
+
+Use version control `git` [POINTER TO TUTORIAL]
+
+
+# Additional tips
+
+## Making interactive tables with datatable {.smaller}
+
+Uses the `DT` package
+
+VERY easy to create nice interactive tables in your html reports (use with Rmarkdown only)
+
+```{r}
+library(DT)
+datatable(gapminder)
+```
+
+
+## Making plots interactive 
+
+`ggplotly` takes as input a ggplot object and converts it into a cool interactive plot (that can be embedded in your html reports or used in Rstudio).
+
+Note that the `text` aesthetic includes the country name in the hovertip text (so you can see the country associated with each dot when you hover over it with your mouse)
+
+```{r}
+library(plotly)
+g <- ggplot(gapminder %>% filter(year == 1952),
+       aes(x = gdpPercap, y = lifeExp, text = country)) + 
+  geom_point() + 
+  scale_x_log10()
+ggplotly(g)
+```
+

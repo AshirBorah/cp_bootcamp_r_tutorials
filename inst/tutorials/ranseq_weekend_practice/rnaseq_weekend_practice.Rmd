@@ -1,0 +1,32 @@
+---
+title: "RNAseq weekend practice"
+tutorial:
+  id: "cp_bootcamp_2021_weekend1_hw"
+  version: 1.0
+output: 
+  learnr::tutorial:
+    theme: "lumen"
+runtime: shiny_prerendered
+description: >
+  Learn how analyze RNAseq data
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+```
+
+# Introduction
+In this tutorial, you’ll work through a simple differential expression analysis. This tutorial is adapted from the wonderful tutorial/paper by Law et al. [RNA-seq analysis is easy as 1-2-3 with limma, Glimma and edgeR](https://f1000research.com/articles/5-1408/v3), and uses RNA-Seq data from mouse mammary gland cells [Sheridan et al.](https://bmccancer.biomedcentral.com/articles/10.1186/s12885-015-1187-z). The goal of this exercise is not to cover the ins-and-outs of differential expression analysis, but rather to get some practice working through real applied data analysis in Rstudio, reinforcing some of the key skills we’ve covered so far: 
+- Loading and inspecting tabular and matrix data
+- Writing and applying custom functions
+- Using packages and new functions (including applying some ‘boilerplate’ code)
+- Slicing and dicing matrix data
+- Making simple plots
+- Saving files of results
+
+# To get started:
+Please download and unzip this [project folder](https://cds.team/CP_R_bootcamp/others/rnaseq_practice.zip). This includes the input data files you’ll need, as well as a template R Markdown Notebook “RNAseq_practice.Rmd”. As we discussed, it’s best to create an Rstudio Project within this folder. Then you can open up the RNASeq_practice.Rmd file and work on it directly fill-in-the-blank style. Of course feel free to experiment around as much as you want beyond the provided template. Once you’ve worked through the whole doc, use the ‘knit’ button in Rstudio to compile it all into an html report.
+
+# More info
+Later in the BootCamp we’ll share an ‘enhanced’ version of this template for differential expression analysis that has some nice extra features you can use.  
+

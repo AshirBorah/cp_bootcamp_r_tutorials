@@ -1,0 +1,393 @@
+---
+title: "Introduction to Tidyverse"
+tutorial:
+  id: "cp_bootcamp_2021_chp4_pres"
+  version: 1.0
+output:
+  ioslides_presentation:
+    transition: faster
+    highlight: haddock
+    widescreen: true
+    self_contained: true
+runtime: shiny_prerendered
+description: >
+  Learn the tidyverse ecosystem and use this paradigm to explore data
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(learnr)
+library(tidyverse)
+library(gapminder)
+tutorial_options(exercise.timelimit = 60, exercise.blanks = "___+", exercise.eval=T)
+```
+
+## Recap (key concepts so far)
+
+- Variables, data types in R
+
+- Functions (using, getting help, making your own)
+
+- Loading and saving data
+
+- Using Rstudio, Projects, and Markdown notebooks
+
+- Working with data in vectors, lists, matrices, and **tables**
+
+
+## Data 'wrangling'
+
+- 'Doing stuff to data'
+
+- Much of data analysis can be viewed as taking some datasets (the 'nouns') and applying a series of transformations (the 'verbs')
+
+- The nouns are typically 'tibbles' (could be matrices, vectors or lists).
+
+- The verbs are functions
+
+- Today we'll learn about the key 'verbs' for wrangling tables
+
+
+## Intro to the tidyverse {.smaller}
+
+<img src="images/tidyverse_website.png" width="70%">
+
+- Read more [here](https://www.tidyverse.org/packages/)
+
+## Pipes
+
+We often want to apply multiple functions ('verbs') to our data in a chain.
+
+<img src="images/pipe_schematic.png" width = 85%>
+
+<!-- <img src="images/pipe.png"> -->
+
+`%>%` is a special R symbol for chaining together functions (part of `tidyverse`)
+
+
+## An example of pipes 
+
+```{r, eval = FALSE}
+#Very hard to read
+bop(scoop(hop(foo_foo, through = forest), up = field_mice), on = head)
+
+#creating unnecessary 'temporary' variables
+foo_foo_1 <- hop(foo_foo, through = forest)
+foo_foo_2 <- scoop(foo_foo_1, up = field_mice)
+foo_foo_3 <- bop(foo_foo_2, on = head)
+```
+
+Using pipes makes your code easy to read and understand as a series of verbs 
+```{r, eval = FALSE}
+foo_foo %>%
+  hop(through = forest) %>%
+  scoop(up = field_mice) %>%
+  bop(on = head)
+```
+
+---
+
+Assigning the results of a chain to a new variable
+
+```{r, eval = FALSE}
+result <- input_data %>% function_1 %>% function_2
+```
+
+This also works
+
+```{r, eval = FALSE}
+input_data %>% function_1 %>% function_2 -> result 
+```
+
+---
+
+The pipe feeds the *first* argument of the next function
+
+```{r}
+x <- c('a', 'b', 'c')
+x %>% c('d')
+#same as c(x, 'd')
+```
+
+If you want the piped input to feed a different argument, you can use `.`:
+
+```{r}
+x %>% c('d', .)
+#same as c('d', x)
+```
+
+
+
+## Why use pipes
+
+- Code is MUCH easier to read (and modify)
+
+  - `%>%` = read as 'and then'
+
+- This style of coding is less prone to errors
+
+- Using pipes is a choice! Use it when it's helpful
+
+- Note: Rstudio keyboard shortcut: Cmd + shift + M
+
+
+# Data wrangling verbs
+
+## Key data wrangling verbs
+
+dplyr package 
+
+  - `filter`
+  
+  - `select`
+  
+  - `arrange`
+  
+  - `mutate`
+  
+  - `summarise`
+  
+  - `group-by`
+
+## Gapminder package
+
+```{r, include = FALSE}
+library(tidyverse)
+```
+
+```{r, ref.label="gapminder_setup"}
+```
+
+```{r gapminder_setup}
+#install.packages('gapminder')
+library(gapminder)
+```
+
+```{r show_gapminder}
+head(gapminder)
+```
+
+
+
+## Filter
+
+- Select a subset of the rows from a tibble
+
+- Arguments are the 'filters' you'd like to apply
+
+```{r gapminder_year_filter, exercise.setup='gapminder_setup', exercise=T}
+gapminder %>% filter(year == 2007)
+```
+
+- Use `==` to pick rows with variable equal to a specified value.
+
+## Logical operators for filtering
+
+- Use `,` to check for multiple filters being true ('AND')
+
+```{r gapminder_multiple_filter, exercise.setup='gapminder_setup', exercise=T}
+gapminder %>% 
+  filter(year == 2002, continent == "Asia") %>% 
+  sample_n(4)
+```
+
+
+## Logical operators for filtering
+
+- Use `|` to check for any in multiple filters being true ('OR')
+
+```{r gapminder_or_filter, exercise.setup='gapminder_setup', exercise=T}
+gapminder %>% 
+  filter(year == 2002 | continent == "Asia") %>% 
+  sample_n(4)
+```
+
+
+## Logical operators for filtering
+
+- Use `%in%` to check if value is contained in a specified set
+
+```{r gapminder_membership_filter, exercise.setup='gapminder_setup', exercise=T}
+gapminder %>% 
+  filter(country %in% c("Argentina", "Belgium", "Mexico"),
+         year %in% c(1987, 1992))
+```
+
+
+
+## Select 
+
+- Use `select` to pick a subset of columns by name
+
+```{r gapminder_select, exercise.setup='gapminder_setup', exercise=T}
+gapminder %>% 
+  select(country, year, lifeExp) %>% 
+  head(4)
+```
+
+## Handling improper column names
+
+- Select columns with 'improper' names using back-ticks (NOT single quotes):
+
+- Tab complete column names will do this for you
+
+```{r gapminder_select_improper_names, eval = FALSE}
+df %>% select(`1999`, `badly named variable`)
+```
+
+## Rename
+
+- Use `rename` to rename certain columns
+
+```{r gapminder_rename, exercise.setup='gapminder_setup', exercise=T}
+gapminder %>% 
+  rename(lifeExpectancy = lifeExp, population = pop) %>% 
+  head(3)
+```
+
+- Note that any column names you don't include are left unchanged
+
+
+## Arrange
+
+- Reorder rows based on the values of one or more variables
+
+```{r gapminder_arrange, exercise.setup='gapminder_setup', exercise=T}
+gapminder %>% 
+  arrange(year) %>% 
+  head(4)
+```
+
+## Arrange
+
+- Sorting by multiple variables
+
+```{r gapminder_arrange_multiple, exercise.setup='gapminder_setup', exercise=T}
+gapminder %>% 
+  arrange(year, lifeExp) %>% 
+  head(4)
+```
+
+
+## Desc
+
+- Can also sort in descending order
+
+```{r gapminder_desc_arrange, exercise.setup='gapminder_setup', exercise=T}
+gapminder %>%
+  filter(year > 2000) %>%
+  arrange(desc(country)) %>%
+  head(4)
+```
+
+
+## Mutate
+
+- **create a new variable with a specific value** OR
+- create a new variable based on other variables OR
+- change the contents of an existing variable
+  
+```{r gapminder_mutate, exercise.setup='gapminder_setup', exercise=T}
+gapminder %>% 
+  mutate(just_one = 1) %>% 
+  head(4)
+```
+
+## Mutate
+
+- create a new variable with a specific value OR
+- **create a new variable based on other variables** OR
+- change the contents of an existing variable
+  
+```{r gapminder_mutate_arithmetic, exercise.setup='gapminder_setup', exercise=T}
+gapminder %>%
+  mutate(gdp = pop * gdpPercap) %>% 
+  head(4)
+```
+
+
+## Mutate
+
+- create a new variable with a specific value OR
+- create a new variable based on other variables OR
+- **change the contents of an existing variable**
+  
+```{r gapminder_mutate_change_var, exercise.setup='gapminder_setup', exercise=T}
+gapminder %>%
+  mutate(pop = pop/1e6) %>% 
+  head(4)
+```
+
+## Mutate and ifelse {.smaller}
+
+```{r}
+x <- 10
+ifelse(x > 9, "x is greater than 9", "x is not greater than 9")
+```
+
+Allows you to use mutate in a 'condition-dependent' way
+
+```{r}
+gapminder %>% 
+  mutate(adjusted_gdp = ifelse(year < 1980, gdpPercap * 2, gdpPercap)) %>% 
+  sample_n(5)
+```
+
+
+## Summarize
+
+- Apply a numerical summary to a column of a table
+
+```{r gapminder_summarize, exercise.setup='gapminder_setup', exercise=T}
+gapminder %>% 
+  filter(year == 1997) %>% 
+  summarize(max_exp = max(lifeExp),
+            sd_exp = sd(lifeExp))
+```
+
+- Works with any functions that take a vector as input and return a single value
+
+
+## Group-by
+
+- Combined with `summarise`, `group_by` allows you to summarise data for each possible value of a categorical variable
+
+```{r gapminder_groupby, exercise.setup='gapminder_setup', exercise=T}
+gapminder %>% 
+  filter(year == 1997) %>% 
+  group_by(continent) %>%
+  summarize(max_exp = max(lifeExp),
+            sd_exp = sd(lifeExp))
+```
+
+## Group-by {.smaller}
+
+- Can be applied to combinations of variables
+
+```{r gapminder_groupby_multiple, exercise.setup='gapminder_setup', exercise=T}
+gapminder %>% 
+  group_by(continent, year) %>%
+  summarize(num_rows = n(),
+            max_exp = max(lifeExp),
+            sd_exp = sd(lifeExp)) %>% 
+  head(4)
+```
+
+- `n()` function counts number of rows in each group
+
+
+## Recap
+
+<img src="images/dplyr_visual.png" width="100%">
+
+(google 'dplyr cheat sheet')
+[Cheat sheet](https://4.files.edl.io/b9e2/07/12/19/142839-a23788fb-1d3a-4665-9dc4-33bfd442c296.pdf)
+
+## Additional resources
+
+- [dplyr intro](https://dplyr.tidyverse.org/articles/dplyr.html)
+
+- [DataCamp Slides](https://ismayc.github.io/talks/ness-infer/slide_deck.html#13
+)
+- More on pipes: [DataCamp](https://www.datacamp.com/community/tutorials/pipe-r-tutorial)
+[TowardsDataScience](https://towardsdatascience.com/an-introduction-to-the-pipe-in-r-823090760d64)

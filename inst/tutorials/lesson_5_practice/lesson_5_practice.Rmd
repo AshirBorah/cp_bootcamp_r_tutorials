@@ -1,0 +1,542 @@
+---
+title: "Data Vizualization"
+tutorial:
+  id: "cp_bootcamp_2021_chp5_practice"
+  version: 1.0
+output: 
+  learnr::tutorial:
+    theme: "lumen"
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+description: >
+  Learn how to make beautiful publication ready plots
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gapminder)
+library(ggrepel)
+library(tidyverse)
+library(plotly)
+
+
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.width = 5, fig.height = 3.5)
+tutorial_options(exercise.timelimit = 20, exercise.blanks = "___+")
+
+
+gapminder <- gapminder %>% 
+  mutate(country = as.character(country),
+         continent = as.character(continent))
+
+gap_92 <- gapminder %>% 
+  filter(year == 1992) %>% 
+  mutate(gdp = pop*gdpPercap/1e9)
+```
+
+
+## Scatterplot basics {data-progressive=TRUE}
+
+### Create data
+
+We'll be using the gapminder data again
+
+```{r gapminder_head}
+head(gapminder)
+```
+
+First, pull out the gapminder data from the year 1992, and add a column `gdp` (in units of billions of $). Call this new table `gap_92`
+
+```{r make_gap_df, exercise = TRUE}
+gap_92 <- ___
+```
+
+```{r make_gap_df-solution}
+gap_92 <- gapminder %>% 
+  filter(year == 1992) %>% 
+  mutate(gdp = pop*gdpPercap/1e9)
+```
+
+### Recreate Graph 1
+
+For the following you will be able to use the `gap_92` table you created above.
+Let's make a basic scatterplot of the data using `ggplot`. 
+
+Your output should look like this.
+
+```{r, echo = FALSE}
+ggplot(data = gap_92, mapping = aes(x = gdp, y = lifeExp)) + 
+  geom_point()
+```
+
+
+```{r gap92_setup}
+gap_92 <- gapminder %>% 
+  filter(year == 1992) %>% 
+  mutate(gdp = pop*gdpPercap/1e9)
+```
+
+```{r scatter_test1, exercise = TRUE,  exercise.setup='gap92_setup'}
+
+```
+
+```{r scatter_test1-solution}
+ggplot(data = gap_92, mapping = aes(x = gdp, y = lifeExp)) + 
+  geom_point()
+```
+
+
+
+
+### Recreate Graph 2
+
+Now make the same figure, but set the x-axis on a log10 scale, add informative x- and y-axis labels, and a figure title. 
+
+Your new plot should look like this:
+
+```{r, echo=F}
+ggplot(data = gap_92, mapping = aes(x = gdp, y = lifeExp)) + 
+  geom_point() +
+  scale_x_log10() +
+  labs(x = 'GDP (billions $)', y = 'Life expectancy', title = 'Life Expectancy vs GDP')
+```
+
+```{r scatter_test2, exercise = TRUE,  exercise.setup='gap92_setup'}
+
+```
+
+```{r scatter_test2-solution}
+ggplot(data = gap_92, mapping = aes(x = gdp, y = lifeExp)) + 
+  geom_point() +
+  scale_x_log10() +
+  labs(x = 'GDP (billions $)', y = 'Life expectancy', title = 'Life Expectancy vs GDP')
+```
+
+
+
+### Additional Practice
+
+Now explore mapping additional information from this dataset, such as `continent` and `pop` to different aesthetic variables of the points. Use `help(geom_point)` to see information on the available aesthetics for points.
+```{r scatter_explore, exercise = TRUE}
+
+```
+
+
+
+## Line plots and color basics
+
+### Line plot base
+
+
+Pick 3 countries and make a plot of their lifeExp over time including both lines and points. Make the lines colored by country, but make the points all black. 
+
+Your plot should look similar to this.
+
+```{r, echo = FALSE}
+target_countries <- c('Venezuela', 'Vietnam', 'Uruguay')
+gap_targ <- gapminder %>% 
+  filter(country %in% target_countries)
+ggplot(gap_targ, mapping = aes(x = year, lifeExp, color = country)) + 
+  geom_line() + 
+  geom_point(color = 'black')
+```
+
+
+```{r lines_and_colors1, exercise = TRUE}
+
+```
+
+```{r lines_and_colors1-solution}
+## One of the solution
+target_countries <- c('Venezuela', 'Vietnam', 'Uruguay')
+gap_targ <- gapminder %>% 
+  filter(country %in% target_countries)
+ggplot(gap_targ, mapping = aes(x = year, lifeExp, color = country)) + 
+  geom_line() + 
+  geom_point(color = 'black')
+```
+
+### Transparency and size
+
+Try controlling the size and transparency of the points. (transparancy is controlled by 'alpha', which ranges from 0 to 1)
+
+```{r lines_and_colors2, exercise = TRUE}
+
+```
+
+```{r lines_and_colors2-solution}
+## One of the solution
+target_countries <- c('Venezuela', 'Vietnam', 'Uruguay')
+gap_targ <- gapminder %>% 
+  filter(country %in% target_countries)
+ggplot(gap_targ, mapping = aes(x = year, lifeExp, color = country)) + 
+  geom_line() + 
+  geom_point(color = 'black', size=3, alpha=0.4)
+```
+
+
+Use `scale_color_manual` to set the colors to ones you like. You can choose specific colors for each country using a named vector of colors like this: `my_colors = c(country1 = 'darkred', country2 = 'magenta', ...)`. You can see names of available colors [here](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf). 
+
+```{r lines_and_colors3, exercise = TRUE}
+
+```
+
+```{r lines_and_colors3-solution}
+
+my_colors = c(Venezuela = 'darkred', Vietnam = 'magenta', Uruguay='blue')
+
+target_countries <- c('Venezuela', 'Vietnam', 'Uruguay')
+gap_targ <- gapminder %>% 
+  filter(country %in% target_countries)
+ggplot(gap_targ, mapping = aes(x = year, lifeExp, color = country)) + 
+  geom_line() + 
+  geom_point(color = 'black', size=3, alpha=0.4)+
+  scale_color_manual(values = my_colors)
+```
+
+
+Now try picking one of the default RColorBrewer themes, using the `scale_color_brewer` function. See available palettes [here](http://applied-r.com/rcolorbrewer-palettes/)
+
+```{r lines_and_colors4, exercise = TRUE}
+
+```
+
+```{r lines_and_colors4-solution}
+target_countries <- c('Venezuela', 'Vietnam', 'Uruguay')
+gap_targ <- gapminder %>% 
+  filter(country %in% target_countries)
+ggplot(gap_targ, mapping = aes(x = year, lifeExp, color = country)) + 
+  geom_line() + 
+  geom_point(color = 'black', size=3, alpha=0.4)+
+scale_colour_brewer(palette = "Set1")
+```
+
+
+
+## geom_smooth
+
+Make a plot using `geom_smooth` to show the average trends of lifeExp over time for each continent. Test out using both linear regression (method = 'lm') and 'loess' models (the default). Also try out turning off the confidence intervals (parameter `se` in `geom_smooth`). 
+
+For reference, your plots should look something like this:
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(year, lifeExp, color = continent)) + 
+  geom_smooth(se = FALSE)
+```
+
+```{r geom_smooth, exercise = TRUE}
+
+```
+
+```{r geom_smooth-solution}
+ggplot(gapminder, aes(year, lifeExp, color = continent)) + 
+  geom_smooth(se = FALSE)
+```
+
+
+
+## geom_facet
+
+Using only data from up to and including the year 1962, make a faceted scatterplot of gdpPercap vs lifeExp, where there is a separate scatterplot for each year (use `facet_wrap()`).
+Make gdpPercap on a log10 scale
+Add a 'smoothing trend' with `geom_smooth()` if you want!
+
+It should look like this:
+
+```{r, echo = FALSE}
+gap_early <- gapminder %>% filter(year <= 1962)
+ggplot(gap_early, mapping = aes(gdpPercap, lifeExp)) + 
+  scale_x_log10() +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  facet_wrap(~year)
+```
+
+
+```{r geom_facet, exercise = TRUE}
+
+```
+
+```{r geom_facet-solution}
+gap_early <- gapminder %>% filter(year <= 1962)
+ggplot(gap_early, mapping = aes(gdpPercap, lifeExp)) + 
+  scale_x_log10() +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  facet_wrap(~year)
+```
+
+
+## Adding text 
+
+Make a table called `continent_stats` which has the average lifeExp and average gdpPercap for each continent. Then use to it make a scatterplot of avg lifeExp vs avg gdp, and label the points using `geom_label_repel()` (or `geom_text_repel()` if you prefer)
+
+Your plot should look like this:
+
+```{r, echo = FALSE}
+continent_stats <- gapminder %>% 
+  group_by(continent) %>% 
+  summarise(avg_lifeExp = mean(lifeExp),
+            avg_gdpPercap = mean(gdpPercap))
+ggplot(continent_stats, mapping = aes(avg_lifeExp, avg_gdpPercap, label = continent)) + 
+  geom_point() + 
+  geom_label_repel()
+```
+
+```{r adding_text, exercise = TRUE}
+
+```
+
+```{r adding_text-solution}
+continent_stats <- gapminder %>% 
+  group_by(continent) %>% 
+  summarise(avg_lifeExp = mean(lifeExp),
+            avg_gdpPercap = mean(gdpPercap))
+ggplot(continent_stats, mapping = aes(avg_lifeExp, avg_gdpPercap, label = continent)) + 
+  geom_point() + 
+  geom_label_repel()
+```
+
+
+
+## Plotting distributions
+
+### Violin plots
+Make a violin plot of lifeExp for each continent 
+```{r violin1, exercise = TRUE}
+
+```
+
+```{r violin1-solution}
+ggplot(gapminder, aes(x=continent, y=lifeExp))+
+  geom_violin()
+```
+
+
+Now make each continent's violin a different fill color (play around with using `fill` vs `color` to encode the continent)
+
+Try the fill aesthetic
+
+```{r violin2, exercise = TRUE}
+
+```
+
+```{r violin2-solution}
+ggplot(gapminder, aes(x=continent, y=lifeExp, fill=continent))+
+  geom_violin()
+```
+
+Try the color aesthetic
+
+```{r violin3, exercise = TRUE}
+
+```
+
+```{r violin3-solution}
+ggplot(gapminder, aes(x=continent, y=lifeExp, color=continent))+
+  geom_violin()
+```
+
+### Boxplot plots
+
+Try it as a boxplot
+(Make a boxplot plot of lifeExp for each continent )
+
+```{r boxplot1, exercise = TRUE}
+
+```
+
+```{r boxplot1-solution}
+ggplot(gapminder, aes(x=continent, y=lifeExp))+
+  geom_boxplot()
+```
+
+Use `fct_reorder` to reorder the continents by median lifeExp before making your boxplot. The inputs to `fct_reorder` are a categorical variable, a value variable to order the categories by, and a summary function. So, `fct_reorder(country, gdp, max)` would reorder the country categorical variable based on max GDP across years.
+
+```{r boxplot_reorder, exercise = TRUE}
+
+```
+
+```{r boxplot_reorder-solution}
+gapminder <- gapminder %>% mutate(continent = fct_reorder(continent, lifeExp, median))
+ggplot(gapminder, aes(x=continent, y=lifeExp))+
+  geom_boxplot()
+```
+
+Try making a density plot with `geom_density()`, separate continents by fill color
+
+```{r density_plot, exercise = TRUE}
+
+```
+
+```{r density_plot-solution}
+ggplot(gapminder, aes(fill=continent, x=lifeExp))+
+  geom_density()
+```
+
+What happens when you make the density plots semi-transparent (i.e. setting `alpha` to ~0.5)?
+Try the alpha property to change transparency
+
+```{r density_plot_alpha, exercise = TRUE}
+
+```
+
+```{r density_plot_alpha-solution}
+ggplot(gapminder, aes(fill=continent, x=lifeExp))+
+  geom_density(alpha=0.5)
+```
+
+## Using theme
+
+### Rotate axis
+
+Now let's make a bar plot of the gdpPercap for countries in the Americas in the year 1982. Recall that `geom_col` will do this. Your plot should initially look like this:
+
+```{r gap82_setup}
+gap_82 <- gapminder %>% 
+  filter(year == 1982, continent == 'Americas') 
+```
+
+```{r, echo = FALSE}
+gap_82 <- gapminder %>% 
+  filter(year == 1982, continent == 'Americas') 
+ggplot(gap_82, aes(x = country, y = gdpPercap)) + 
+  geom_col()
+```
+
+```{r plot_count, exercise = TRUE, exercise.setup='gap82_setup'}
+ggplot(gap_82, )
+```
+
+Let's try to figure out how to fix the x-axis labels so they are vertical (and not overlapping). See if you can use Google to figure out how to rotate the x-axis labels in ggplot to make them vertical.
+
+```{r rotate_labels, exercise = TRUE, exercise.setup='gap82_setup'}
+ggplot(gap_82, aes(x = country, y = gdpPercap)) + 
+  geom_col() +
+  ___
+```
+
+```{r rotate_labels-solution}
+ggplot(gap_82, aes(x = country, y = gdpPercap)) + 
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+### Reorder countries
+
+Then see if you can reorder the countries from highest to lowest. Here again you can use the `fct_reorder` function, inside a `mutate` to order countries by gdpPercap. Note that there's another optional input to `fct_reorder` called `.desc` which is FALSE by default 
+
+Your plot should look like this
+```{r, echo = FALSE}
+gap_82 <- gap_82 %>% 
+  mutate(country = fct_reorder(country, gdpPercap, .desc = TRUE))
+ggplot(gap_82, aes(x = country, y = gdpPercap)) + 
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+
+```{r rotate_labels_ordered, exercise = TRUE, exercise.setup='gap82_setup'}
+
+```
+
+```{r rotate_labels_ordered-solution}
+gap_82 <- gap_82 %>% 
+  mutate(country = fct_reorder(country, gdpPercap, .desc = TRUE))
+ggplot(gap_82, aes(x = country, y = gdpPercap)) + 
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+
+## plotly
+
+Now take the code from the last example in 'Scatterplot basics' to make a scatterplot of gdp vs life expectancy from countries in 1992, and let's make it an interactive scatterplot using the package `plotly`. All you have to do is save your plot to a variable (say `my_plot`, and then pass it as an input to the function `ggplotly`). Try it out! Try adding an aesthetic `text` (say to encode the country) and see what happens. Your plot should look like this: 
+
+```{r, echo = FALSE}
+my_data <- gapminder %>% 
+  filter(year == 1992) %>% 
+  mutate(gdp = gdpPercap * pop / 1e9) 
+my_plot <- ggplot(my_data, aes(gdp, lifeExp, text = country)) + 
+  geom_point(aes(color = continent, size = pop)) + 
+  scale_x_log10() +
+  guides(size = 'none') +
+  xlab('Gross Domestic Product (Billions $)') +
+  ylab('Life Expectancy at birth (years)')
+ggplotly(my_plot)
+```
+
+
+```{r plotly, exercise = TRUE}
+
+```
+
+```{r plotly-hint}
+## Adding the text as an aesthetic
+ggplot(my_data, aes(text = country))
+```
+
+
+```{r plotly-solution}
+my_data <- gapminder %>% 
+  filter(year == 1992) %>% 
+  mutate(gdp = gdpPercap * pop / 1e9) 
+my_plot <- ggplot(my_data, aes(gdp, lifeExp, text = country)) + 
+  geom_point(aes(color = continent, size = pop)) + 
+  scale_x_log10() +
+  guides(size = 'none') +
+  xlab('Gross Domestic Product (Billions $)') +
+  ylab('Life Expectancy at birth (years)')
+ggplotly(my_plot)
+```
+
+
+
+## Extra practice: GO analysis
+
+For extra practice, try following along with the ggplot tutorial from HBC [here](https://hbctraining.github.io/Training-modules/Tidyverse_ggplot2/lessons/03_ggplot2.html)
+
+The top 30 enriched GO biological process gene results are loaded in the table `bp_oe`
+```{r GO_setup, echo = FALSE}
+load(here::here('data','GOs_for_plotting.RData'))
+bp_oe <- bp_oe %>% head(30)
+```
+
+```{r, ref.label='GO_setup'}
+
+```
+
+```{r}
+head(bp_oe)
+```
+
+
+
+The tutorial will walk through how to make a plot that looks like this:
+```{r, echo = FALSE}
+library(RColorBrewer)
+mypalette <- brewer.pal(3, "YlOrRd")
+
+ggplot(bp_oe) +
+  geom_point(aes(x = gene_ratio, y = GO_term, color = -log10(p.value)), 
+             size = 2) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=rel(1.15)),
+        axis.text.y = element_text(size=rel(0.7)),
+        axis.title = element_text(size=rel(1.15))) +
+  xlab("Gene ratios") +
+  ylab("Top 30 significant GO terms") +
+  ggtitle("Dotplot of top 30 significant GO terms") +
+  theme(plot.title = element_text(hjust=0.5, 
+  	face = "bold")) +
+  scale_color_gradientn(name = "Significance \n (-log10(padj))", colors = mypalette) +
+  theme(legend.title = element_text(size=rel(1.15),
+	hjust=0.5, 
+	face="bold"))
+```
+
+You can use this code chunk to practice the different components of the tutorial (you can also do this in a Rmarkdown document if you prefer!)
+
+```{r GO_bp, exercise = TRUE}
+
+```

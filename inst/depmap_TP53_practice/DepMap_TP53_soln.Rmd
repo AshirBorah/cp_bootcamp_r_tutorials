@@ -1,0 +1,335 @@
+---
+title: DepMap Practice (TP53)
+author: James McFarland
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: spacelab
+    code_folding: show
+    highlight: tango
+---
+
+```{r, include = FALSE}
+#boilerplate stuff, sets options for what gets included in the html doc
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+## Overview
+
+This notebook involves loading several DepMap datasets, finding cell lines which have TP53 mutations, and then finding genes that have the most differential expression and differential dependency between TP53 mutant vs other cell lines.
+
+**NB**: Here we're only working with small subsets of genes from these datasets to keep the file sizes smaller. The files you'll need are in the `data` directory of the project folder, and have names appended with `subset`. You can download the corresponding full files from [depmap.org/portal/download](https://depmap.org/portal/download/)
+
+As before, it's best to create a project folder that contains this Rmd notebook, along with a 'data' folder where you can put the needed data files.
+
+The notebook provides practice loading files, working with data frames and matrices, joining tables, and making plots.
+
+
+
+## Find TP53 mutant lines
+
+To start, let's load the required packages. For the exercise, we will just need the `tidyverse`, `ggrepel`, `here`, `data.table`, and `DT` packages.
+Remember you can do e.g. `install.packages('DT')` if you need to install any missing packages (recall that some packages need to be installed by other means, Google is often the fastest way to figure it out).
+
+```{r}
+library(tidyverse)
+library(ggrepel)
+library(DT)
+library(here)
+library(data.table)
+library(plotly)
+```
+
+### Loading and processing sample info
+
+First load the CCLE sample info table `sample_info.csv`, which is in the `data` directory of the project folder. Remember to inspect the data after loading it either by looking at the first few rows (`head`) or with a summary function (like `glimpse`) 
+
+```{r}
+sample_info <- read_csv(here('data', 'sample_info.csv'))
+head(sample_info) 
+```
+
+Now let's restrict this sample_info table to just a few columns we're interested using `select`. Let's say we only want to retain the following columns: `DepMap_ID`, `cell_line_name`, `lineage`, and `lineage_subtype`
+
+```{r}
+sample_info <- sample_info %>% 
+  select(DepMap_ID, cell_line_name, lineage, lineage_subtype)
+```
+
+Let's include a table of the sample_info in our report. It's easy to make interactive tables in the reports you generate from your markdown files. The function `datatable()` from the `DT` package takes a data frame as input and produces a nice interactive table. Try it out to create an interactive table from the restricted sample_info table you have.
+
+```{r}
+sample_info %>% 
+  DT::datatable()
+```
+
+### Load mutation data and extract TP53 mutant lines
+
+Now load the table of mutation info (the file `CCLE_mutations_subset.csv` in the data folder). In this table each row represents a detected mutation, and there are lots of columns with different types of info (such as which cell line it was detected in, what type of mutation it was, etc.). Check out the file after loading it (always good practice)
+
+```{r}
+CCLE_mutations <- read_csv(here('data', 'CCLE_mutations_subset.csv'))
+```
+
+Now use `filter` and `pull` to extract the list of cell lines which have a TP53 mutation. For these purposes, let's define TP53 mutant lines as any line that has a mutation which is either marked as deleterious (`isDeleterious` column) or is marked as a COSMIC hotspot mutation (`isCOSMIChotspot` column). 
+
+```{r}
+TP53_mutant_lines <- CCLE_mutations %>% 
+  filter(Hugo_Symbol == 'TP53', isDeleterious | isCOSMIChotspot) %>%
+  pull(DepMap_ID)
+```
+
+
+Add a new column to the sample_info table `is_TP53_mutant` which is `TRUE` if that cell line had a detected TP53 mutation and `FALSE` otherwise.
+
+NOTE: we're ignoring the fact that we don't have mutation data for some lines.
+
+**Hint**: the `%in%` function is helpful here.
+```{r}
+sample_info <- sample_info %>% 
+  mutate(is_TP53_mutant = DepMap_ID %in% TP53_mutant_lines)
+```
+
+
+### **More challenging**
+
+Make a table called `mutant_by_lineage` which has a row for each lineage in the `sample_info` table, and contains the following values for each lineage: 
+
+* `num_TP53_mut`: number of TP53 mutant lines
+* `tot`: total lines
+* `frac_TP53_mut`: fraction of lines that are TP53 mutant
+
+Hint: If `TP53_mutant` is a logical variable, `sum(TP53_mutant)` will calculate the number of cases where it's value is TRUE. 
+
+Hint2: The `n()` function is a helpful to use with `group_by` and `summarise` to compute the total number of rows from each group.
+```{r}
+mutant_by_lineage <- sample_info %>% 
+  group_by(lineage) %>% 
+  summarise(num_TP53_mut = sum(is_TP53_mutant),
+            tot = n()) %>% 
+  mutate(frac_TP53_mut = num_TP53_mut / tot) 
+
+```
+
+Now sort this table from highest to lowest in terms of the fraction of cell lines which are P53 mutant. Only include lineages with at least 5 cell lines total. You might as well pipe the output into the `DT::datatable` function to make it a nice interactive table in the report.
+```{r}
+mutant_by_lineage %>% 
+  filter(tot >= 5) %>% 
+  arrange(desc(frac_TP53_mut)) %>% 
+  DT::datatable()
+```
+
+
+## Gene expression comparison
+
+Now load the file `CCLE_expression_subset.csv`
+This is a matrix with gene expression values as log2(TPM+1), with genes as columns and cell lines as rows. 
+We want to make it a matrix with DepMap_IDs as the rownames. Make the first column (with the DepMap_IDs of the cell lines) into the rownames. 
+
+HINT: remember the functions `column_to_rownames`. It's also good practice to explicitly convert this into a matrix using `as.matrix`.
+
+```{r}
+#note the 'V1' here is just an arbitrary placeholder name that R adds in this case since the file doesn't have a name for the first column containing cell line IDs
+RNAseq_expr <- fread(here('data', 'CCLE_expression_subset.csv')) %>% 
+  as_tibble() %>% 
+  column_to_rownames(var = 'V1') %>%  
+  as.matrix()
+```
+
+Use the provided `get_gene_symbols` function to convert the gene names
+```{r}
+#extract HUGO symbol from gene names
+get_gene_symbols <- function(gene_vec) {
+  str_match(gene_vec, '(.+) \\([0-9]+\\)')[,2]
+}
+colnames(RNAseq_expr) <- get_gene_symbols(colnames(RNAseq_expr))
+```
+
+
+The function `colMeans` will compute the average across rows for each column of a matrix (returning a vector of column-wise averages).
+Use this to compute the average expression of each gene. 
+
+Then make a new vector which 'slices out' only the avg. expression values of the following genes: `TP53`, `MDM2` and `DNAJC7`
+
+```{r}
+avg_expression <- colMeans(RNAseq_expr)
+target_genes <- c('TP53', 'MDM2', 'DNAJC7')
+target_avg_expression <- avg_expression[target_genes]
+```
+
+Now we want to compute average gene expression values for TP53 mutant vs other cell lines. Let's do this by creating a function (which we can reuse later on the dependency data).
+Name this function `get_group_mean_diff`, and have it take a matrix and a vector of cell line IDs as input. We then want it to return a tibble with 4 columns: 
+
+* `gene` (gene names)
+* `avg_in_group` avg expression for cell lines in the list
+* `avg_out_group` avg expression for cell lines not in the list
+* `avg_group_diff` the difference in average expression (in-group minus out-group)
+
+The initial sketch of this function is given below, and you'll need to fill in the missing pieces. 
+
+NOTE: Use the `colMeans` function and make sure to include the parameter `na.rm=TRUE` so that we ignore any missing data when computing the averages over rows.
+
+Use your function to compute these differential expression stats and name the resulting table `exp_group_stats`. This should return a table with the above fields, and a row for each gene in the expression matrix.
+```{r}
+get_group_mean_diff <- function(mat, in_group_cell_lines) {
+  in_group_rows <- rownames(mat) %in% in_group_cell_lines
+  avg_in_group <- colMeans(mat[in_group_rows,], na.rm=TRUE)
+  avg_out_group <- colMeans(mat[!in_group_rows,], na.rm=TRUE)
+  
+  df <- tibble(gene = colnames(mat),
+               avg_in_group = avg_in_group,
+               avg_out_group = avg_out_group) %>% 
+    mutate(avg_group_diff = avg_in_group - avg_out_group)
+  return(df)
+}
+
+exp_group_stats <- get_group_mean_diff(RNAseq_expr, TP53_mutant_lines)
+```
+
+Find the top 5 genes with the largest *magnitude* expression difference between TP53 mutant and other lines.
+```{r}
+top_diff_genes <- exp_group_stats %>% 
+  arrange(desc(abs(avg_group_diff))) %>% 
+  head(5) %>% 
+  pull(gene)
+```
+
+
+Make a scatterplot comparing the average expression of each geen in TP53 mutant lines vs the difference in average expression between these groups.
+
+**Extra** You can use the `geom_label_repel` function to add gene labels for the top differentially expressed genes you identified above.
+
+```{r}
+ggplot(exp_group_stats, aes(avg_in_group, avg_group_diff)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0) +
+  geom_label_repel(data = exp_group_stats %>% filter(gene %in% top_diff_genes),
+                            aes(label = gene)) +
+  labs(x = 'Avg exp TP53 mut',
+       y = 'Avg exp other')
+```
+
+The `plotly` package can be used to easily convert `ggplot` plots into interactive vizs. You can add text info to the tooltip by adding an aesthetic called `text`. Make `text = gene` so that the gene names are shown when you hover over them.
+```{r}
+g <- ggplot(exp_group_stats, aes(avg_in_group, avg_group_diff, text = gene)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0) +
+  labs(x = 'Avg exp TP53 mut',
+       y = 'Avg exp other')
+ggplotly(g)
+```
+
+
+
+## Differential dependencies
+
+Load the Achilles gene effect data (file `Achilles_gene_effect_Chronos_submatrix.csv`) and make it a matrix with DepMap_IDs as the rownames, and convert the column names to HUGO gene symbols using `get_gene_symbols`.
+
+This matrix represents estimates of the viability effects of knocking out each gene in each cell line using the Chronos algorithm (more negative values represent stronger dependencies)
+```{r}
+Achilles_gene_effect <- fread(here('data', 'Achilles_gene_effect_Chronos_submatrix.csv')) %>% 
+  as_tibble() %>% 
+  column_to_rownames(var = 'V1') %>% 
+  as.matrix()
+
+colnames(Achilles_gene_effect) <- get_gene_symbols(colnames(Achilles_gene_effect))
+
+```
+
+Use your `get_group_mean_diff` function to compute a table of stats characterizing the differences in average gene dependencies between TP53 mutant and other lines.
+```{r}
+dep_group_stats <- get_group_mean_diff(Achilles_gene_effect, TP53_mutant_lines)
+```
+
+
+Use `inner_join` to merge the tables of differential expression and differential dependency stats. You should include only the `avg_group_diff` stat per gene, and rename the values to `avg_exp_diff` and `avg_dep_diff` before combining the tables.
+
+Remember that the `inner_join` will restrict the results to genes that appear in both tables (which is all we need if we're going to plot them against each other)
+```{r}
+comb_data <- 
+  inner_join(exp_group_stats %>% select(gene, avg_exp_diff = avg_group_diff), 
+             dep_group_stats %>% select(gene, avg_dep_diff = avg_group_diff), 
+             by = "gene")
+
+```
+
+Make a scatterplot comparing the average difference in gene expression and gene dependency between TP53 mutant and other cell lines using your combined table. 
+
+bonus if you can use the geom_label_repel function to label the top 4 most differentially depedent genes (by magnitude)
+```{r}
+label_genes <- comb_data %>% 
+  arrange(desc(abs(avg_dep_diff))) %>% 
+  head(4) %>% 
+  pull(gene)
+
+ggplot(comb_data, aes(avg_exp_diff, avg_dep_diff)) + 
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = 'dashed') + 
+  geom_vline(xintercept = 0, linetype = 'dashed') +
+  geom_label_repel(data = comb_data %>% filter(gene %in% label_genes),
+                            aes(label = gene))
+```
+
+### t-test of differential dependency
+
+Here's a challenge/bonus problem:
+
+Write a function `get_gene_ttest` which takes a gene name, a data matrix, and a list of 'in-group' cell lines, and returns a tibble with one row containing the stats from a two-sample t-test comparing the matrix's data for that gene between the in-group and non-in-group cell lines.
+The `tidy` function from the `broom` package is helpful for converting the outputs of statistical tests like `t.test` and `lm` into tibbles.
+
+Then apply your function across all genes and compile the results in a table where each row contains the t-test results for a different gene. Try to do this using the `map_dfr` function.
+
+Finally, make a volcano plot of the results, comparing the group mean difference for each gene (will be the `estimate` column if you use `tidy`) against the `q-value`, which you can compute from the `p-values` using the `p.adjust` function.
+
+```{r}
+library(broom) #useful tidy function for converting stats objects into tidy data frames
+get_gene_ttest <- function(target_gene, mat, in_group_cell_lines) {
+  in_group <- rownames(mat) %in% in_group_cell_lines
+  tres <- t.test(mat[in_group, target_gene], mat[!in_group, target_gene])
+  df <- tidy(tres) %>% 
+    mutate(Gene = target_gene) 
+  return(df)
+}
+all_ach_genes <- colnames(Achilles_gene_effect)
+all_tres <- map_dfr(all_ach_genes, get_gene_ttest, Achilles_gene_effect, TP53_mutant_lines) %>% 
+  mutate(FDR = p.adjust(p.value, method = 'fdr')) %>% 
+  relocate(Gene) #move Gene column to be first
+
+ggplot(all_tres, aes(estimate, -log10(FDR))) + 
+  geom_point() +
+  geom_label_repel(data = all_tres %>% arrange(FDR) %>% head(10), aes(label = Gene)) +
+  labs(x = 'Mean difference gene effect (TP53 mut - TP53 WT)', 
+       y = '-log10(FDR)')
+```
+
+
+## EXTRA
+The table 'Bailey_2018.xlsx' contains supplementary tables from this paper (https://doi.org/10.1016/j.cell.2018.02.060).
+Table S1 contains a list of 299 cancer driver genes they identified.
+
+Use the function `read_excel()` from the `readxl` package to load this data into R. Note: the `read_excel` function has a parameter `sheet` that lets you specify which sheet of the Excel table you want to load.
+```{r}
+library(readxl)
+TableS1 <- read_excel('data/Bailey_2018.xlsx', sheet = 2)
+```
+
+Use the sample_info table above to find cell lines whose lineage is either `pancreas`, `gastric` or `colorectal`. 
+```{r}
+target_DepMap_Ids <- sample_info %>% 
+  filter(lineage %in% c('pancreas', 'gastric', 'colorectal'),
+         DepMap_ID %in% rownames(RNAseq_expr)) %>% 
+  pull(DepMap_ID)
+```
+
+Find which gene among the list of cancer drive genes in S1 has the highest average expression among this set of cancer cell lines (the lineages identified above).
+```{r}
+avg_expr_panc_gast_col <- colMeans(RNAseq_expr[target_DepMap_Ids,], na.rm=TRUE)
+
+avg_expr_panc_gast_col[unique(TableS1$Gene)] %>% 
+  sort(decreasing = TRUE) %>% 
+  head(5) 
+```
+
+
