@@ -1,5 +1,5 @@
 # CP R Bootcamp
 
-This repository aims to help get users up to speed with learning the basics of R. We use the package learnr to set up the practice environment. Please visit the [CP R Bootcamp]('https://broad.io/cp_r_bootcamp') site to have an interactive version of that site that needs minimal setup.
+This repository conntains the code used to teach the R bootcamp part of the Cancer Program Bootcamp, 2021. It aims to help get users up to speed with learning the basics of R. We use the package learnr to set up the practice environment. We have added citations but if you find anything missing, please reach out to me at [Ashir Borah](mailto:aborah@broadinstitute.org).
 
-Contact [Ashir Borah](mailto:aborah@broadinstitute.org) or [James McFarland](mailto:jmmcfarl@broadinstitute.org)
+This work was created by Ashir Borah annd James McFarland. Visit the [Cancer Data Science](http://cancerdatascience.org/) website for more details. 
