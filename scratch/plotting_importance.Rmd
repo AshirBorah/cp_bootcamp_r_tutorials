@@ -1,0 +1,35 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library("ggplot2")
+library("datasauRus")
+library('tidyverse')
+library(purrr)
+ggplot(datasaurus_dozen, aes(x = x, y = y, colour = dataset))+
+  geom_point() +
+  theme_void() +
+  theme(legend.position = "none")+
+  facet_wrap(~dataset, ncol = 3)
+```
+```{r}
+datasaurus_dozen %>% 
+  group_by(dataset) %>%
+  summarise(mean_x=mean(x))
+```
+```{r}
+datasaurus_dozen %>% 
+  group_by(dataset) %>%
+  summarise(mean_y=mean(y))
+```
+```{r}
+datasaurus_dozen %>%
+  group_by(dataset) %>%
+  summarize(mean_x = mean(x),
+            mean_y = mean(y),
+            sd_x = sd(x),
+            sd_y = sd(y))
+```
+
