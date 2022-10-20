@@ -1,8 +1,8 @@
 ---
 title: "Function basics"
 tutorial:
-  id: "cp_bootcamp_2021_chp2_pres"
-  version: 1.0
+  id: "bootcamp_2022_chp2_pres"
+  version: 2.0
 output:
   ioslides_presentation:
     transition: faster
@@ -106,19 +106,19 @@ help(my_function)
 <img src="images/help_example.png" width="80%">
 
 
-<!-- ## Function help -->
+## Function help
 
-<!-- Documentation is typically divided into sections. -->
+Documentation is typically divided into sections.
 
-<!-- - `Description` -->
+- `Description`
 
-<!-- - Example `Usage` -->
+- Example `Usage`
 
-<!-- - What are the inputs (`Arguments`)? -->
+- What are the inputs (`Arguments`)?
 
-<!-- - What does it return (`Value`) ? -->
+- What does it return (`Value`) ?
 
-<!-- - Some inputs are optional (and have default settings). Look at the `signature` -->
+- Some inputs are optional (and have default settings). Look at the `signature`
 
 
 ## Tips on using functions
@@ -169,7 +169,8 @@ name_of_function <- function(argument1, argument2) {
 
 ## Creating functions (a simple example)
 
-```{r user_def_func, exercise=T}
+```{r user_def_func, exercise = TRUE}
+
 combine_two_numbers <- function(num1, num2) {
   result <- num1 + num2
   return(result)
@@ -185,7 +186,7 @@ Don't forget to `return` a result
 
 Assign a default value to inputs with `=` to make them optional
 
-```{r optional_params, exercise=T, exercise.eval=F}
+```{r optional_params, exercise = TRUE, exercise.eval = FALSE}
 subtract_from_vec <- function(data_vec, subtract_val = 1) {
   new_data_vec <- data_vec - subtract_val
   return(new_data_vec)
@@ -196,15 +197,15 @@ subtract_from_vec(test_vec, subtract_val = 2)
 ```
 
 
-<!-- ## Returning values -->
+## Returning values
 
-<!-- What does this do?  -->
+What does this do?
 
-<!-- ```{r ret_val, exercise=T} -->
-<!-- center_vec <- function(data_vec, midpoint = 0) { -->
-<!--   new_data <- (data_vec - mean(data_vec)) + midpoint -->
-<!-- } -->
-<!-- ``` -->
+```{r ret_val, exercise=TRUE}
+center_vec <- function(data_vec, midpoint = 0) {
+  new_data <- (data_vec - mean(data_vec)) + midpoint
+}
+```
 
 
 <!-- # Packages -->
@@ -320,19 +321,13 @@ do_a_thing <- function(input_obj, param1) {
 
 ## Now for hands-on practice!
 
-- I'll open up breakout rooms
-
-- Go to [broad.io/cp_r_bootcamp](https://broad.io/cp_r_bootcamp)
+- Go to [R Bootcamp](https://ashirborah.github.io/Bootcamp_R_tutorials/)
 
 - Work through Chapters 1 and 2 Practice
 
 - There are clickable 'hints' throughout.
 
 - Use slack for Q&A. 
-
-- Use 'ask for help' button and TA can jump into Breakout room to help
-
-- Group Slack channels and 'huddle' audio spaces might be helpful too. 
 
 
 ## Tips for using web site
@@ -344,4 +339,3 @@ do_a_thing <- function(input_obj, param1) {
 - Your work in each code chunk is **independent** (results don't carry over)
 
 - You can reset the whole notebook with the 'Start over' button on the left panel (careful!)
-

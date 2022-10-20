@@ -1,8 +1,8 @@
 ---
 title: "Introduction to R"
 tutorial:
-  id: "cp_bootcamp_2021_chp1_pres"
-  version: 1.0
+  id: "R_bootcamp_2022_chp1_pres"
+  version: 2.0
 output:
   ioslides_presentation:
     transition: faster
@@ -15,7 +15,7 @@ runtime: shiny_prerendered
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(learnr)
-tutorial_options(exercise.timelimit = 10, exercise.blanks = "___+")
+tutorial_options(exercise.timelimit = 20, exercise.blanks = "___+")
 ```
 
 ## Welcome!
@@ -89,11 +89,16 @@ tutorial_options(exercise.timelimit = 10, exercise.blanks = "___+")
 
 :::
 
+## But I have excel
 
+<center>
+<img src="images/excel_1.png" width="70%">
+</center>
 
 ## Quick demo
 
 <!-- Could walk through some juxtaposition with Excel based analysis here. Either specific to this example analysis or general -->
+
 
 [LIVE DEMO]
 
@@ -125,11 +130,11 @@ tutorial_options(exercise.timelimit = 10, exercise.blanks = "___+")
 
 - **Resources**
 
-  - TAs: (James, Ashir) plus: Jason Kwon, Aviad Tsherniak, Phil Montgomery, William Colgan
+  - TAs: Ashir, Maggie
 
-  - Course website: [broad.io/cp_r_bootcamp](cds.team/CP_R_bootcamp)
+  - Course website: [Bootcamp_R_tutorials](https://ashirborah.github.io/Bootcamp_R_tutorials/)
   
-  - Slack #[cancer-bootcamp_r](https://broadinstitute.slack.com/archives/C02ERPL3P5F)
+  - Slack #[c3-bootcamp_r](https://join.slack.com/t/ucsf-y287136/shared_invite/zt-1gxdls2if-l5vcYlS8T3MyRhiPUB10xA)
 
 <!-- ## Schedule -->
 
@@ -155,29 +160,29 @@ tutorial_options(exercise.timelimit = 10, exercise.blanks = "___+")
 - Hadley Wickham's R for Data Science
 
 
-<!-- ## We need your help -->
+## We need your help
 
-<!-- - Your feedback is very much appreciated (Slack, email, etc) -->
+- Your feedback is very much appreciated (Slack, email, etc)
 
-<!-- - We'll do our best to adapt as we go. -->
+- We'll do our best to adapt as we go.
 
 
 
 # R Basics
 
-<!-- ## Key Tools  -->
+## Key Tools
 
-<!-- <center> -->
-<!-- <img src="images/Rtools_car.png" width="60%"> -->
-<!-- </center> -->
+<center>
+<img src="images/Rtools_car.png" width="60%">
+</center>
 
-<!-- - **R Markdown/Notebooks** -->
+- **R Markdown/Notebooks**
 
-<!--   - Sort of like a lab notebook for analysis -->
+  - Sort of like a lab notebook for analysis
 
-<!--   - Easily share results and methods in different formats -->
+  - Easily share results and methods in different formats
 
-<!--   - Encourages good code and analysis practices -->
+  - Encourages good code and analysis practices
 
 
 <!-- ## R Studio review -->
@@ -208,15 +213,15 @@ Where the action happens!
 
 ```
 
-<!-- ## Create project directory -->
+## Create project directory
 
-<!-- - Organize your work as 'Projects' in Rstudio -->
+- Organize your work as 'Projects' in Rstudio
 
-<!-- - Each project has a separate folder, with data, code, results. -->
+- Each project has a separate folder, with data, code, results.
 
 <!-- - Copy the R_BootCamp_2019 folder from Google Drive to your computer -->
 
-<!-- - Create a 'Project' in Rstudio -->
+- Create a 'Project' in Rstudio
   
 
 
@@ -264,16 +269,16 @@ x <- 3 * 4
 x
 ```
 
-<!-- - All object-creation statements have the form: -->
-<!--   - `object_name <- value` -->
+- All object-creation statements have the form:
+  - `object_name <- value`
 
-<!-- ```{r obj_create, exercise = TRUE, exercise.eval = FALSE} -->
-<!-- color1 = 'red' -->
-<!-- color2 <- 'red' -->
-<!-- color1 == color2 -->
-<!-- ``` -->
+```{r obj_create, exercise = TRUE, exercise.eval = FALSE}
+color1 = 'red'
+color2 <- 'red'
+color1 == color2
+```
 
-<!-- - You can use `=`, but `<-` makes for better R code -->
+- You can use `=`, but `<-` makes for better R code
 
 <!-- - Use Rstudio shortcut 'Alt' + '-' -->
 
@@ -327,24 +332,24 @@ Not allowed: `4th`, `my var`, `weird?`, etc. etc.
 
 NOT: `var1` or `a`
 
-<!-- ## Use comments! -->
+## Use comments!
 
-<!-- - Code readability is huge so others can understand what you've done -->
+- Code readability is huge so others can understand what you've done
 
-<!--   - Including future you! -->
+  - Including future you!
 
-<!-- - In RMarkdown docs, write descriptive text before each code chunk -->
+- In RMarkdown docs, write descriptive text before each code chunk
 
-<!-- - Also good to add comments to key lines of code within chunks -->
+- Also good to add comments to key lines of code within chunks
 
 
-<!-- ## R environment -->
+## R environment
 
-<!-- - See info on current variables -->
+- See info on current variables
 
-<!-- - Clearing variables -->
+- Clearing variables
 
-<!-- - View data tables, etc. -->
+- View data tables, etc.
 
 <!-- **Practice** -->
 
@@ -486,7 +491,7 @@ c(z, 'c')
 
 ## Key concepts recap
 
-<!-- - Use RMarkdown documents like an experiment notebook -->
+- Use RMarkdown documents like an experiment notebook
 
 - Create variables with `<-`, naming them is important
 

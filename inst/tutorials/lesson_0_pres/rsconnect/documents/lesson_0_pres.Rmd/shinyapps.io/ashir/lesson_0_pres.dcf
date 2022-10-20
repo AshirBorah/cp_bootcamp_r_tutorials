@@ -5,9 +5,9 @@ account: ashir
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 7181256
-bundleId: 6359883
+bundleId: 6416651
 url: https://ashir.shinyapps.io/lesson_0_pres/
-when: 1664674320.74791
-lastSyncTime: 1664674320.74792
+when: 1666124937.21266
+lastSyncTime: 1666124937.2127
 asMultiple: FALSE
 asStatic: FALSE

@@ -7,7 +7,7 @@ output:
     allow_skip: true
 runtime: shiny_prerendered
 description: >
-  Learn about miscellaneous topics that didn't fit directly into a lesson in the main CP Bootcamp track
+  Learn about miscellaneous topics that didn't fit directly into a lesson in the main Bootcamp track
 ---
 
 ```{r setup, include=FALSE}

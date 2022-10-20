@@ -1,8 +1,8 @@
 ---
 title: "Function basics"
 tutorial:
-  id: "cp_bootcamp_2021_chp2_practice"
-  version: 1.0
+  id: "bootcamp_2022_chp2_practice"
+  version: 2.0
 output: 
   learnr::tutorial:
     theme: "lumen"
@@ -16,7 +16,7 @@ description: >
 ```{r setup, include=FALSE}
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
-tutorial_options(exercise.timelimit = 60, exercise.blanks = "___+")
+tutorial_options(exercise.timelimit = 20, exercise.blanks = "___+")
 ```
 
 
@@ -190,11 +190,11 @@ raise_to_power <- function(x, p=2) {
 
 `lubridate` is a `tidyverse` package which has helper functions for working with dates.
 
-<!-- Start by pulling up the help documentation for the `lubridate` package.  -->
+Start by pulling up the help documentation for the `lubridate` package.
 
-<!-- ```{r help_lubridate, exercise = TRUE} -->
-<!-- help(package = 'lubridate') -->
-<!-- ``` -->
+```{r help_lubridate, exercise = TRUE}
+help(package = 'lubridate')
+```
 
 This package has a function `now` (which doesn't have any inputs). What happens if you try to use it now? Why?
 ```{r fun_before_load, exercise = TRUE}

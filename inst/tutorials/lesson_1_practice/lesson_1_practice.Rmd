@@ -1,8 +1,8 @@
 ---
 title: "Introduction to R"
 tutorial:
-  id: "cp_bootcamp_2021_chp1_practice"
-  version: 1.0
+  id: "bootcamp_2022_chp1_practice"
+  version: 2.0
 output: 
   learnr::tutorial:
     theme: "lumen"
@@ -17,7 +17,7 @@ description: >
 ```{r setup, include=FALSE}
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
-tutorial_options(exercise.timelimit = 60, exercise.blanks = "___+")
+tutorial_options(exercise.timelimit = 20, exercise.blanks = "___+")
 ```
 
 ## Testing 1-2-3

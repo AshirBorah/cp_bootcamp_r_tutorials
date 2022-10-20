@@ -1,7 +1,7 @@
 ---
 title: "What's in it for me? (BootCamp Demo)"
-author: James McFarland
-date: 2021-09-01
+author: James McFarland, Ashir Borah
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   html_document:
     toc: true
@@ -26,6 +26,7 @@ library(plotly)
 library(DT)
 library(data.table)
 library(tidyverse)
+library(here)
 ```
 
 ## Load data
@@ -42,17 +43,17 @@ For the gene expression and dependency data we'll also extract data for just a s
 
 ```{r}
 #cell line metadata
-cell_line_meta <- read_csv('data/sample_info.csv') 
+cell_line_meta <- read_csv(here::here('data/sample_info.csv')) 
 
 #load gene expression data and keep only the cell line IDs and the MDM2 expression levels
-CCLE_GE <- fread('data/CCLE_expression.csv') %>% 
+CCLE_GE <- fread(here::here('data/CCLE_expression.csv')) %>% 
   as_tibble() %>% 
   select(DepMap_ID = V1, MDM2_GE = `MDM2 (4193)`)
 
 #load the Achilles data and keep only the cell line IDs and the MDM2 dependency scores
-Achilles_dep <- fread('data/Achilles_gene_effect.csv') %>% 
+Achilles_dep <- fread(here::here('data/CRISPR_gene_effect.csv')) %>% 
   as_tibble() %>% 
-  select(DepMap_ID = V1, MDM2_dep = `MDM2 (4193)`)
+  select(DepMap_ID = DepMap_ID, MDM2_dep = `MDM2 (4193)`)
 ```
 
 ## Make table
@@ -79,6 +80,14 @@ cell_line_data %>%
 ```
 
 ## Make plot
+
+A plot of the MDM2 gene expression values
+```{r}
+ggplot(cell_line_data, aes(x=MDM2_GE))+
+  geom_density()+
+  ggpubr::theme_pubr()
+```
+
 
 Make an interactive scatterplot of MDM2 expression and dependency status across these cell lines
 
