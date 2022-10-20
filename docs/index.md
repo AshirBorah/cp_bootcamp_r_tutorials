@@ -15,4 +15,4 @@ I will stay after to answer questions each day
 Link to join [Slack](https://join.slack.com/t/ucsf-y287136/shared_invite/zt-1gxdls2if-l5vcYlS8T3MyRhiPUB10xA)
 
 
-Day one [lesson pack](https://drive.google.com/file/d/1GOgN3AvGIVBOsf2x9jrpqZaevJ0KCAZO/view?usp=sharing)
+Day one [lesson pack](https://drive.google.com/uc?export=download&id=1GOgN3AvGIVBOsf2x9jrpqZaevJ0KCAZO)
