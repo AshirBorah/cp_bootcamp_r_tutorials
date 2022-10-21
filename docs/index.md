@@ -9,7 +9,14 @@ Before the first class, please **ensure that you complete [lesson 0](https://ash
 **Location**
 Thursday October 20: MH-1400 4-6pm;
                     Tech help and setup: 3:30pm
-Friday October 21- Friday October 28: HD-160: 4-6pm;
+Friday October 21: MH-2103 4-6pm;
+Monday October 24:  MH 1400 4-6pm;
+Tuesday October 25: MH 1400 4-6pm;
+Wednesday October 26: HD 160 4-6pm;
+Thursday October 27: MH 1400 4-6pm;
+Friday October 28: MH 1400 4-6pm;
+
+- Friday October 28: HD-160: 4-6pm;
 I will stay after to answer questions each day
 
 Link to join [Slack](https://join.slack.com/t/ucsf-y287136/shared_invite/zt-1gxdls2if-l5vcYlS8T3MyRhiPUB10xA)
