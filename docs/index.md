@@ -16,3 +16,8 @@ Link to join [Slack](https://join.slack.com/t/ucsf-y287136/shared_invite/zt-1gxd
 
 
 Day one [lesson pack](https://drive.google.com/uc?export=download&id=1GOgN3AvGIVBOsf2x9jrpqZaevJ0KCAZO)
+
+
+
+Day two [Presentation 3](https://drive.google.com/uc?export=download&id=18-DMekLh7lNUpnbMnaFD-hxSFvMPn0AF)
+Day two [Practice 3](https://drive.google.com/uc?export=download&id=10-oTNd7jEiEmEvj9kVfffLCjGcNfG8p2)
