@@ -10,10 +10,15 @@ Before the first class, please **ensure that you complete [lesson 0](https://ash
 Thursday October 20: MH-1400 4-6pm;
                     Tech help and setup: 3:30pm
 Friday October 21: MH-2103 4-6pm;
+
 Monday October 24:  MH 1400 4-6pm;
+
 Tuesday October 25: MH 1400 4-6pm;
+
 Wednesday October 26: HD 160 4-6pm;
+
 Thursday October 27: MH 1400 4-6pm;
+
 Friday October 28: MH 1400 4-6pm;
 
 - Friday October 28: HD-160: 4-6pm;
