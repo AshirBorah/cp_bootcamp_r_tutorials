@@ -35,4 +35,10 @@ Day two [Presentation 3](https://drive.google.com/uc?export=download&id=18-DMekL
 
 Day two [Practice 3](https://drive.google.com/uc?export=download&id=10-oTNd7jEiEmEvj9kVfffLCjGcNfG8p2)
 
+Day two [Data](https://drive.google.com/uc?export=download&id=10-oTNd7jEiEmEvj9kVfffLCjGcNfG8p2)
+
 Weekend Practice [RNAseq analysis](https://drive.google.com/uc?export=download&id=1s_ziz6jg0tvk0QLLrU8X4Im_lWeUdi4E)
+
+Day three [Presentation 4](https://drive.google.com/uc?export=download&id=1dOrPVX7ED1zXZ-rQRMP6qvlSNSBx4VO-)
+
+Day three [Practice 4](https://drive.google.com/uc?export=download&id=1eq7U7b4VmGPxRLSXpJ0sg5SCqux11bT1)
