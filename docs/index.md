@@ -27,24 +27,43 @@ I will stay after to answer questions each day
 Link to join [Slack](https://join.slack.com/t/ucsf-y287136/shared_invite/zt-1gxdls2if-l5vcYlS8T3MyRhiPUB10xA)
 
 
-Day one [lesson pack](https://drive.google.com/uc?export=download&id=1GOgN3AvGIVBOsf2x9jrpqZaevJ0KCAZO)
 
+[Presentation 1](https://drive.google.com/uc?export=download&id=1jaWq2ohJA5fMTLorcUNJ4I2YuXg6kfeh)
 
+Day give [Practice 1](https://drive.google.com/uc?export=download&id=1P3WY8IiEYDAYYeb6Vw5m6sYJ1yZe8qRw)
 
-Day two [Presentation 3](https://drive.google.com/uc?export=download&id=18-DMekLh7lNUpnbMnaFD-hxSFvMPn0AF)
+[Presentation 2](https://drive.google.com/uc?export=download&id=1SU2nNQkK5TPup4n4VhWr7MHWbmPSgbuT)
 
-Day two [Practice 3](https://drive.google.com/uc?export=download&id=10-oTNd7jEiEmEvj9kVfffLCjGcNfG8p2)
+[Practice 2](https://drive.google.com/uc?export=download&id=1SiPAl3dQ09xL10oQ0EtJRaw6FzY4sJBl)
 
-Day two [Data](https://drive.google.com/uc?export=download&id=10-oTNd7jEiEmEvj9kVfffLCjGcNfG8p2)
+[Presentation 3](https://drive.google.com/uc?export=download&id=18-DMekLh7lNUpnbMnaFD-hxSFvMPn0AF)
+
+[Practice 3](https://drive.google.com/uc?export=download&id=10-oTNd7jEiEmEvj9kVfffLCjGcNfG8p2)
+
+[Practice 3 Data](https://drive.google.com/uc?export=download&id=10-oTNd7jEiEmEvj9kVfffLCjGcNfG8p2)
 
 Weekend Practice [RNAseq analysis](https://drive.google.com/uc?export=download&id=1s_ziz6jg0tvk0QLLrU8X4Im_lWeUdi4E)
 
-Day three [Presentation 4](https://drive.google.com/uc?export=download&id=1dOrPVX7ED1zXZ-rQRMP6qvlSNSBx4VO-)
+Weekend Practice Solutions [RNAseq analysis solutions](https://drive.google.com/uc?export=download&id=1uyWYZTmlk71WqHg6faf-o2HU7qajmQ-k)
 
-Day three [Practice 4](https://drive.google.com/uc?export=download&id=1eq7U7b4VmGPxRLSXpJ0sg5SCqux11bT1)
+[Presentation 4](https://drive.google.com/uc?export=download&id=1dOrPVX7ED1zXZ-rQRMP6qvlSNSBx4VO-)
 
-Day four [Single Cell RNAseq](https://ucsf.box.com/s/vqw586w4ihwqdr4j06wrkvz1q5xf9zpg)
+[Practice 4](https://drive.google.com/uc?export=download&id=1eq7U7b4VmGPxRLSXpJ0sg5SCqux11bT1)
 
-Day five [Presentation 5](https://drive.google.com/uc?export=download&id=1WYbge5sJ8AO0kQ_ZCE1QrceEdl4GZKQp)
+[Single Cell RNAseq](https://ucsf.box.com/s/vqw586w4ihwqdr4j06wrkvz1q5xf9zpg)
 
-Day give [Practice 5](https://drive.google.com/uc?export=download&id=1Ea3qvDyg9XzqYoXxAW5petsJTDEr9gVZ)
+[Presentation 5](https://drive.google.com/uc?export=download&id=1WYbge5sJ8AO0kQ_ZCE1QrceEdl4GZKQp)
+
+[Practice 5](https://drive.google.com/uc?export=download&id=1Ea3qvDyg9XzqYoXxAW5petsJTDEr9gVZ)
+
+[Presentation 6](https://drive.google.com/uc?export=download&id=1_pXgcOMHzrOEVrPb6PmtvFz5FrZPapdu)
+
+[Practice 6](https://drive.google.com/uc?export=download&id=1462X2-ElsMgshRphLw_ek3RKrVKXgmOG)
+
+[Presentation 7](https://drive.google.com/uc?export=download&id=1qeggsgqto61kc7-B2cZg8OIstTcK2UxV)
+
+[Practice 7](https://drive.google.com/uc?export=download&id=14hOQXEwLYJYQ2Sr53o7gPJGhObV45Fk6)
+
+[DepMap Analysis](https://drive.google.com/uc?export=download&id=1dX8JG9x28MvwxV16wvtEvRllgouLH1vl)
+
+[DepMap Analysis Solutions](https://drive.google.com/uc?export=download&id=1HGu_MHX2aFNmDFMbncho0F5yiMY4J0zj)
