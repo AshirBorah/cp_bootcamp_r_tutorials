@@ -1,8 +1,8 @@
 ---
 title: "Introduction to Tidyverse"
 tutorial:
-  id: "cp_bootcamp_2021_chp4_pres"
-  version: 1.0
+  id: "bootcamp_2021_chp4_pres"
+  version: 2.0
 output:
   ioslides_presentation:
     transition: faster
@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(learnr)
 library(tidyverse)
 library(gapminder)
-tutorial_options(exercise.timelimit = 60, exercise.blanks = "___+", exercise.eval=T)
+tutorial_options(exercise.timelimit = 10, exercise.blanks = "___+")
 ```
 
 ## Recap (key concepts so far)
@@ -175,7 +175,7 @@ head(gapminder)
 
 - Arguments are the 'filters' you'd like to apply
 
-```{r gapminder_year_filter, exercise.setup='gapminder_setup', exercise=T}
+```{r gapminder_year_filter, exercise.setup='gapminder_setup', exercise=TRUE}
 gapminder %>% filter(year == 2007)
 ```
 
@@ -185,7 +185,7 @@ gapminder %>% filter(year == 2007)
 
 - Use `,` to check for multiple filters being true ('AND')
 
-```{r gapminder_multiple_filter, exercise.setup='gapminder_setup', exercise=T}
+```{r gapminder_multiple_filter, exercise.setup='gapminder_setup', exercise=TRUE}
 gapminder %>% 
   filter(year == 2002, continent == "Asia") %>% 
   sample_n(4)
@@ -196,7 +196,7 @@ gapminder %>%
 
 - Use `|` to check for any in multiple filters being true ('OR')
 
-```{r gapminder_or_filter, exercise.setup='gapminder_setup', exercise=T}
+```{r gapminder_or_filter, exercise.setup='gapminder_setup', exercise=TRUE}
 gapminder %>% 
   filter(year == 2002 | continent == "Asia") %>% 
   sample_n(4)
@@ -207,7 +207,7 @@ gapminder %>%
 
 - Use `%in%` to check if value is contained in a specified set
 
-```{r gapminder_membership_filter, exercise.setup='gapminder_setup', exercise=T}
+```{r gapminder_membership_filter, exercise.setup='gapminder_setup', exercise=TRUE}
 gapminder %>% 
   filter(country %in% c("Argentina", "Belgium", "Mexico"),
          year %in% c(1987, 1992))
@@ -219,7 +219,7 @@ gapminder %>%
 
 - Use `select` to pick a subset of columns by name
 
-```{r gapminder_select, exercise.setup='gapminder_setup', exercise=T}
+```{r gapminder_select, exercise.setup='gapminder_setup', exercise=TRUE}
 gapminder %>% 
   select(country, year, lifeExp) %>% 
   head(4)
@@ -239,7 +239,7 @@ df %>% select(`1999`, `badly named variable`)
 
 - Use `rename` to rename certain columns
 
-```{r gapminder_rename, exercise.setup='gapminder_setup', exercise=T}
+```{r gapminder_rename, exercise.setup='gapminder_setup', exercise=TRUE}
 gapminder %>% 
   rename(lifeExpectancy = lifeExp, population = pop) %>% 
   head(3)
@@ -252,7 +252,7 @@ gapminder %>%
 
 - Reorder rows based on the values of one or more variables
 
-```{r gapminder_arrange, exercise.setup='gapminder_setup', exercise=T}
+```{r gapminder_arrange, exercise.setup='gapminder_setup', exercise=TRUE}
 gapminder %>% 
   arrange(year) %>% 
   head(4)
@@ -262,7 +262,7 @@ gapminder %>%
 
 - Sorting by multiple variables
 
-```{r gapminder_arrange_multiple, exercise.setup='gapminder_setup', exercise=T}
+```{r gapminder_arrange_multiple, exercise.setup='gapminder_setup', exercise=TRUE}
 gapminder %>% 
   arrange(year, lifeExp) %>% 
   head(4)
@@ -273,7 +273,7 @@ gapminder %>%
 
 - Can also sort in descending order
 
-```{r gapminder_desc_arrange, exercise.setup='gapminder_setup', exercise=T}
+```{r gapminder_desc_arrange, exercise.setup='gapminder_setup', exercise=TRUE}
 gapminder %>%
   filter(year > 2000) %>%
   arrange(desc(country)) %>%
@@ -287,7 +287,7 @@ gapminder %>%
 - create a new variable based on other variables OR
 - change the contents of an existing variable
   
-```{r gapminder_mutate, exercise.setup='gapminder_setup', exercise=T}
+```{r gapminder_mutate, exercise.setup='gapminder_setup', exercise=TRUE}
 gapminder %>% 
   mutate(just_one = 1) %>% 
   head(4)
@@ -299,7 +299,7 @@ gapminder %>%
 - **create a new variable based on other variables** OR
 - change the contents of an existing variable
   
-```{r gapminder_mutate_arithmetic, exercise.setup='gapminder_setup', exercise=T}
+```{r gapminder_mutate_arithmetic, exercise.setup='gapminder_setup', exercise=TRUE}
 gapminder %>%
   mutate(gdp = pop * gdpPercap) %>% 
   head(4)
@@ -312,7 +312,7 @@ gapminder %>%
 - create a new variable based on other variables OR
 - **change the contents of an existing variable**
   
-```{r gapminder_mutate_change_var, exercise.setup='gapminder_setup', exercise=T}
+```{r gapminder_mutate_change_var, exercise.setup='gapminder_setup', exercise=TRUE}
 gapminder %>%
   mutate(pop = pop/1e6) %>% 
   head(4)
@@ -338,7 +338,7 @@ gapminder %>%
 
 - Apply a numerical summary to a column of a table
 
-```{r gapminder_summarize, exercise.setup='gapminder_setup', exercise=T}
+```{r gapminder_summarize, exercise.setup='gapminder_setup', exercise=TRUE}
 gapminder %>% 
   filter(year == 1997) %>% 
   summarize(max_exp = max(lifeExp),
@@ -352,7 +352,7 @@ gapminder %>%
 
 - Combined with `summarise`, `group_by` allows you to summarise data for each possible value of a categorical variable
 
-```{r gapminder_groupby, exercise.setup='gapminder_setup', exercise=T}
+```{r gapminder_groupby, exercise.setup='gapminder_setup', exercise=TRUE}
 gapminder %>% 
   filter(year == 1997) %>% 
   group_by(continent) %>%
@@ -364,7 +364,7 @@ gapminder %>%
 
 - Can be applied to combinations of variables
 
-```{r gapminder_groupby_multiple, exercise.setup='gapminder_setup', exercise=T}
+```{r gapminder_groupby_multiple, exercise.setup='gapminder_setup', exercise=TRUE}
 gapminder %>% 
   group_by(continent, year) %>%
   summarize(num_rows = n(),

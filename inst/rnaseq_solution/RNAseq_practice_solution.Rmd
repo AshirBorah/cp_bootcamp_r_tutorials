@@ -81,7 +81,7 @@ Use the `fread` function to load `rnaseq_counts.csv`, and the `read_csv` functio
 Remember that if you create an Rstudio 'Project' you can use the `here` function to specify the file locations like: `here('data', 'my_file.csv')`
 
 ```{r}
-counts_mat <- fread(here('data', 'rnaseq_counts.csv'))
+counts_mat <- fread('data/rnaseq_counts.csv')
   
 sample_info <- read_csv(here('data', 'rnaseq_sample_info.csv'))
 
@@ -176,7 +176,7 @@ sum(usable_genes)
 
 How much would the number of expressed genes change if we increased the `min_expressed_samples` parameter to 6?
 ```{r}
-sum(get_usable_genes(counts_mat, min_cpm = 1, min_expressed_samples = 6))
+sum(get_usable_genes(input_mat = counts_mat, min_cpm = 1, min_expressed_samples = 6))
 ```
 
 Use your function to find which genes are expressed above `min_cpm` in at least 3 but fewer than 6 samples 
@@ -184,7 +184,7 @@ Use your function to find which genes are expressed above `min_cpm` in at least 
 expressed_in_3 <- get_usable_genes(counts_mat, min_expressed_samples = 3)
 expressed_in_6 <- get_usable_genes(counts_mat, min_expressed_samples = 6)
 g3_l6_genes <- rownames(counts_mat)[expressed_in_3 & !expressed_in_6]
-head(g3_l6_genes)
+length(g3_l6_genes)
 ```
 
 Now let's use the default values to determine the list of genes we'll include in analysis.
@@ -211,7 +211,7 @@ Make an object called `dge` that stores all our data, using the `DGEList` functi
 ```{r}
 dge <- DGEList(counts = used_counts_mat, samples = sample_info, genes = used_gene_info)
 
-print(dim(dge)) # We see that the data has 27k rows and 9 columns
+print(dim(dge)) # We see that the data has 14k rows and 9 columns
 
 head(dge$counts)
 ```
