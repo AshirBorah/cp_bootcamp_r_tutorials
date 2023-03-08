@@ -44,7 +44,7 @@ Link to join [Slack](https://join.slack.com/t/ucsf-y287136/shared_invite/zt-1gxd
 
 Weekend Practice [RNAseq analysis](https://drive.google.com/uc?export=download&id=1s_ziz6jg0tvk0QLLrU8X4Im_lWeUdi4E)
 
-Weekend Practice Solutions [RNAseq analysis solutions](https://drive.google.com/uc?export=download&id=1uyWYZTmlk71WqHg6faf-o2HU7qajmQ-k)
+<!--- Weekend Practice Solutions [RNAseq analysis solutions](https://drive.google.com/uc?export=download&id=1uyWYZTmlk71WqHg6faf-o2HU7qajmQ-k) --->
 
 [Presentation 4](https://drive.google.com/uc?export=download&id=1dOrPVX7ED1zXZ-rQRMP6qvlSNSBx4VO-)
 
@@ -64,6 +64,6 @@ Weekend Practice Solutions [RNAseq analysis solutions](https://drive.google.com/
 
 [Practice 7](https://drive.google.com/uc?export=download&id=14hOQXEwLYJYQ2Sr53o7gPJGhObV45Fk6)
 
-[DepMap Analysis](https://drive.google.com/uc?export=download&id=1dX8JG9x28MvwxV16wvtEvRllgouLH1vl)
+Weekend Practice [DepMap Analysis](https://drive.google.com/uc?export=download&id=1dX8JG9x28MvwxV16wvtEvRllgouLH1vl)
 
-[DepMap Analysis Solutions](https://drive.google.com/uc?export=download&id=1HGu_MHX2aFNmDFMbncho0F5yiMY4J0zj)
+<!--- [DepMap Analysis Solutions](https://drive.google.com/uc?export=download&id=1HGu_MHX2aFNmDFMbncho0F5yiMY4J0zj) --->
