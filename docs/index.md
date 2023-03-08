@@ -30,7 +30,7 @@ Link to join [Slack](https://join.slack.com/t/ucsf-y287136/shared_invite/zt-1gxd
 
 [Presentation 1](https://drive.google.com/uc?export=download&id=1jaWq2ohJA5fMTLorcUNJ4I2YuXg6kfeh)
 
-Day give [Practice 1](https://drive.google.com/uc?export=download&id=1P3WY8IiEYDAYYeb6Vw5m6sYJ1yZe8qRw)
+[Practice 1](https://drive.google.com/uc?export=download&id=1P3WY8IiEYDAYYeb6Vw5m6sYJ1yZe8qRw)
 
 [Presentation 2](https://drive.google.com/uc?export=download&id=1SU2nNQkK5TPup4n4VhWr7MHWbmPSgbuT)
 
@@ -40,7 +40,7 @@ Day give [Practice 1](https://drive.google.com/uc?export=download&id=1P3WY8IiEYD
 
 [Practice 3](https://drive.google.com/uc?export=download&id=10-oTNd7jEiEmEvj9kVfffLCjGcNfG8p2)
 
-[Practice 3 Data](https://drive.google.com/uc?export=download&id=10-oTNd7jEiEmEvj9kVfffLCjGcNfG8p2)
+[Practice 3 Data](https://drive.google.com/uc?export=download&id=1UVIHDxwohGT1FTJIEeZ0VNXvSdGePnvL)
 
 Weekend Practice [RNAseq analysis](https://drive.google.com/uc?export=download&id=1s_ziz6jg0tvk0QLLrU8X4Im_lWeUdi4E)
 
