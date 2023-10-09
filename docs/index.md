@@ -7,24 +7,29 @@ A common plage to collect all relevant information for the R Bootcamp. This will
 Before the first class, please **ensure that you complete [lesson 0](https://ashir.shinyapps.io/lesson_0_pres/)** which will help you set up a working R, RStudio and the required packages for this course.
 
 **Location**
-Thursday October 20: MH-1400 4-6pm;
+Tuesday October 10: MH-1400 4-6pm;
                     Tech help and setup: 3:30pm
-Friday October 21: MH-2103 4-6pm;
+Thursday October 12: MH-2103 4-6pm;
 
-Monday October 24:  MH 1400 4-6pm;
+Tuesday October 17:  MH 1400 4-6pm;
 
-Tuesday October 25: MH 1400 4-6pm;
+Thursday October 19: MH 1400 4-6pm;
 
-Wednesday October 26: HD 160 4-6pm;
+Tuesday October 24: HD 160 4-6pm;
 
 Thursday October 27: MH 1400 4-6pm;
 
-Friday October 28: MH 1400 4-6pm;
+Tuesday October 31: MH 1400 4-6pm;
 
-- Friday October 28: HD-160: 4-6pm;
+Thursday November 2: MH 1400 4-6pm;
+
+Tuesday November 7: No class;
+
+Thursday November 9: MH 1400 4-6pm;
+
 I will stay after to answer questions each day
 
-Link to join [Slack](https://join.slack.com/t/ucsf-y287136/shared_invite/zt-1gxdls2if-l5vcYlS8T3MyRhiPUB10xA)
+Link to join [Slack](https://join.slack.com/t/slack-8p09532/shared_invite/zt-24vkrwa81-HHo5fnuB0ApWHZ~gQKLGPQ)
 
 
 
@@ -32,38 +37,38 @@ Link to join [Slack](https://join.slack.com/t/ucsf-y287136/shared_invite/zt-1gxd
 
 [Practice 1](https://drive.google.com/uc?export=download&id=1P3WY8IiEYDAYYeb6Vw5m6sYJ1yZe8qRw)
 
-[Presentation 2](https://drive.google.com/uc?export=download&id=1SU2nNQkK5TPup4n4VhWr7MHWbmPSgbuT)
+<!-- [Presentation 2](https://drive.google.com/uc?export=download&id=1SU2nNQkK5TPup4n4VhWr7MHWbmPSgbuT) -->
 
-[Practice 2](https://drive.google.com/uc?export=download&id=1SiPAl3dQ09xL10oQ0EtJRaw6FzY4sJBl)
+<!-- [Practice 2](https://drive.google.com/uc?export=download&id=1SiPAl3dQ09xL10oQ0EtJRaw6FzY4sJBl) -->
 
-[Presentation 3](https://drive.google.com/uc?export=download&id=18-DMekLh7lNUpnbMnaFD-hxSFvMPn0AF)
+<!-- [Presentation 3](https://drive.google.com/uc?export=download&id=18-DMekLh7lNUpnbMnaFD-hxSFvMPn0AF) -->
 
-[Practice 3](https://drive.google.com/uc?export=download&id=10-oTNd7jEiEmEvj9kVfffLCjGcNfG8p2)
+<!-- [Practice 3](https://drive.google.com/uc?export=download&id=10-oTNd7jEiEmEvj9kVfffLCjGcNfG8p2) -->
 
-[Practice 3 Data](https://drive.google.com/uc?export=download&id=1UVIHDxwohGT1FTJIEeZ0VNXvSdGePnvL)
+<!-- [Practice 3 Data](https://drive.google.com/uc?export=download&id=1UVIHDxwohGT1FTJIEeZ0VNXvSdGePnvL) -->
 
-Weekend Practice [RNAseq analysis](https://drive.google.com/uc?export=download&id=1s_ziz6jg0tvk0QLLrU8X4Im_lWeUdi4E)
+<!-- Weekend Practice [RNAseq analysis](https://drive.google.com/uc?export=download&id=1s_ziz6jg0tvk0QLLrU8X4Im_lWeUdi4E) -->
 
 <!--- Weekend Practice Solutions [RNAseq analysis solutions](https://drive.google.com/uc?export=download&id=1uyWYZTmlk71WqHg6faf-o2HU7qajmQ-k) --->
 
-[Presentation 4](https://drive.google.com/uc?export=download&id=1dOrPVX7ED1zXZ-rQRMP6qvlSNSBx4VO-)
+<!-- [Presentation 4](https://drive.google.com/uc?export=download&id=1dOrPVX7ED1zXZ-rQRMP6qvlSNSBx4VO-) -->
 
-[Practice 4](https://drive.google.com/uc?export=download&id=1eq7U7b4VmGPxRLSXpJ0sg5SCqux11bT1)
+<!-- [Practice 4](https://drive.google.com/uc?export=download&id=1eq7U7b4VmGPxRLSXpJ0sg5SCqux11bT1) -->
 
-[Single Cell RNAseq](https://ucsf.box.com/s/vqw586w4ihwqdr4j06wrkvz1q5xf9zpg)
+<!-- [Single Cell RNAseq](https://ucsf.box.com/s/vqw586w4ihwqdr4j06wrkvz1q5xf9zpg) -->
 
-[Presentation 5](https://drive.google.com/uc?export=download&id=1WYbge5sJ8AO0kQ_ZCE1QrceEdl4GZKQp)
+<!-- [Presentation 5](https://drive.google.com/uc?export=download&id=1WYbge5sJ8AO0kQ_ZCE1QrceEdl4GZKQp) -->
 
-[Practice 5](https://drive.google.com/uc?export=download&id=1Ea3qvDyg9XzqYoXxAW5petsJTDEr9gVZ)
+<!-- [Practice 5](https://drive.google.com/uc?export=download&id=1Ea3qvDyg9XzqYoXxAW5petsJTDEr9gVZ) -->
 
-[Presentation 6](https://drive.google.com/uc?export=download&id=1_pXgcOMHzrOEVrPb6PmtvFz5FrZPapdu)
+<!-- [Presentation 6](https://drive.google.com/uc?export=download&id=1_pXgcOMHzrOEVrPb6PmtvFz5FrZPapdu) -->
 
-[Practice 6](https://drive.google.com/uc?export=download&id=1462X2-ElsMgshRphLw_ek3RKrVKXgmOG)
+<!-- [Practice 6](https://drive.google.com/uc?export=download&id=1462X2-ElsMgshRphLw_ek3RKrVKXgmOG) -->
 
-[Presentation 7](https://drive.google.com/uc?export=download&id=1qeggsgqto61kc7-B2cZg8OIstTcK2UxV)
+<!-- [Presentation 7](https://drive.google.com/uc?export=download&id=1qeggsgqto61kc7-B2cZg8OIstTcK2UxV) -->
 
-[Practice 7](https://drive.google.com/uc?export=download&id=14hOQXEwLYJYQ2Sr53o7gPJGhObV45Fk6)
+<!-- [Practice 7](https://drive.google.com/uc?export=download&id=14hOQXEwLYJYQ2Sr53o7gPJGhObV45Fk6) -->
 
-Weekend Practice [DepMap Analysis](https://drive.google.com/uc?export=download&id=1dX8JG9x28MvwxV16wvtEvRllgouLH1vl)
+<!-- Weekend Practice [DepMap Analysis](https://drive.google.com/uc?export=download&id=1dX8JG9x28MvwxV16wvtEvRllgouLH1vl) -->
 
 <!--- [DepMap Analysis Solutions](https://drive.google.com/uc?export=download&id=1HGu_MHX2aFNmDFMbncho0F5yiMY4J0zj) --->
