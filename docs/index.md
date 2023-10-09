@@ -13,6 +13,7 @@ Before the first class, please **ensure that you complete [lesson 0](https://ash
 **Location**
 Tuesday October 10: MH-1400 4-6pm;
                     Tech help and setup: 3:30pm
+                    
 Thursday October 12: MH-2103 4-6pm;
 
 Tuesday October 17:  MH 1400 4-6pm;
