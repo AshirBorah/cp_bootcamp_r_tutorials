@@ -13,24 +13,24 @@ Before the first class, please **ensure that you complete [lesson 0](https://ash
 **Location**
 Tuesday October 10: MH-1400 4-6pm;
                     Tech help and setup: 3:30pm
-                    
-Thursday October 12: MH-2103 4-6pm;
 
-Tuesday October 17:  MH 1400 4-6pm;
+Thursday October 12: MH 1401 4-6pm;
 
-Thursday October 19: MH 1400 4-6pm;
+Tuesday October 17:  MH 1401 4-6pm;
 
-Tuesday October 24: HD 160 4-6pm;
+Thursday October 19: MH 1401 4-6pm;
 
-Thursday October 27: MH 1400 4-6pm;
+Tuesday October 24: MH 1401 4-6pm;
 
-Tuesday October 31: MH 1400 4-6pm;
+Thursday October 27: MH 1401 4-6pm;
 
-Thursday November 2: MH 1400 4-6pm;
+Tuesday October 31: MH 1401 4-6pm;
+
+Thursday November 2: MH 1401 4-6pm;
 
 Tuesday November 7: No class;
 
-Thursday November 9: MH 1400 4-6pm;
+Thursday November 9: MH 1401 4-6pm;
 
 I will stay after to answer questions each day
 
