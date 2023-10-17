@@ -46,11 +46,11 @@ Link to join [Slack](https://join.slack.com/t/slack-8p09532/shared_invite/zt-24v
 
 [Practice 2](https://drive.google.com/uc?export=download&id=1SiPAl3dQ09xL10oQ0EtJRaw6FzY4sJBl)
 
-<!-- [Presentation 3](https://drive.google.com/uc?export=download&id=18-DMekLh7lNUpnbMnaFD-hxSFvMPn0AF) -->
+[Presentation 3](https://drive.google.com/uc?export=download&id=18-DMekLh7lNUpnbMnaFD-hxSFvMPn0AF)
 
-<!-- [Practice 3](https://drive.google.com/uc?export=download&id=10-oTNd7jEiEmEvj9kVfffLCjGcNfG8p2) -->
+[Practice 3](https://drive.google.com/uc?export=download&id=10-oTNd7jEiEmEvj9kVfffLCjGcNfG8p2)
 
-<!-- [Practice 3 Data](https://drive.google.com/uc?export=download&id=1UVIHDxwohGT1FTJIEeZ0VNXvSdGePnvL) -->
+[Practice 3 Data](https://drive.google.com/uc?export=download&id=1I6rAjghZnXnbAkYLv7GNE4F4ZIxF44ne)
 
 <!-- Weekend Practice [RNAseq analysis](https://drive.google.com/uc?export=download&id=1s_ziz6jg0tvk0QLLrU8X4Im_lWeUdi4E) -->
 
