@@ -52,13 +52,13 @@ Link to join [Slack](https://join.slack.com/t/slack-8p09532/shared_invite/zt-24v
 
 [Practice 3 Data](https://drive.google.com/uc?export=download&id=1I6rAjghZnXnbAkYLv7GNE4F4ZIxF44ne)
 
-<!-- Weekend Practice [RNAseq analysis](https://drive.google.com/uc?export=download&id=1s_ziz6jg0tvk0QLLrU8X4Im_lWeUdi4E) -->
+Practice [RNAseq analysis](https://drive.google.com/uc?export=download&id=1s_ziz6jg0tvk0QLLrU8X4Im_lWeUdi4E)
 
 <!--- Weekend Practice Solutions [RNAseq analysis solutions](https://drive.google.com/uc?export=download&id=1uyWYZTmlk71WqHg6faf-o2HU7qajmQ-k) --->
 
-<!-- [Presentation 4](https://drive.google.com/uc?export=download&id=1dOrPVX7ED1zXZ-rQRMP6qvlSNSBx4VO-) -->
+[Presentation 4](https://drive.google.com/uc?export=download&id=1dOrPVX7ED1zXZ-rQRMP6qvlSNSBx4VO-)
 
-<!-- [Practice 4](https://drive.google.com/uc?export=download&id=1eq7U7b4VmGPxRLSXpJ0sg5SCqux11bT1) -->
+[Practice 4](https://drive.google.com/uc?export=download&id=1eq7U7b4VmGPxRLSXpJ0sg5SCqux11bT1)
 
 <!-- [Single Cell RNAseq](https://ucsf.box.com/s/vqw586w4ihwqdr4j06wrkvz1q5xf9zpg) -->
 
