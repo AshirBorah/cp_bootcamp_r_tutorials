@@ -52,7 +52,7 @@ Link to join [Slack](https://join.slack.com/t/slack-8p09532/shared_invite/zt-24v
 
 [Practice 3 Data](https://drive.google.com/uc?export=download&id=1I6rAjghZnXnbAkYLv7GNE4F4ZIxF44ne)
 
-Practice [RNAseq analysis](https://drive.google.com/uc?export=download&id=1s_ziz6jg0tvk0QLLrU8X4Im_lWeUdi4E)
+Practice [RNAseq analysis](https://drive.google.com/uc?export=download&id=10WNhc02j-PkDGcezTERFkb17isiyOleS)
 
 <!--- Weekend Practice Solutions [RNAseq analysis solutions](https://drive.google.com/uc?export=download&id=1uyWYZTmlk71WqHg6faf-o2HU7qajmQ-k) --->
 
