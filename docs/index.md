@@ -62,9 +62,9 @@ Practice [RNAseq analysis](https://drive.google.com/uc?export=download&id=10WNhc
 
 <!-- [Single Cell RNAseq](https://ucsf.box.com/s/vqw586w4ihwqdr4j06wrkvz1q5xf9zpg) -->
 
-<!-- [Presentation 5](https://drive.google.com/uc?export=download&id=1WYbge5sJ8AO0kQ_ZCE1QrceEdl4GZKQp) -->
+[Presentation 5](https://drive.google.com/uc?export=download&id=1WYbge5sJ8AO0kQ_ZCE1QrceEdl4GZKQp)
 
-<!-- [Practice 5](https://drive.google.com/uc?export=download&id=1Ea3qvDyg9XzqYoXxAW5petsJTDEr9gVZ) -->
+[Practice 5](https://drive.google.com/uc?export=download&id=1Ea3qvDyg9XzqYoXxAW5petsJTDEr9gVZ)
 
 <!-- [Presentation 6](https://drive.google.com/uc?export=download&id=1_pXgcOMHzrOEVrPb6PmtvFz5FrZPapdu) -->
 
