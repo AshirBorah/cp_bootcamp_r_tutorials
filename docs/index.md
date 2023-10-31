@@ -54,7 +54,7 @@ Link to join [Slack](https://join.slack.com/t/slack-8p09532/shared_invite/zt-24v
 
 Practice [RNAseq analysis](https://drive.google.com/uc?export=download&id=10WNhc02j-PkDGcezTERFkb17isiyOleS)
 
-<!--- Weekend Practice Solutions [RNAseq analysis solutions](https://drive.google.com/uc?export=download&id=1uyWYZTmlk71WqHg6faf-o2HU7qajmQ-k) --->
+Weekend Practice Solutions [RNAseq analysis solutions](https://drive.google.com/uc?export=download&id=1uyWYZTmlk71WqHg6faf-o2HU7qajmQ-k)
 
 [Presentation 4](https://drive.google.com/uc?export=download&id=1dOrPVX7ED1zXZ-rQRMP6qvlSNSBx4VO-)
 
@@ -66,9 +66,9 @@ Practice [RNAseq analysis](https://drive.google.com/uc?export=download&id=10WNhc
 
 [Practice 5](https://drive.google.com/uc?export=download&id=1Ea3qvDyg9XzqYoXxAW5petsJTDEr9gVZ)
 
-<!-- [Presentation 6](https://drive.google.com/uc?export=download&id=1_pXgcOMHzrOEVrPb6PmtvFz5FrZPapdu) -->
+[Presentation 6](https://drive.google.com/uc?export=download&id=1_pXgcOMHzrOEVrPb6PmtvFz5FrZPapdu)
 
-<!-- [Practice 6](https://drive.google.com/uc?export=download&id=1462X2-ElsMgshRphLw_ek3RKrVKXgmOG) -->
+[Practice 6](https://drive.google.com/uc?export=download&id=1462X2-ElsMgshRphLw_ek3RKrVKXgmOG)
 
 <!-- [Presentation 7](https://drive.google.com/uc?export=download&id=1qeggsgqto61kc7-B2cZg8OIstTcK2UxV) -->
 
