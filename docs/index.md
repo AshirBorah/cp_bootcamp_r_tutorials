@@ -70,9 +70,9 @@ Weekend Practice Solutions [RNAseq analysis solutions](https://drive.google.com/
 
 [Practice 6](https://drive.google.com/uc?export=download&id=1462X2-ElsMgshRphLw_ek3RKrVKXgmOG)
 
-<!-- [Presentation 7](https://drive.google.com/uc?export=download&id=1qeggsgqto61kc7-B2cZg8OIstTcK2UxV) -->
+[Presentation 7](https://drive.google.com/uc?export=download&id=1qeggsgqto61kc7-B2cZg8OIstTcK2UxV)
 
-<!-- [Practice 7](https://drive.google.com/uc?export=download&id=14hOQXEwLYJYQ2Sr53o7gPJGhObV45Fk6) -->
+[Practice 7](https://drive.google.com/uc?export=download&id=14hOQXEwLYJYQ2Sr53o7gPJGhObV45Fk6)
 
 <!-- Weekend Practice [DepMap Analysis](https://drive.google.com/uc?export=download&id=1dX8JG9x28MvwxV16wvtEvRllgouLH1vl) -->
 
