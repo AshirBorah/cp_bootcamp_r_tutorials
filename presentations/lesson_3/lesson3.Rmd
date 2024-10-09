@@ -1,0 +1,786 @@
+---
+title: "Lesson 3: Introduction"
+author: "Ashir Borah"
+date: "October 28th, 2024"
+knit: (function(input, ...) {
+    rmarkdown::render(
+      input,
+      output_dir = "../../docs/presentations"
+    )
+  })
+output:
+  revealjs::revealjs_presentation:
+    theme: simple
+    css: ../style.css
+---
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  comment = ""
+)
+# To allow for the use of "here" within the presentation project
+here <- function(...) {
+  file.path(...)
+}
+
+library(tidyverse)
+library(useful)
+
+
+```
+
+
+## Outline
+
+- Working in Rstudio with notebooks
+
+- Loading and inspecting data 
+
+- Working with vectors
+
+- Working with matrices
+
+- Working with dataframes (the old fashioned way)
+
+
+# R and Rstudio 
+
+<center>
+<img src="images/Rtools_car.png" width="60%">
+</center>
+
+<!-- - **R Markdown/Notebooks** -->
+
+<!--   - Sort of like a lab notebook for analysis -->
+
+<!--   - Easily share results and methods in different formats -->
+
+<!--   - Encourages good code and analysis practices -->
+
+
+## Different ways to work with R
+
+- Enter commands directly into the console 
+
+- Write 'scripts': set of R code to execute as a unit  (.R files)
+
+- Write 'packages': sets of functions that others can use
+
+- **Write analysis 'notebooks'** (R markdown: .Rmd files)
+
+  - Easily share results and methods in different formats
+
+  - Encourages good code and analysis practices
+
+
+
+## Rstudio: Live demo
+
+<!-- Also set up project folder live demo -->
+
+- Different components of Rstudio interface
+
+- Running code lines
+
+- Running code chunks
+
+- Creating new chunks
+
+- Creating, inspecting and clearing variables
+
+- There are many good Rstudio video tutorials, e.g.: (https://youtu.be/kfcX5DEMAp4)
+
+
+<!-- ## R environment -->
+
+<!-- <!-- This can be incorporated in the live demo --> -->
+
+<!-- - See info on current variables -->
+
+<!-- - Clearing variables -->
+
+<!-- - View data tables, etc. -->
+
+
+## Make your code readable!
+
+<!-- UPDATE -->
+
+- **Why?**
+
+  - Others can understand what you've done (including future you)
+  
+  - Reproducibility and open science
+  
+  - Clarify your logical thought process while writing code
+
+- **How?**
+
+  - Write descriptive text before each code chunk in R notebooks:
+  
+    - Describe data used, analysis approach
+    
+    - What are you trying to test/show with a given analysis?
+
+## Comments
+
+Also good to include comments in your code for specifics/lightweight explanation
+
+- R ignores stuff after `#`
+
+```{r, eval = FALSE}
+#add a fixed offset to avoid negative values
+new_data <- old_data + offset 
+
+#now normalize so max value is 1
+new_data <- new_data/max(new_data)
+```
+
+```{r, eval = FALSE}
+new_data <- my_pipeline_function(new_data, outliers = 'ignore') #drop 6-sigma outliers
+```
+
+
+
+## Create project directory
+
+- Organize your work as 'Projects' in Rstudio
+
+- Each project has a separate folder, with data, code, results.
+
+- You will practice setting up a new project for today's assignment. 
+
+
+# Loading data
+
+## Basics of data formats 
+
+- Small-scale data are typically stored as text files
+
+- Different 'rows' of data appear on different lines
+
+- Values for a given 'row' are typically separated by either a comma, or a tab
+
+
+## Comma-separated values (.csv) {.code-big}
+ 
+```
+name,age,member_since
+bob,20,2015
+frank,40,2015
+tammy,15,2016
+```
+
+## Tab-separated values (.tsv or .txt) {.code-big}
+
+```{}
+name  age  member_since
+bob  20  2015
+frank  40  2015
+tammy  15  2016
+```
+
+
+## A zoo of data loading functions
+
+| Data type               | Extension | Function          | Package            |
+|:------------------------|:----------|:------------------|:-------------------|
+| Comma separated values  | csv       | `read.csv()`      | utils (default)    |
+|                         |           | `read_csv()`      | readr (tidyverse)  |
+| Tab separated values    | tsv       | `read_tsv()`      | readr              |
+| Other delimited formats | txt       | `read.table()`    | utils              |
+|                         |           | `read_table()`    | readr              |
+|                         |           | `read_delim()`    | readr              |
+| Excel                   | xlsx, xls | `read_excel()`    | readxl (tidyverse) |
+
+
+## Practical advice on data loading
+
+- For loading data tables, we suggest:
+
+  - Use `read_delim` (part of the `tidyverse` megapackage) for text files (.csv, .tsv, .txt)
+  
+  - Use `read_excel` for loading .xls, .xlsx files
+
+- We'll discuss more about loading data matrices later.
+
+- For example: 
+```{r, eval = FALSE}
+my_table <- read_delim('my_data_file.csv')
+```
+
+
+
+## Specifying where a file 'is'
+
+File locations ('paths') can be specified in absolute or relative terms
+
+- An 'absolute' path specifies where exactly in your computer's 'directory structure' a given file lives
+
+- For example: 
+
+```{r, eval = FALSE}
+imported_data <- read_csv("/Users/jmmcfarl/BootCamp/cp_r_bootcamp/
+                          data/data_file.csv")
+```
+
+- `data_file.csv` lives inside `data` folder, inside `cp_r_boocamp`, etc.
+
+- But these will vary from computer to computer, so makes code sharing harder..
+
+
+## Relative paths
+
+This will look for the file inside your 'working directory'
+
+```{r, eval = FALSE}
+imported_data <- read_csv('data_file.csv')
+```
+
+What's the working directory and how does it get set?
+
+
+## To avoid having to worry about this 
+
+  - Organize project-specific data in a 'data' subfolder and use Rstudio projects
+  
+  - Use the `here` function from the `here` package to find the right relative path within the project.
+  
+```{r, message=FALSE, echo=TRUE, eval=FALSE}
+library(here)
+here('data', 'my_data_file.csv')
+```
+
+```{r, echo=FALSE}
+here('data', 'my_data_file.csv')
+```
+
+  
+You can use it like this:
+
+```{r, eval = FALSE}
+imported_csv <- read_delim(here('data', 'data_file.csv'))
+imported_tsv <- read_delim(here('data', 'tab_separated_table.tsv'))
+```
+
+
+## Loading from Excel sheets
+
+Load the second sheet from an xlsx file
+
+```{r, eval = FALSE}
+my_table <- read_excel(here('data', 'my_metadata_file.xlsx'), sheet = 2)
+```
+
+Uses the `readxl` package part of `tidyverse`
+
+
+## Loading matrices
+
+<center>
+<img src="images/matrix_named.png" width="50%">
+<!-- <img src="images/matrix.png" width="30%"> -->
+<!-- <img src="images/dataframe.png" width="30%"> -->
+</center>
+ 
+  - The size of matrices is often too large for `read_delim` to work well.
+  
+  - The first column is special: 'row names'
+
+
+## Loading matrices
+
+- Let's use `fread` from the `data.table` package
+
+- `fread` creates a slightly different type of table than we want. `as_tibble` converts to the right kind.
+  
+```{r, message=FALSE, warning=FALSE}
+library(data.table)
+counts_matrix <-  fread(here('data', 'counts_rpkm.csv'))
+counts_matrix <- as_tibble(counts_matrix) #convert to a 'tibble'
+corner(counts_matrix)
+```
+
+## Loading matrices
+
+Then we want to make one of the column rownames and mint our new data matrix
+
+```{r}
+counts_matrix <- column_to_rownames(counts_matrix, var = 'Gene') #set Gene column to rownames
+counts_matrix <- as.matrix(counts_matrix) #formally make it a matrix, not really necessary
+corner(counts_matrix)
+```
+
+
+## Inspecting data {.smaller}
+
+- Always start with some quick inspection of data after reading it into R
+
+- Check for:
+
+  - Column (always) and row (matrix only) names are correct
+
+  - Make sure data types of columns are correct
+  
+- Useful inspection functions:
+
+  - `View(df)`: Open spreadsheet viewer
+  - `head(df)`: Show top K (10) rows
+  - `glimpse(df)`: quick overview of a table
+  - `useful::corner(mat)`: Show upper left corner of matrix
+  - `dim(mat)`: Number of rows and columns
+  - `rownames(mat)`/`colnames(mat)`: extract row/column names
+
+
+## Backup plan
+
+- If you're having trouble with the above data loading strategies
+
+- Or you want to load a data file that's not part of your local project directory (and don't want to bother with file paths)
+
+- You can import files using the RStudio `Import Dataset` tool (see [here](https://support.rstudio.com/hc/en-us/articles/218611977-Importing-Data-with-the-RStudio-IDE) for more info).
+
+
+# Working with data in R
+
+## 3 ways to access data
+
+- By position
+
+- By logical conditions
+
+- By name
+
+## Selecting by position
+
+```{r}
+age <- c(15, 22, 45, 52, 73, 81)
+```
+
+<img src="images/vector-index.png">
+
+```{r}
+age[5]
+```
+
+```{r}
+idx <- c(3,5,6) # create vector of the elements of interest
+age[idx]
+```
+
+
+
+## Selecting elements with logical statements {.smaller}
+
+| Operator | Description |
+| :-----------:|:-------------|
+| > | greater than |
+| >= | greater than or equal to|
+| < | less than |
+| <= | less than or equal to |
+| == | equal to |
+| != | not equal to |
+| & | and |
+| \| |or |
+
+---
+
+<img src="images/vector-index.png">
+
+```{r}
+age > 50
+```
+
+```{r}
+log_idx <- age > 50
+age[log_idx]
+#same as age[age > 50]
+```
+
+---
+
+<img src="images/vector-index.png">
+
+```{r}
+age == 52
+```
+
+```{r}
+age[age == 52]
+```
+
+```{r}
+age[age != 52]
+```
+
+
+## Subsetting using names 
+
+Can assign names to each element in a vector
+
+```{r}
+age <- c(Allice = 15, Bob = 22, Charlie = 45, Dan = 52)
+age
+```
+
+```{r}
+names(age)
+```
+
+Can also set names on a given vector
+```{r, eval = FALSE}
+age <- c(15, 22, 45, 52)
+names(age) <- c('Allice', 'Bob', 'Charlie', 'Dan')
+```
+
+
+## Subsetting using names 
+
+```{r}
+age
+```
+
+Selecting elements by name is generally unambiguous
+
+```{r}
+age[c('Bob', 'Charlie')]
+```
+
+- Vectors often are unnamed. 
+
+- Most useful when working with lists (more to come)
+
+
+## Brief asside on NULL
+
+R has another special value `NULL` which represents 'the absence of a value'.
+
+For example
+```{r}
+my_vec <- c(1,2,3)
+names(my_vec)
+```
+
+Note: Subtly different from `NA`, but don't worry about that now.
+
+
+## Reordering data
+
+```{r}
+x <- c(4, 2, 3, 5, 1)
+sort(x)
+```
+
+- Or in decreasing order
+```{r}
+sort(x, decreasing = TRUE)
+```
+
+
+## Reordering using indexing
+
+Indexing can also be used to reorder data
+
+```{r}
+teaching_team <- c("Mary", "Meeta", "Radhika")
+```
+
+```{r}
+reorder_teach <- teaching_team[c(3, 1, 2)] # Saving the results to a variable
+reorder_teach
+```
+
+
+
+
+## Subsetting matrices
+
+- Same as subsetting vectors, but can be applied to both rows and columns!
+
+- General formula:
+
+```{r, eval = FALSE}
+matrix[row_set, column_set]
+```
+
+- `row_set` and `column_set` can be individual elements or vectors
+
+- Leave either blank if you want all rows/columns, e.g.:
+
+```{r, eval = FALSE}
+matrix[row_set, ] #keeps all columns
+
+matrix[, column_set] #keeps all rows
+```
+
+## Matrix subsetting examples
+
+```{r, echo = FALSE}
+counts_mat <- fread(here('data', 'counts_rpkm.csv'))
+counts_mat <- as_tibble(counts_mat)
+counts_mat <- column_to_rownames(counts_mat, var = 'Gene')
+counts_mat <- as.matrix(counts_mat)
+```
+
+```{r}
+useful::corner(counts_mat)
+```
+
+
+- 'Slice' out the third row
+
+```{r}
+counts_mat[3, ]
+```
+
+## Matrix subsetting examples
+
+- Or slice out the third column
+
+```{r}
+counts_mat[, 3]
+```
+
+## Matrix subsetting examples
+
+- Slice a set of rows and set of columns
+
+```{r}
+counts_mat[1:4, 2:3]
+```
+
+## Using rownames and column names
+
+- Use `colnames(mat)` and `rownames(mat)` to get/set the column and row names of a matrix.
+
+- Data for a specified set of rows (genes)
+
+```{r}
+counts_mat[c('ENSMUSG00000000028', 'ENSMUSG00000000037'), ]
+```
+
+
+
+- Specifying columns and rows by name
+```{r}
+counts_mat['ENSMUSG00000000001', c('sample7', 'sample5')]
+```
+
+
+
+## The %in% operator
+
+- Check whether each element of vector1 is contained in the set vector2
+
+```{r}
+A <- c(1, 2, 3, 4)
+B <- c(3, 4, 5, 6)
+
+A %in% B
+```
+
+
+## Applications of %in% 
+
+Useful for restricting to the intersection of elements in two lists
+
+```{r}
+A <- c(1, 2, 3, 4)
+B <- c(3, 4, 5, 6)
+
+A[A %in% B]
+```
+
+
+
+Or checking whether any/all elements of A are contained in B
+
+```{r}
+any(A %in% B)
+all(A %in% B)
+```
+
+
+## Other 'set' functions
+
+- `intersect(A, B)`: return the elements in both `A` and `B`
+
+- `setdiff(A, B)`: return the elements in `A` that are not in `B`
+
+- `union(A, B)`: return the elements in either `A` or `B`
+
+
+
+
+## Inspecting data visually
+
+
+<!-- ```{r, include = FALSE} -->
+<!-- counts_mat <- read_csv(here('data', 'counts_rpkm.csv')) -->
+<!-- counts_mat <- column_to_rownames(counts_mat, var = 'Gene') -->
+<!-- counts_mat <- as.matrix(counts_mat) -->
+<!-- ``` -->
+
+
+```{r, fig.width=5, fig.height = 4}
+x <- counts_mat['ENSMUSG00000081010',]
+hist(x)
+```
+
+## Inspecting data visually
+
+```{r,  fig.width=5, fig.height = 4}
+x <- counts_mat['ENSMUSG00000081010',]
+y <- counts_mat['ENSMUSG00000000037',]
+plot(x,y)
+```
+
+
+
+
+## Subsetting lists {.smaller}
+
+A list of lists
+
+```{r}
+people <- list(
+  Allice = list(age = 20, height = 50, school = 'MIT'),
+  Bob = list(age = 10, height = 30, school = 'Harvard'),
+  Charlie = list(age = 40, height = 60, school = 'BU'),
+  Frank = c(age = 10, height = 2)
+  )
+```
+
+- To select a specific element from the list use 'double brackets'
+
+```{r}
+people[[2]]
+```
+
+
+
+## Subsetting lists {.smaller}
+
+With lists it's especially useful to access elements by name
+
+```{r}
+people[['Bob']]
+```
+
+Another (equivalent) way is to use the `$` symbol. This is nice because it works with 'tab-complete'
+
+```{r, eval = FALSE}
+people$Bob
+```
+
+## Nested indexing of lists
+
+- You can use multiple indices to pull out specific elements nested within a list
+
+```{r}
+people[['Allice']][['school']]
+```
+
+- Using `$` makes it easier to read
+
+```{r}
+people$Allice$height
+```
+
+
+
+## Creating dataframes 
+
+```{r}
+species <- c("ecoli", "human", "corn")
+glengths <- c(4.6, 3000, 50000)
+```
+
+- Create a tibble (dataframe, table) using `tibble()` function.
+
+- Input as many columns as you want (must have same length)
+
+```{r}
+df <- tibble(species, glengths)
+df
+```
+
+## Creating dataframes 
+
+You can name the columns
+
+```{r}
+df <- tibble(animal_species = species, genome_lengths = glengths)
+df
+```
+
+
+## Quick note on new/old ways
+
+- `data.frame()` is the old way, gives a similar table
+
+```{r}
+df <- data.frame(species = species, glengths = glengths)
+df
+```
+
+- But it makes strings into 'factors', and has some other subtle differences.
+
+- Use `tibble()` to avoid some rare but confusing issues
+
+- Sometimes we'll use the terms 'dataframe', 'tibble', and 'table' interchangeably though.
+
+
+## Extracting a single column
+
+```{r, include = FALSE}
+df <- tibble(species, glengths)
+```
+
+You can access a column from a tibble as if it were a list of vectors (it is):
+
+```{r}
+df$species
+df[['species']]
+```
+
+## Subsetting dataframes 
+
+You can access rows and columns of dataframes like matrix indexing
+
+```{r}
+df[2,]
+```
+
+```{r}
+df[2:3, 'glengths']
+```
+
+
+## Saving data to a file
+
+- Just like the inverse of reading data
+
+- `write_csv` to save tables
+
+- `write.csv` to save matrices (keeps row names)
+
+- Use `here` function to specify the path to save the file 
+
+```{r, eval=F}
+write_csv(df, here('results', 'my_dataframe.csv'))
+```
+
+
+# Key concepts recap
+
+- Reading data in R is kinda of a mess, but stick with `read_delim` for tables, `read_excel` for Excel files, and `data.table::fread` for matrices
+
+- You can extract data from a vector by numeric index, name, or using logical conditions
+
+- Matrices and data frames are the same, you just specify which rows and columns
+
+- Lists are a bit weird, but use `$` to pull out elements by name
