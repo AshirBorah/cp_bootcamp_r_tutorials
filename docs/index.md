@@ -12,7 +12,7 @@ Before the first class, please **ensure that you complete [lesson 0](https://ash
 
 **Location**
 Thursday October 24: GHN114 4-6pm;
-                    Tech help and setup: 3:30pm (Look for me by the sofa area, message me on slack)
+                      Tech help and setup: 3:30pm (Look for me by the sofa area, message me on slack)
 
 Friday October 25: MH 1401 4-6pm;
 
