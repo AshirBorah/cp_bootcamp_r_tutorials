@@ -33,7 +33,7 @@ Link to join [Slack](https://join.slack.com/t/c3bootcamp2024/shared_invite/zt-2t
 
 
 
-[Presentation 1](https://ashirborah.github.io/Bootcamp_R_tutorials/presentations/lesson_1.html)
+[Presentation 1](https://drive.google.com/uc?export=download&id=1oTsPGj5xUys603Wn815ym5iGUVl3UPW_)
 
 [Practice 1](https://drive.google.com/uc?export=download&id=1P3WY8IiEYDAYYeb6Vw5m6sYJ1yZe8qRw)
 
