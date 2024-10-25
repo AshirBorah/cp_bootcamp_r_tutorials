@@ -1,5 +1,5 @@
 ---
-title: "Lesson 3: Introduction"
+title: "Lesson 3: Data Wrangling Basics"
 author: "Ashir Borah"
 date: "October 28th, 2024"
 knit: (function(input, ...) {

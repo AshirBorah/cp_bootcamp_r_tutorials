@@ -37,11 +37,11 @@ Link to join [Slack](https://join.slack.com/t/c3bootcamp2024/shared_invite/zt-2t
 
 [Practice 1](https://drive.google.com/uc?export=download&id=1P3WY8IiEYDAYYeb6Vw5m6sYJ1yZe8qRw)
 
-<!-- [Presentation 2](https://drive.google.com/uc?export=download&id=1SU2nNQkK5TPup4n4VhWr7MHWbmPSgbuT)
+[Presentation 2](https://drive.google.com/uc?export=download&id=1SU2nNQkK5TPup4n4VhWr7MHWbmPSgbuT)
 
 [Practice 2](https://drive.google.com/uc?export=download&id=1SiPAl3dQ09xL10oQ0EtJRaw6FzY4sJBl)
 
-[Presentation 3](https://drive.google.com/uc?export=download&id=18-DMekLh7lNUpnbMnaFD-hxSFvMPn0AF)
+<!-- [Presentation 3](https://drive.google.com/uc?export=download&id=18-DMekLh7lNUpnbMnaFD-hxSFvMPn0AF)
 
 [Practice 3](https://drive.google.com/uc?export=download&id=10-oTNd7jEiEmEvj9kVfffLCjGcNfG8p2)
 

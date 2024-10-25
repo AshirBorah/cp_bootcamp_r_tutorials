@@ -22,7 +22,7 @@ library(gapminder)
 
 ## Recap (key concepts so far)
 
-- Variables, data types in R
+- Variables, data types and data structures in R
 
 - Functions (using, getting help, making your own)
 
@@ -30,7 +30,7 @@ library(gapminder)
 
 - Using Rstudio, Projects, and Markdown notebooks
 
-- Working with data in vectors, lists, matrices, and **tables**
+- Working with data in vectors, lists, matrices, and dataframes (tables)
 
 
 # Data Wrangling
