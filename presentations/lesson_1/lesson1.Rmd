@@ -23,6 +23,12 @@ knitr::opts_chunk$set(comment = "")
 ```
 
 
+## 
+
+<center>Press the "?" key for tips on navigating these slides</center>
+
+
+
 # Welcome!
 
 <center>

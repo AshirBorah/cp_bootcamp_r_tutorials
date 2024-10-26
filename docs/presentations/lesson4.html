@@ -1992,6 +1992,12 @@ document.addEventListener('DOMContentLoaded', function(e) {
     <h3 class="date">October 29th, 2024</h3>
 </section>
 
+<section id="section" class="slide level2">
+<h2></h2>
+<center>
+Press the “?” key for tips on navigating these slides
+</center>
+</section>
 <section id="recap-key-concepts-so-far" class="slide level2">
 <h2>Recap (key concepts so far)</h2>
 <ul>
@@ -2152,12 +2158,12 @@ value.</li>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2002</span>, continent <span class="sc">==</span> <span class="st">&quot;Asia&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 6
-##   country  continent  year lifeExp      pop gdpPercap
-##   &lt;fct&gt;    &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
-## 1 Bahrain  Asia       2002    74.8   656397    23404.
-## 2 Mongolia Asia       2002    65.0  2674234     2141.
-## 3 Oman     Asia       2002    74.2  2713462    19775.
-## 4 Thailand Asia       2002    68.6 62806748     5913.</code></pre>
+##   country     continent  year lifeExp        pop gdpPercap
+##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;      &lt;int&gt;     &lt;dbl&gt;
+## 1 Philippines Asia       2002    70.3   82995088     2651.
+## 2 India       Asia       2002    62.9 1034172547     1747.
+## 3 Japan       Asia       2002    82    127065841    28605.
+## 4 Israel      Asia       2002    79.7    6029529    21906.</code></pre>
 </section>
 <section id="logical-operators-for-filtering-1" class="slide level2">
 <h2>Logical operators for filtering</h2>
@@ -2169,12 +2175,12 @@ value.</li>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2002</span> <span class="sc">|</span> continent <span class="sc">==</span> <span class="st">&quot;Asia&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 6
-##   country continent  year lifeExp       pop gdpPercap
-##   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;
-## 1 Japan   Asia       1992    79.4 124329269    26825.
-## 2 Bahrain Asia       1972    63.3    230800    18269.
-## 3 Ireland Europe     2002    77.8   3879155    34077.
-## 4 Japan   Asia       1977    75.4 113872473    16610.</code></pre>
+##   country     continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Somalia     Africa     2002    45.9  7753310      882.
+## 2 Venezuela   Americas   2002    72.8 24287670     8605.
+## 3 Bangladesh  Asia       1967    43.5 62821884      721.
+## 4 Philippines Asia       1977    60.1 46850962     2373.</code></pre>
 </section>
 <section id="logical-operators-for-filtering-2" class="slide level2">
 <h2>Logical operators for filtering</h2>
@@ -2196,7 +2202,7 @@ set</li>
 ## 6 Mexico    Americas   1992    71.5 88111030     9472.</code></pre>
 </section>
 <section id="select" class="slide level2">
-<h2>Select</h2>
+<h2>select</h2>
 <ul>
 <li>Use <code>select</code> to pick a subset of columns by name</li>
 </ul>
@@ -2224,7 +2230,7 @@ column names will do this for you</li>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="st">`</span><span class="at">1999</span><span class="st">`</span>, <span class="st">`</span><span class="at">variable with spaces</span><span class="st">`</span>)</span></code></pre></div>
 </section>
 <section id="rename" class="slide level2">
-<h2>Rename</h2>
+<h2>rename</h2>
 <ul>
 <li>Use <code>rename</code> to rename certain columns
 <ul>
@@ -2245,7 +2251,7 @@ column names will do this for you</li>
 </ul>
 </section>
 <section id="arrange" class="slide level2">
-<h2>Arrange</h2>
+<h2>arrange</h2>
 <ul>
 <li>Reorder rows based on the values of one or more variables</li>
 </ul>
@@ -2261,7 +2267,7 @@ column names will do this for you</li>
 ## 4 Angola      Africa     1952    30.0 4232095     3521.</code></pre>
 </section>
 <section id="arrange-1" class="slide level2">
-<h2>Arrange</h2>
+<h2>arrange</h2>
 <ul>
 <li>Sorting by multiple variables</li>
 </ul>
@@ -2277,7 +2283,7 @@ column names will do this for you</li>
 ## 4 Sierra Leone Africa     1952    30.3 2143249      880.</code></pre>
 </section>
 <section id="desc" class="slide level2">
-<h2>Desc</h2>
+<h2>desc</h2>
 <ul>
 <li>Can also sort in descending order</li>
 </ul>
@@ -2294,7 +2300,7 @@ column names will do this for you</li>
 ## 4 Zambia   Africa     2007    42.4 11746035     1271.</code></pre>
 </section>
 <section id="mutate" class="slide level2">
-<h2>Mutate</h2>
+<h2>mutate</h2>
 <ul>
 <li><strong>Create a new variable with a specific value</strong></li>
 <li>Create a new variable that is a function of existing variables</li>
@@ -2312,7 +2318,7 @@ column names will do this for you</li>
 ## 4 Afghanistan Asia       1967    34.0 11537966      836.        1</code></pre>
 </section>
 <section id="mutate-1" class="slide level2">
-<h2>Mutate</h2>
+<h2>mutate</h2>
 <ul>
 <li>Create a new variable with a specific value</li>
 <li><strong>Create a new variable based on other variables</strong></li>
@@ -2330,7 +2336,7 @@ column names will do this for you</li>
 ## 4 Afghanistan Asia       1967    34.0 11537966      836. 9648014150.</code></pre>
 </section>
 <section id="mutate-2" class="slide level2">
-<h2>Mutate</h2>
+<h2>mutate</h2>
 <ul>
 <li>Create a new variable with a specific value</li>
 <li>Create a new variable based on other variables</li>
@@ -2348,7 +2354,7 @@ column names will do this for you</li>
 ## 4 Afghanistan Asia       1967    34.0 11.5       836.</code></pre>
 </section>
 <section id="mutate-and-ifelse" class="slide level2">
-<h2>Mutate and ifelse</h2>
+<h2>mutate and ifelse</h2>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">10</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(x <span class="sc">&gt;</span> <span class="dv">9</span>, <span class="st">&quot;x is greater than 9&quot;</span>, <span class="st">&quot;x is not greater than 9&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;x is greater than 9&quot;</code></pre>
@@ -2357,16 +2363,16 @@ column names will do this for you</li>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">adjusted_gdp =</span> <span class="fu">ifelse</span>(year <span class="sc">&lt;</span> <span class="dv">1980</span>, gdpPercap <span class="sc">*</span> <span class="dv">2</span>, gdpPercap)) <span class="sc">%&gt;%</span> </span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 7
-##   country    continent  year lifeExp     pop gdpPercap adjusted_gdp
-##   &lt;fct&gt;      &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-## 1 Denmark    Europe     1962    72.4 4646899    13583.       27167.
-## 2 Chad       Africa     1972    45.6 3899068     1104.        2208.
-## 3 Bahrain    Asia       2002    74.8  656397    23404.       23404.
-## 4 Mozambique Africa     1957    33.8 7038035      496.         991.
-## 5 Mali       Africa     1972    40.0 5828158      581.        1163.</code></pre>
+##   country            continent  year lifeExp      pop gdpPercap adjusted_gdp
+##   &lt;fct&gt;              &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+## 1 West Bank and Gaza Asia       2007    73.4  4018332     3025.        3025.
+## 2 Albania            Europe     1982    70.4  2780097     3631.        3631.
+## 3 Australia          Oceania    1977    73.5 14074100    18334.       36668.
+## 4 Croatia            Europe     1997    73.7  4444595     9876.        9876.
+## 5 Guinea-Bissau      Africa     1997    44.9  1193708      797.         797.</code></pre>
 </section>
 <section id="summarise" class="slide level2">
-<h2>Summarise</h2>
+<h2>summarise</h2>
 <ul>
 <li>Apply a numerical summary to a column of a table</li>
 </ul>
@@ -2384,7 +2390,7 @@ single value</li>
 </ul>
 </section>
 <section id="group_by" class="slide level2">
-<h2>Group_by</h2>
+<h2>group_by</h2>
 <ul>
 <li>Combined with <code>summarise</code>, <code>group_by</code> allows
 you to summarise data for each possible value of a categorical
@@ -2405,7 +2411,7 @@ variable</li>
 ## 5 Oceania      78.8  0.905</code></pre>
 </section>
 <section id="group_by-1" class="slide level2 smaller">
-<h2 class="smaller">Group_by</h2>
+<h2 class="smaller">group_by</h2>
 <ul>
 <li>Can be applied to combinations of variables</li>
 </ul>

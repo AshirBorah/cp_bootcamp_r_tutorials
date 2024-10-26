@@ -20,6 +20,10 @@ library(tidyverse)
 library(gapminder)
 ```
 
+## 
+
+<center>Press the "?" key for tips on navigating these slides</center>
+
 ## Recap (key concepts so far)
 
 - Variables, data types and data structures in R
@@ -207,7 +211,7 @@ gapminder %>%
 
 
 
-## Select 
+## select 
 
 - Use `select` to pick a subset of columns by name
 
@@ -227,7 +231,7 @@ gapminder %>%
 df %>% select(`1999`, `variable with spaces`)
 ```
 
-## Rename
+## rename
 
 - Use `rename` to rename certain columns
     -   Expected format: new name = old name
@@ -241,7 +245,7 @@ gapminder %>%
 - Note that any column names you don't include are left unchanged
 
 
-## Arrange
+## arrange
 
 - Reorder rows based on the values of one or more variables
 
@@ -251,7 +255,7 @@ gapminder %>%
   head(4)
 ```
 
-## Arrange
+## arrange
 
 - Sorting by multiple variables
 
@@ -262,7 +266,7 @@ gapminder %>%
 ```
 
 
-## Desc
+## desc
 
 - Can also sort in descending order
 
@@ -274,7 +278,7 @@ gapminder %>%
 ```
 
 
-## Mutate
+## mutate
 
 - **Create a new variable with a specific value**
 - Create a new variable that is a function of existing variables
@@ -286,7 +290,7 @@ gapminder %>%
   head(4)
 ```
 
-## Mutate
+## mutate
 
 - Create a new variable with a specific value 
 - **Create a new variable based on other variables**
@@ -299,7 +303,7 @@ gapminder %>%
 ```
 
 
-## Mutate
+## mutate
 
 - Create a new variable with a specific value 
 - Create a new variable based on other variables
@@ -311,7 +315,7 @@ gapminder %>%
   head(4)
 ```
 
-## Mutate and ifelse 
+## mutate and ifelse 
 
 ```{r}
 x <- 10
@@ -327,7 +331,7 @@ gapminder %>%
 ```
 
 
-## Summarise
+## summarise
 
 - Apply a numerical summary to a column of a table
 
@@ -341,7 +345,7 @@ gapminder %>%
 - Works with any functions that take a vector as input and return a single value
 
 
-## Group_by
+## group_by
 
 - Combined with `summarise`, `group_by` allows you to summarise data for each possible value of a categorical variable
 
@@ -353,7 +357,7 @@ gapminder %>%
             sd_exp = sd(lifeExp))
 ```
 
-## Group_by {.smaller}
+## group_by {.smaller}
 
 - Can be applied to combinations of variables
 

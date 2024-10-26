@@ -40,7 +40,9 @@ df <- gapminder %>%
   filter(country == 'Romania')
 ```
 
+## 
 
+<center>Press the "?" key for tips on navigating these slides</center>
 
 ## BaseR plotting 
 

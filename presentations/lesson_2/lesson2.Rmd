@@ -20,6 +20,10 @@ knitr::opts_chunk$set(echo = TRUE,
 library(tidyverse)
 ```
 
+## 
+
+<center>Press the "?" key for tips on navigating these slides</center>
+
 # Functions
 
 ## What are functions?

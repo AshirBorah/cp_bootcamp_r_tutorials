@@ -31,7 +31,9 @@ library(useful)
 
 
 ```
+## 
 
+<center>Press the "?" key for tips on navigating these slides</center>
 
 ## Outline
 

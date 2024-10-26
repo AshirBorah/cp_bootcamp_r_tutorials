@@ -27,6 +27,9 @@ gapminder <- gapminder %>%
          continent = as.character(continent))
 ```
 
+## 
+
+<center>Press the "?" key for tips on navigating these slides</center>
 
 ## Overview
 

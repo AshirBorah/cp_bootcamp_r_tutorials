@@ -35,6 +35,9 @@ pretty_table <- function(table, max_rows = 10, max_cols = 10) {
 }
 ```
 
+## 
+
+<center>Press the "?" key for tips on navigating these slides</center>
 
 # Overview
 
