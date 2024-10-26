@@ -35,13 +35,13 @@ Link to join [Slack](https://join.slack.com/t/c3bootcamp2024/shared_invite/zt-2t
 
 [Presentation 1](https://drive.google.com/uc?export=download&id=1oTsPGj5xUys603Wn815ym5iGUVl3UPW_)  
 
-[Presentation 1 HTML version](https://ashirborah.github.io/Bootcamp_R_tutorials/presentations/lesson_1.html)
+[Presentation 1 HTML version](https://ashirborah.github.io/Bootcamp_R_tutorials/presentations/lesson1.html)
 
 [Practice 1](https://drive.google.com/uc?export=download&id=1P3WY8IiEYDAYYeb6Vw5m6sYJ1yZe8qRw)
 
 [Presentation 2](https://drive.google.com/uc?export=download&id=1SU2nNQkK5TPup4n4VhWr7MHWbmPSgbuT)  
 
-[Presentation 2 HTML version](https://ashirborah.github.io/Bootcamp_R_tutorials/presentations/lesson_2.html)  
+[Presentation 2 HTML version](https://ashirborah.github.io/Bootcamp_R_tutorials/presentations/lesson2.html)  
 
 [Practice 2](https://drive.google.com/uc?export=download&id=1SiPAl3dQ09xL10oQ0EtJRaw6FzY4sJBl)
 
