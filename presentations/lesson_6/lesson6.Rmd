@@ -1,6 +1,6 @@
 ---
 title: "Lesson 6: Tidying and Transforming Data"
-author: "Natalie Elphick"
+author: "Ashir Borah and Natalie Elphick"
 date: "October 31th, 2024"
 knit: (function(input, ...) {
     rmarkdown::render(

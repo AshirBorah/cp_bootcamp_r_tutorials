@@ -1,6 +1,6 @@
 ---
 title: "Lesson 7: Further Topics"
-author: "Ashir Borah"
+author: "Ashir Borah and Natalie Elphick"
 date: "November 1st, 2024"
 knit: (function(input, ...) {
     rmarkdown::render(

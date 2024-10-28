@@ -1,6 +1,6 @@
 ---
 title: "Lesson 5: Data Visualization"
-author: "Ashir Borah"
+author: "Ashir Borah and Natalie Elphick"
 date: "October 30th, 2024"
 knit: (function(input, ...) {
     rmarkdown::render(

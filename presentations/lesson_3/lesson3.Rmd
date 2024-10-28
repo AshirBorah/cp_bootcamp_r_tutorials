@@ -1,6 +1,6 @@
 ---
 title: "Lesson 3: Data Wrangling Basics"
-author: "Ashir Borah"
+author: "Ashir Borah and Natalie Elphick"
 date: "October 28th, 2024"
 knit: (function(input, ...) {
     rmarkdown::render(

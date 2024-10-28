@@ -1,6 +1,6 @@
 ---
 title: "Lesson 4: Introduction to Tidyverse"
-author: "Natalie Elphick"
+author: "Ashir Borah and Natalie Elphick"
 date: "October 29th, 2024"
 knit: (function(input, ...) {
     rmarkdown::render(
