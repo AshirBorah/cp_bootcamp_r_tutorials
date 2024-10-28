@@ -98,7 +98,7 @@ library(useful)
 
 <!-- ## R environment -->
 
-<!-- <!-- This can be incorporated in the live demo --> -->
+<!-- <!-- This can be incorporated in the live demo -->
 
 <!-- - See info on current variables -->
 
@@ -786,3 +786,54 @@ write_csv(df, here('results', 'my_dataframe.csv'))
 - Matrices and data frames are the same, you just specify which rows and columns
 
 - Lists are a bit weird, but use `$` to pull out elements by name
+
+# ChatGPT/LLMs Tips for R
+
+## General Tips
+
+-   Follow [UCSF's institutional guidelines](https://ai.ucsf.edu/ucsf-ai-guidance) on using LLMs
+-   Always **critically review** the outputs of LLMs
+-   Provide **as much detail as possible** about the problem in the 1st prompt
+-   Use separate chats for separate tasks/projects
+-   Commented R code yields better responses
+-   Never input sensitive data into an LLM
+
+## When to use LLMs?
+
+-   To help you understand coding concepts by providing examples and explanations
+-   To reformat or optimize code that already works
+-   To explain what someone else's code is doing
+-   To write **small** amounts of code that you can test easily
+
+<u>Over-reliance on LLMs to write your code can prevent you from learning the basics.</u>
+
+## Coding with LLMs Tips
+
+-   LLMs have a limited context (memory)
+    -   If you query them long enough they "forget"
+-   Provide short blocks of code (fewer than 200 lines)
+-   Works best on single functions instead of whole code files
+-   Include in the 1st prompt the kinds of code outputs you want
+    -   "Output short blocks of commented code"
+    -   "Output only the code you modified"
+    -   "Make minimal changes to fix the issue"
+
+## Prompt Engineering
+
+-   Developing and optimizing prompts to get the desired outputs from LLMs
+-   **Zero-shot**: the prompt does not contain examples
+-   **Few-shot**: the prompt contains a few examples of responses
+-   **Chain-of-thought**: Few-shot but the examples explain their reasoning
+
+This is an on-going field of active research, see this [guide](https://www.promptingguide.ai/techniques) for more techniques.
+
+
+## Recap
+
+-   Avoid over-reliance on LLMs
+-   Provide lots of details about the problem in the 1st prompt
+-   If the outputs do not make sense then try different styles of prompting
+
+
+
+

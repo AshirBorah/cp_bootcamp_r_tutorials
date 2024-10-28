@@ -47,14 +47,14 @@ Link to join [Slack](https://join.slack.com/t/c3bootcamp2024/shared_invite/zt-2t
 
 Weekend Practice [RNAseq analysis](https://drive.google.com/uc?export=download&id=17cMdGaSOLE3ADkKfauFtuVzGaghfectS)
 
-<!-- [Presentation 3](https://drive.google.com/uc?export=download&id=18-DMekLh7lNUpnbMnaFD-hxSFvMPn0AF)
+[Presentation 3](https://ashirborah.github.io/Bootcamp_R_tutorials/presentations/lesson3.html)
 
 [Practice 3](https://drive.google.com/uc?export=download&id=10-oTNd7jEiEmEvj9kVfffLCjGcNfG8p2)
 
 [Practice 3 Data](https://drive.google.com/uc?export=download&id=1I6rAjghZnXnbAkYLv7GNE4F4ZIxF44ne)
 
 
-
+<!-- 
 Weekend Practice Solutions [RNAseq analysis solutions](https://drive.google.com/uc?export=download&id=1uyWYZTmlk71WqHg6faf-o2HU7qajmQ-k)
 
 [Presentation 4](https://drive.google.com/uc?export=download&id=1dOrPVX7ED1zXZ-rQRMP6qvlSNSBx4VO-)

@@ -2047,7 +2047,6 @@ files)</p>
 </ul>
 <!-- ## R environment -->
 <!-- <!-- This can be incorporated in the live demo -->
-<p>–&gt;</p>
 <!-- - See info on current variables -->
 <!-- - Clearing variables -->
 <!-- - View data tables, etc. -->
@@ -22178,6 +22177,79 @@ rows and columns</p></li>
 elements by name</p></li>
 </ul>
 </section>
+
+<section>
+<section id="chatgptllms-tips-for-r" class="title-slide slide level1">
+<h1>ChatGPT/LLMs Tips for R</h1>
+
+</section>
+<section id="general-tips" class="slide level2">
+<h2>General Tips</h2>
+<ul>
+<li>Follow <a href="https://ai.ucsf.edu/ucsf-ai-guidance">UCSF’s
+institutional guidelines</a> on using LLMs</li>
+<li>Always <strong>critically review</strong> the outputs of LLMs</li>
+<li>Provide <strong>as much detail as possible</strong> about the
+problem in the 1st prompt</li>
+<li>Use separate chats for separate tasks/projects</li>
+<li>Commented R code yields better responses</li>
+<li>Never input sensitive data into an LLM</li>
+</ul>
+</section>
+<section id="when-to-use-llms" class="slide level2">
+<h2>When to use LLMs?</h2>
+<ul>
+<li>To help you understand coding concepts by providing examples and
+explanations</li>
+<li>To reformat or optimize code that already works</li>
+<li>To explain what someone else’s code is doing</li>
+<li>To write <strong>small</strong> amounts of code that you can test
+easily</li>
+</ul>
+<p><u>Over-reliance on LLMs to write your code can prevent you from
+learning the basics.</u></p>
+</section>
+<section id="coding-with-llms-tips" class="slide level2">
+<h2>Coding with LLMs Tips</h2>
+<ul>
+<li>LLMs have a limited context (memory)
+<ul>
+<li>If you query them long enough they “forget”</li>
+</ul></li>
+<li>Provide short blocks of code (fewer than 200 lines)</li>
+<li>Works best on single functions instead of whole code files</li>
+<li>Include in the 1st prompt the kinds of code outputs you want
+<ul>
+<li>“Output short blocks of commented code”</li>
+<li>“Output only the code you modified”</li>
+<li>“Make minimal changes to fix the issue”</li>
+</ul></li>
+</ul>
+</section>
+<section id="prompt-engineering" class="slide level2">
+<h2>Prompt Engineering</h2>
+<ul>
+<li>Developing and optimizing prompts to get the desired outputs from
+LLMs</li>
+<li><strong>Zero-shot</strong>: the prompt does not contain
+examples</li>
+<li><strong>Few-shot</strong>: the prompt contains a few examples of
+responses</li>
+<li><strong>Chain-of-thought</strong>: Few-shot but the examples explain
+their reasoning</li>
+</ul>
+<p>This is an on-going field of active research, see this <a href="https://www.promptingguide.ai/techniques">guide</a> for more
+techniques.</p>
+</section>
+<section id="recap" class="slide level2">
+<h2>Recap</h2>
+<ul>
+<li>Avoid over-reliance on LLMs</li>
+<li>Provide lots of details about the problem in the 1st prompt</li>
+<li>If the outputs do not make sense then try different styles of
+prompting</li>
+</ul>
+</section></section>
     </div>
   </div>
 
