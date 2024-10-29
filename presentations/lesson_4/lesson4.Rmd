@@ -15,7 +15,10 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE,
+                      comment = "")
 library(tidyverse)
 library(gapminder)
 ```
@@ -36,30 +39,34 @@ library(gapminder)
 
 - Working with data in vectors, lists, matrices, and dataframes (tables)
 
+# Tidyverse
+
+## Tidyverse
+
+-   The tidyverse packages work well together because they share
+common data representations and design principles
+      -   Rows = Observations/Samples
+      -   Columns = Variables/Measurements
+-   [ggplot2](https://ggplot2.tidyverse.org/), for data visualization.
+-   [dplyr](https://dplyr.tidyverse.org/), for data manipulation.
+-   [tidyr](https://tidyr.tidyverse.org/), for data tidying.
+-   [readr](https://readr.tidyverse.org/), for data import.
+-   [purrr](https://purrr.tidyverse.org/), for iteration.
+-   and more..
+
 
 # Data Wrangling
 
 ## Data Wrangling
 
-- Much of data analysis can be viewed as taking some datasets (the 'nouns') and applying a series of transformations (the 'verbs')
+-   Turning messy data into useful statistics and visualizations
 
-- These transformations are nessecary to create the format needed to create outputs (plots, summary tables etc.)
+-   Taking some datasets (the 'nouns') and applying a series of transformations (the 'verbs')
 
-- The nouns are typically 'tibbles' (could be matrices, vectors or lists).
-
-- The verbs are functions
-
-- Today we'll learn about the key 'verbs' for wrangling tables
+-   These transformations are nessecary to create the format needed to create outputs (plots, summary tables etc.)
 
 
-## The Tidyverse
 
-<img src="images/tidyverse_website.png" width="50%">
-
--   Read more [here](https://www.tidyverse.org/packages/)
--   Tidy data convention:
-    -   Rows = Observations/Samples
-    -   Columns = Variables/Measurements
 
 ## Pipes
 
@@ -67,18 +74,16 @@ We often want to apply multiple functions ('verbs') to our data in a chain.
 
 <img src="images/pipe_schematic.png" width = 85%>
 
-<!-- <img src="images/pipe.png"> -->
-
 `%>%` is a special R symbol for chaining together functions (part of `tidyverse`)
 
 
 ## Pipe Example
 
 ```{r, eval = FALSE}
-#Very hard to read
+# Hard to read
 bop(scoop(hop(foo_foo, through = forest), up = field_mice), on = head)
 
-#creating unnecessary 'temporary' variables
+# Creating unnecessary 'temporary' variables
 foo_foo_1 <- hop(foo_foo, through = forest)
 foo_foo_2 <- scoop(foo_foo_1, up = field_mice)
 foo_foo_3 <- bop(foo_foo_2, on = head)
@@ -126,33 +131,43 @@ x %>% c('d', .)
 
 - Note: Rstudio keyboard shortcut: Cmd + shift + M
 
+## Base R Pipe
+-   Introduced in R 4.1.0, the base R pipe is represented by `|>`
+
+-   It works similarly to %>% 
+
+
+```{r}
+x <- c('a', 'b', 'c')
+x |> c('d')
+```
+Use `_` as a placeholder if the pipe output should go to a different argument:
+
+```{r}
+x |> rep(x = _, 2)
+```
+When using the placeholder `_` the arguement must be named.
+
+
+
 
 # Data wrangling verbs
 
-## Key data wrangling verbs
 
-dplyr package 
+## dplyr
+-    Offers a set of verbs for data manipulation   
+      -    [mutate()](https://dplyr.tidyverse.org/reference/mutate.html) adds new variables that are functions of existing
+    columns
+      -    [select()](https://dplyr.tidyverse.org/reference/select.html) picks columns based on their names
+      -    [filter()](https://dplyr.tidyverse.org/reference/filter.html) picks rows based on their values
+      -    [summarise()](https://dplyr.tidyverse.org/reference/summarise.html) reduces multiple values down to a single summary
+      -    [arrange()](https://dplyr.tidyverse.org/reference/arrange.html) changes the ordering of the rows
+      -    [group_by()](https://dplyr.tidyverse.org/reference/group_by.html) allows any function above to be applied within a categorical grouping
 
-  - `filter`
-  
-  - `select`
-  
-  - `arrange`
-  
-  - `mutate`
-  
-  - `summarise`
-  
-  - `group_by`
+
 
 ## Gapminder package
 
-```{r, include = FALSE}
-library(tidyverse)
-```
-
-```{r, ref.label="gapminder_setup"}
-```
 
 ```{r gapminder_setup}
 #install.packages('gapminder')
@@ -162,7 +177,6 @@ library(gapminder)
 ```{r show_gapminder}
 head(gapminder)
 ```
-
 
 
 ## Filter
@@ -293,7 +307,7 @@ gapminder %>%
 ## mutate
 
 - Create a new variable with a specific value 
-- **Create a new variable based on other variables**
+- **Create a new variable that is a function of existing variables**
 - Overwrite the contents of an existing variable
   
 ```{r gapminder_mutate_arithmetic}
@@ -306,7 +320,7 @@ gapminder %>%
 ## mutate
 
 - Create a new variable with a specific value 
-- Create a new variable based on other variables
+- Create a new variable that is a function of existing variables
 - **Overwrite the contents of an existing variable**
   
 ```{r gapminder_mutate_change_var}
@@ -377,13 +391,65 @@ gapminder %>%
 
 <img src="images/dplyr_visual.png" width="100%">
 
-[dplyr cheat sheet](https://4.files.edl.io/b9e2/07/12/19/142839-a23788fb-1d3a-4665-9dc4-33bfd442c296.pdf)
+[dplyr cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf)
 
 ## Additional resources
 
 - [dplyr intro](https://dplyr.tidyverse.org/articles/dplyr.html)
 
-- [DataCamp Slides](https://ismayc.github.io/talks/ness-infer/slide_deck.html#13
-)
 - More on pipes: [DataCamp](https://www.datacamp.com/community/tutorials/pipe-r-tutorial), 
 [TowardsDataScience](https://towardsdatascience.com/an-introduction-to-the-pipe-in-r-823090760d64)
+
+
+
+# ChatGPT/LLMs Tips for R
+
+## General Tips
+
+-   Follow [UCSF's institutional guidelines](https://ai.ucsf.edu/ucsf-ai-guidance) on using LLMs
+-   Always **critically review** the outputs of LLMs
+-   Provide **as much detail as possible** about the problem in the 1st prompt
+-   Use separate chats for separate tasks/projects
+-   Commented R code yields better responses
+-   Never input sensitive data into an LLM
+
+## When to use LLMs?
+
+-   To help you understand coding concepts by providing examples and explanations
+-   To reformat or optimize code that already works
+-   To explain what someone else's code is doing
+-   To write **small** amounts of code that you can test easily
+
+<u>Over-reliance on LLMs to write your code can prevent you from learning the basics.</u>
+
+## Coding with LLMs Tips
+
+-   LLMs have a limited context (memory)
+    -   If you query them long enough they "forget"
+-   Provide short blocks of code (fewer than 200 lines)
+-   Works best on single functions instead of whole code files
+-   Include in the 1st prompt the kinds of code outputs you want
+    -   "Output short blocks of commented code"
+    -   "Output only the code you modified"
+    -   "Make minimal changes to fix the issue"
+
+## Prompt Engineering
+
+-   Developing and optimizing prompts to get the desired outputs from LLMs
+-   **Zero-shot**: the prompt does not contain examples
+-   **Few-shot**: the prompt contains a few examples of responses
+-   **Chain-of-thought**: Few-shot but the examples explain their reasoning
+
+This is an on-going field of active research, see this [guide](https://www.promptingguide.ai/techniques) for more techniques.
+
+
+## Recap
+
+-   Avoid over-reliance on LLMs
+-   Provide lots of details about the problem in the 1st prompt
+-   If the outputs do not make sense then try different styles of prompting
+
+
+
+
+
