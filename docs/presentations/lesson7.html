@@ -2025,9 +2025,9 @@ Press the “?” key for tips on navigating these slides
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (element <span class="cf">in</span> my_vector) {</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(element)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<pre><code>## [1] 2
-## [1] 5
-## [1] 3</code></pre>
+<pre><code>[1] 2
+[1] 5
+[1] 3</code></pre>
 </section>
 <section id="for-loop-1" class="slide level2">
 <h2>For loop</h2>
@@ -2038,11 +2038,11 @@ Press the “?” key for tips on navigating these slides
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  count <span class="ot">&lt;-</span> count <span class="sc">+</span> val</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(count)</span></code></pre></div>
-<pre><code>## [1] 44</code></pre>
+<pre><code>[1] 44</code></pre>
 <p>We’ve been using them (implicitly)</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>my_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">9</span>,<span class="dv">8</span>,<span class="dv">11</span>,<span class="dv">6</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(my_vector)</span></code></pre></div>
-<pre><code>## [1] 44</code></pre>
+<pre><code>[1] 44</code></pre>
 </section>
 <section id="looping-over-indices-of-a-vector" class="slide level2">
 <h2>Looping over indices of a vector</h2>
@@ -2053,7 +2053,7 @@ Press the “?” key for tips on navigating these slides
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  mod_vector[i] <span class="ot">&lt;-</span> my_vector[i] <span class="sc">+</span> <span class="dv">1</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>mod_vector</span></code></pre></div>
-<pre><code>## [1]  3  6  4 10  9 12  7</code></pre>
+<pre><code>[1]  3  6  4 10  9 12  7</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>my_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">9</span>,<span class="dv">8</span>,<span class="dv">11</span>,<span class="dv">6</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mod_vector <span class="ot">&lt;-</span> my_vector <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div>
 </section>
@@ -2066,7 +2066,7 @@ loop over</p>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  my_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(my_vector, <span class="st">&#39;ha&#39;</span>)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(my_vector)</span></code></pre></div>
-<pre><code>## [1] &quot;ha&quot; &quot;ha&quot; &quot;ha&quot; &quot;ha&quot; &quot;ha&quot;</code></pre>
+<pre><code>[1] &quot;ha&quot; &quot;ha&quot; &quot;ha&quot; &quot;ha&quot; &quot;ha&quot;</code></pre>
 </section>
 <section id="components-of-a-for-loop" class="slide level2">
 <h2>Components of a for loop</h2>
@@ -2112,7 +2112,7 @@ holds</p>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">test_num</span>(<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;Negative number&quot;</code></pre>
+<pre><code>[1] &quot;Negative number&quot;</code></pre>
 </section>
 <section id="if-example" class="slide level2">
 <h2>If example</h2>
@@ -2125,7 +2125,7 @@ holds</p>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(count)</span></code></pre></div>
-<pre><code>## [1] 3</code></pre>
+<pre><code>[1] 3</code></pre>
 </section>
 <section id="example-loop" class="slide level2 smaller">
 <h2 class="smaller">Example loop</h2>
@@ -2139,7 +2139,7 @@ gapminder</p>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>   med_lifeExp[i] <span class="ot">&lt;-</span> <span class="fu">median</span>(gap_cur_country<span class="sc">$</span>lifeExp)</span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(med_lifeExp)</span></code></pre></div>
-<pre><code>## [1] 39.1460 69.6750 59.6910 39.6945 69.2115 74.1150</code></pre>
+<pre><code>[1] 39.1460 69.6750 59.6910 39.6945 69.2115 74.1150</code></pre>
 </section>
 <section id="often-a-better-way" class="slide level2 smaller">
 <h2 class="smaller">Often a better way</h2>
@@ -2148,20 +2148,20 @@ when it comes to loops there are often more efficient ways</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country) <span class="sc">%&gt;%</span> </span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(lifeExp))</span></code></pre></div>
-<pre><code>## # A tibble: 142 × 2
-##    country     median
-##    &lt;chr&gt;        &lt;dbl&gt;
-##  1 Afghanistan   39.1
-##  2 Albania       69.7
-##  3 Algeria       59.7
-##  4 Angola        39.7
-##  5 Argentina     69.2
-##  6 Australia     74.1
-##  7 Austria       72.7
-##  8 Bahrain       67.3
-##  9 Bangladesh    48.5
-## 10 Belgium       73.4
-## # ℹ 132 more rows</code></pre>
+<pre><code># A tibble: 142 × 2
+   country     median
+   &lt;chr&gt;        &lt;dbl&gt;
+ 1 Afghanistan   39.1
+ 2 Albania       69.7
+ 3 Algeria       59.7
+ 4 Angola        39.7
+ 5 Argentina     69.2
+ 6 Australia     74.1
+ 7 Austria       72.7
+ 8 Bahrain       67.3
+ 9 Bangladesh    48.5
+10 Belgium       73.4
+# ℹ 132 more rows</code></pre>
 <!-- MORE REFS -->
 </section>
 <section id="loops-the-tidyverse-way" class="slide level2 smaller">
@@ -2215,14 +2215,14 @@ into a tibble (by row or column)</p></li>
 <h2>String manipulation</h2>
 <p>Or what if we have a list of pathway enrichment results</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>GO <span class="sc">%&gt;%</span> <span class="fu">select</span>(term.name, p.value) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 5 × 2
-##   term.name                                           p.value
-##   &lt;chr&gt;                                                 &lt;dbl&gt;
-## 1 type I interferon production                        0.00434
-## 2 regulation of type I interferon production          0.0033 
-## 3 negative regulation of type I interferon production 0.0297 
-## 4 positive regulation of type I interferon production 0.0193 
-## 5 cell communication by electrical coupling           0.0148</code></pre>
+<pre><code># A tibble: 5 × 2
+  term.name                                           p.value
+  &lt;chr&gt;                                                 &lt;dbl&gt;
+1 type I interferon production                        0.00434
+2 regulation of type I interferon production          0.0033 
+3 negative regulation of type I interferon production 0.0297 
+4 positive regulation of type I interferon production 0.0193 
+5 cell communication by electrical coupling           0.0148 </code></pre>
 <p>How could we find results for pathways involving certain key terms,
 like ‘interferon’?</p>
 </section>
@@ -2256,19 +2256,19 @@ like ‘interferon’?</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>str_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;why&quot;</span>, <span class="st">&quot;video&quot;</span>, <span class="st">&quot;cross&quot;</span>, <span class="st">&quot;extra&quot;</span>, <span class="st">&quot;deal&quot;</span>, <span class="st">&quot;authority&quot;</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str_length</span>(str_vec)</span></code></pre></div>
-<pre><code>## [1] 3 5 5 5 4 9</code></pre>
+<pre><code>[1] 3 5 5 5 4 9</code></pre>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_sub</span>(str_vec, <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;hy&quot;       &quot;ideo&quot;     &quot;ross&quot;     &quot;xtra&quot;     &quot;eal&quot;      &quot;uthority&quot;</code></pre>
+<pre><code>[1] &quot;hy&quot;       &quot;ideo&quot;     &quot;ross&quot;     &quot;xtra&quot;     &quot;eal&quot;      &quot;uthority&quot;</code></pre>
 </section>
 <section id="str_c" class="slide level2">
 <h2>str_c</h2>
 <p>collapse vector of strings into a single string</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;dog&#39;</span>, <span class="st">&#39;walked&#39;</span>, <span class="st">&#39;into&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;bar&#39;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;adogwalkedintoabar&quot;</code></pre>
+<pre><code>[1] &quot;adogwalkedintoabar&quot;</code></pre>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>address <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Main St.&#39;</span>, <span class="st">&#39;Ames St.&#39;</span>, <span class="st">&#39;Brookline Ave.&#39;</span>)</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>nums <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">415</span>, <span class="dv">75</span>, <span class="dv">450</span>)</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str_c</span>(nums, address, <span class="at">sep =</span> <span class="st">&#39; &#39;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;415 Main St.&quot;       &quot;75 Ames St.&quot;        &quot;450 Brookline Ave.&quot;</code></pre>
+<pre><code>[1] &quot;415 Main St.&quot;       &quot;75 Ames St.&quot;        &quot;450 Brookline Ave.&quot;</code></pre>
 <!-- ## str_c -->
 <!-- Element-wise combining string vectors -->
 <!-- ```{r} -->
@@ -2284,14 +2284,14 @@ like ‘interferon’?</p>
 </ul>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>str_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;why&quot;</span>, <span class="st">&quot;video&quot;</span>, <span class="st">&quot;cross&quot;</span>, <span class="st">&quot;extra&quot;</span>, <span class="st">&quot;deal&quot;</span>, <span class="st">&quot;authority&quot;</span>)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace</span>(str_vec, <span class="at">pattern =</span> <span class="st">&quot;y&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;?&quot;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;wh?&quot;       &quot;video&quot;     &quot;cross&quot;     &quot;extra&quot;     &quot;deal&quot;      &quot;authorit?&quot;</code></pre>
+<pre><code>[1] &quot;wh?&quot;       &quot;video&quot;     &quot;cross&quot;     &quot;extra&quot;     &quot;deal&quot;      &quot;authorit?&quot;</code></pre>
 </section>
 <section id="str_extract" class="slide level2">
 <h2>str_extract</h2>
 <p>Pull out the matching sequences from each string</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>str_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;why&quot;</span>, <span class="st">&quot;floss&quot;</span>, <span class="st">&quot;cross&quot;</span>, <span class="st">&quot;extra&quot;</span>, <span class="st">&quot;boss&quot;</span>)</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(str_vec, <span class="st">&#39;oss&#39;</span>)</span></code></pre></div>
-<pre><code>## [1] NA    &quot;oss&quot; &quot;oss&quot; NA    &quot;oss&quot;</code></pre>
+<pre><code>[1] NA    &quot;oss&quot; &quot;oss&quot; NA    &quot;oss&quot;</code></pre>
 </section>
 <section id="string-manipulation-with-dplyr" class="slide level2">
 <h2>String manipulation with dplyr</h2>
@@ -2299,14 +2299,14 @@ like ‘interferon’?</p>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>gset <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;interferon signaling&#39;</span>, <span class="st">&#39;interferon signaling&#39;</span>, <span class="st">&#39;NFKB signaling&#39;</span>,<span class="st">&#39;ER-nucleus signaling&#39;</span>, <span class="st">&#39;TP53 pathway&#39;</span>)</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>pathways <span class="ot">&lt;-</span> <span class="fu">tibble</span>(db, gset)</span></code></pre></div>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>pathways</span></code></pre></div>
-<pre><code>## # A tibble: 5 × 2
-##   db    gset                
-##   &lt;chr&gt; &lt;chr&gt;               
-## 1 GO    interferon signaling
-## 2 KEGG  interferon signaling
-## 3 GO    NFKB signaling      
-## 4 GO    ER-nucleus signaling
-## 5 KEGG  TP53 pathway</code></pre>
+<pre><code># A tibble: 5 × 2
+  db    gset                
+  &lt;chr&gt; &lt;chr&gt;               
+1 GO    interferon signaling
+2 KEGG  interferon signaling
+3 GO    NFKB signaling      
+4 GO    ER-nucleus signaling
+5 KEGG  TP53 pathway        </code></pre>
 </section>
 <section id="string-manipulation-with-dplyr-1" class="slide level2">
 <h2>String manipulation with dplyr</h2>
@@ -2314,50 +2314,50 @@ like ‘interferon’?</p>
 <code>separate</code>)</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>pathways <span class="sc">%&gt;%</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">db_gset =</span> <span class="fu">str_c</span>(db, gset, <span class="at">sep =</span> <span class="st">&#39; &#39;</span>))</span></code></pre></div>
-<pre><code>## # A tibble: 5 × 3
-##   db    gset                 db_gset                  
-##   &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;                    
-## 1 GO    interferon signaling GO interferon signaling  
-## 2 KEGG  interferon signaling KEGG interferon signaling
-## 3 GO    NFKB signaling       GO NFKB signaling        
-## 4 GO    ER-nucleus signaling GO ER-nucleus signaling  
-## 5 KEGG  TP53 pathway         KEGG TP53 pathway</code></pre>
+<pre><code># A tibble: 5 × 3
+  db    gset                 db_gset                  
+  &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;                    
+1 GO    interferon signaling GO interferon signaling  
+2 KEGG  interferon signaling KEGG interferon signaling
+3 GO    NFKB signaling       GO NFKB signaling        
+4 GO    ER-nucleus signaling GO ER-nucleus signaling  
+5 KEGG  TP53 pathway         KEGG TP53 pathway        </code></pre>
 </section>
 <section id="string-manipulation-with-dplyr-2" class="slide level2">
 <h2>String manipulation with dplyr</h2>
 <p>Modify text in a column</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>pathways <span class="sc">%&gt;%</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">db_gset =</span> <span class="fu">str_replace</span>(gset, <span class="st">&#39;signaling&#39;</span>, <span class="st">&#39;sig.&#39;</span>))</span></code></pre></div>
-<pre><code>## # A tibble: 5 × 3
-##   db    gset                 db_gset        
-##   &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;          
-## 1 GO    interferon signaling interferon sig.
-## 2 KEGG  interferon signaling interferon sig.
-## 3 GO    NFKB signaling       NFKB sig.      
-## 4 GO    ER-nucleus signaling ER-nucleus sig.
-## 5 KEGG  TP53 pathway         TP53 pathway</code></pre>
+<pre><code># A tibble: 5 × 3
+  db    gset                 db_gset        
+  &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;          
+1 GO    interferon signaling interferon sig.
+2 KEGG  interferon signaling interferon sig.
+3 GO    NFKB signaling       NFKB sig.      
+4 GO    ER-nucleus signaling ER-nucleus sig.
+5 KEGG  TP53 pathway         TP53 pathway   </code></pre>
 </section>
 <section id="string-manipulation-with-dplyr-3" class="slide level2">
 <h2>String manipulation with dplyr</h2>
 <p>Filter based on properties of string column (e.g. its length)</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>pathways <span class="sc">%&gt;%</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_length</span>(db) <span class="sc">&gt;</span> <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 2 × 3
-##   db    gset                 db_gset        
-##   &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;          
-## 1 KEGG  interferon signaling interferon sig.
-## 2 KEGG  TP53 pathway         TP53 pathway</code></pre>
+<pre><code># A tibble: 2 × 3
+  db    gset                 db_gset        
+  &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;          
+1 KEGG  interferon signaling interferon sig.
+2 KEGG  TP53 pathway         TP53 pathway   </code></pre>
 </section>
 <section id="string-manipulation-with-dplyr-4" class="slide level2">
 <h2>String manipulation with dplyr</h2>
 <p>Filter to rows matching a certain text pattern</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>pathways <span class="sc">%&gt;%</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(gset, <span class="st">&#39;interferon&#39;</span>))</span></code></pre></div>
-<pre><code>## # A tibble: 2 × 3
-##   db    gset                 db_gset        
-##   &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;          
-## 1 GO    interferon signaling interferon sig.
-## 2 KEGG  interferon signaling interferon sig.</code></pre>
+<pre><code># A tibble: 2 × 3
+  db    gset                 db_gset        
+  &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;          
+1 GO    interferon signaling interferon sig.
+2 KEGG  interferon signaling interferon sig.</code></pre>
 </section>
 <section id="regular-expressions" class="slide level2">
 <h2>regular expressions</h2>
@@ -2374,14 +2374,14 @@ tutorial</a></p></li>
 <section id="an-example-putting-things-together" class="slide level2">
 <h2>An example putting things together</h2>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(GO, <span class="dv">5</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 5 × 3
-##   term.id    term.name                                           p.value
-##   &lt;chr&gt;      &lt;chr&gt;                                                 &lt;dbl&gt;
-## 1 GO:0032606 type I interferon production                        0.00434
-## 2 GO:0032479 regulation of type I interferon production          0.0033 
-## 3 GO:0032480 negative regulation of type I interferon production 0.0297 
-## 4 GO:0032481 positive regulation of type I interferon production 0.0193 
-## 5 GO:0010644 cell communication by electrical coupling           0.0148</code></pre>
+<pre><code># A tibble: 5 × 3
+  term.id    term.name                                           p.value
+  &lt;chr&gt;      &lt;chr&gt;                                                 &lt;dbl&gt;
+1 GO:0032606 type I interferon production                        0.00434
+2 GO:0032479 regulation of type I interferon production          0.0033 
+3 GO:0032480 negative regulation of type I interferon production 0.0297 
+4 GO:0032481 positive regulation of type I interferon production 0.0193 
+5 GO:0010644 cell communication by electrical coupling           0.0148 </code></pre>
 <p>Let’s find just the GO terms with ‘bolic’ in their name</p>
 </section>
 <section id="an-example-putting-things-together-1" class="slide level2">
@@ -2391,14 +2391,14 @@ tutorial</a></p></li>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(term.name, <span class="st">&#39;bolic&#39;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type_of_bolic =</span> <span class="fu">str_extract</span>(term.name, <span class="st">&#39;[:alnum:]+bolic&#39;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 5 × 4
-##   term.id    term.name                                     p.value type_of_bolic
-##   &lt;chr&gt;      &lt;chr&gt;                                           &lt;dbl&gt; &lt;chr&gt;        
-## 1 GO:0046653 tetrahydrofolate metabolic process           4.39e- 2 metabolic    
-## 2 GO:0009066 aspartate family amino acid metabolic proce… 3.25e- 2 metabolic    
-## 3 GO:0008152 metabolic process                            1.63e-52 metabolic    
-## 4 GO:0044238 primary metabolic process                    1.89e-49 metabolic    
-## 5 GO:0009056 catabolic process                            3.24e- 9 catabolic</code></pre>
+<pre><code># A tibble: 5 × 4
+  term.id    term.name                                     p.value type_of_bolic
+  &lt;chr&gt;      &lt;chr&gt;                                           &lt;dbl&gt; &lt;chr&gt;        
+1 GO:0046653 tetrahydrofolate metabolic process           4.39e- 2 metabolic    
+2 GO:0009066 aspartate family amino acid metabolic proce… 3.25e- 2 metabolic    
+3 GO:0008152 metabolic process                            1.63e-52 metabolic    
+4 GO:0044238 primary metabolic process                    1.89e-49 metabolic    
+5 GO:0009056 catabolic process                            3.24e- 9 catabolic    </code></pre>
 </section>
 <section id="additional-string-refs" class="slide level2">
 <h2>Additional string refs</h2>
@@ -2447,36 +2447,36 @@ block to more complex analyses</p>
 </ul>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> gdpPercap, <span class="at">data =</span> gap_77) </span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mod)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = lifeExp ~ gdpPercap, data = gap_77)
-## 
-## Coefficients:
-## (Intercept)    gdpPercap  
-##   5.348e+01    8.322e-04</code></pre>
+<pre><code>
+Call:
+lm(formula = lifeExp ~ gdpPercap, data = gap_77)
+
+Coefficients:
+(Intercept)    gdpPercap  
+  5.348e+01    8.322e-04  </code></pre>
 </section>
 <section id="linear-models-in-r-1" class="slide level2 smaller">
 <h2 class="smaller">Linear models in R</h2>
 <p>Use the <code>summary</code> function to print more details</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod) </span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = lifeExp ~ gdpPercap, data = gap_77)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -33.462  -5.848   1.815   7.071  13.855 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 5.348e+01  9.872e-01  54.179   &lt;2e-16 ***
-## gdpPercap   8.322e-04  8.904e-05   9.347   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 8.842 on 140 degrees of freedom
-## Multiple R-squared:  0.3842, Adjusted R-squared:  0.3798 
-## F-statistic: 87.36 on 1 and 140 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>
+Call:
+lm(formula = lifeExp ~ gdpPercap, data = gap_77)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-33.462  -5.848   1.815   7.071  13.855 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 5.348e+01  9.872e-01  54.179   &lt;2e-16 ***
+gdpPercap   8.322e-04  8.904e-05   9.347   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 8.842 on 140 degrees of freedom
+Multiple R-squared:  0.3842,    Adjusted R-squared:  0.3798 
+F-statistic: 87.36 on 1 and 140 DF,  p-value: &lt; 2.2e-16</code></pre>
 <!-- ## Linear regression {.smaller} -->
 <!-- - `dep_var = a * ind_var + b` -->
 <!-- - Specifying the 'intercept' term explicitly:  -->
@@ -2495,25 +2495,25 @@ block to more complex analyses</p>
 </ul>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> gdpPercap <span class="sc">+</span> pop, <span class="at">data =</span> gap_77) </span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod) </span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = lifeExp ~ gdpPercap + pop, data = gap_77)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -33.527  -5.743   1.608   6.807  14.022 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 5.320e+01  1.017e+00  52.327   &lt;2e-16 ***
-## gdpPercap   8.380e-04  8.906e-05   9.409   &lt;2e-16 ***
-## pop         8.907e-09  7.640e-09   1.166    0.246    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 8.83 on 139 degrees of freedom
-## Multiple R-squared:  0.3902, Adjusted R-squared:  0.3814 
-## F-statistic: 44.47 on 2 and 139 DF,  p-value: 1.177e-15</code></pre>
+<pre><code>
+Call:
+lm(formula = lifeExp ~ gdpPercap + pop, data = gap_77)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-33.527  -5.743   1.608   6.807  14.022 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 5.320e+01  1.017e+00  52.327   &lt;2e-16 ***
+gdpPercap   8.380e-04  8.906e-05   9.409   &lt;2e-16 ***
+pop         8.907e-09  7.640e-09   1.166    0.246    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 8.83 on 139 degrees of freedom
+Multiple R-squared:  0.3902,    Adjusted R-squared:  0.3814 
+F-statistic: 44.47 on 2 and 139 DF,  p-value: 1.177e-15</code></pre>
 </section>
 <section id="linear-models-in-r-3" class="slide level2 smaller">
 <h2 class="smaller">Linear models in R</h2>
@@ -2522,28 +2522,28 @@ block to more complex analyses</p>
 </ul>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> gdpPercap <span class="sc">+</span> continent, <span class="at">data =</span> gap_77) </span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = lifeExp ~ gdpPercap + continent, data = gap_77)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -25.4014  -3.1606   0.1833   3.6260  16.7703 
-## 
-## Coefficients:
-##                    Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)       4.852e+01  9.334e-01  51.981  &lt; 2e-16 ***
-## gdpPercap         4.114e-04  7.834e-05   5.251 5.68e-07 ***
-## continentAmericas 1.285e+01  1.642e+00   7.826 1.26e-12 ***
-## continentAsia     7.889e+00  1.518e+00   5.197 7.26e-07 ***
-## continentEurope   1.755e+01  1.763e+00   9.951  &lt; 2e-16 ***
-## continentOceania  1.723e+01  4.872e+00   3.536 0.000556 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 6.57 on 136 degrees of freedom
-## Multiple R-squared:  0.6697, Adjusted R-squared:  0.6576 
-## F-statistic: 55.15 on 5 and 136 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>
+Call:
+lm(formula = lifeExp ~ gdpPercap + continent, data = gap_77)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-25.4014  -3.1606   0.1833   3.6260  16.7703 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       4.852e+01  9.334e-01  51.981  &lt; 2e-16 ***
+gdpPercap         4.114e-04  7.834e-05   5.251 5.68e-07 ***
+continentAmericas 1.285e+01  1.642e+00   7.826 1.26e-12 ***
+continentAsia     7.889e+00  1.518e+00   5.197 7.26e-07 ***
+continentEurope   1.755e+01  1.763e+00   9.951  &lt; 2e-16 ***
+continentOceania  1.723e+01  4.872e+00   3.536 0.000556 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 6.57 on 136 degrees of freedom
+Multiple R-squared:  0.6697,    Adjusted R-squared:  0.6576 
+F-statistic: 55.15 on 5 and 136 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="linear-models-in-r-4" class="slide level2 smaller">
 <h2 class="smaller">Linear models in R</h2>
@@ -2552,32 +2552,32 @@ block to more complex analyses</p>
 </ul>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> gdpPercap <span class="sc">*</span> continent, <span class="at">data =</span> gap_77) </span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = lifeExp ~ gdpPercap * continent, data = gap_77)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -26.0089  -3.3857   0.0334   3.1294  16.4923 
-## 
-## Coefficients:
-##                               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)                  4.810e+01  1.079e+00  44.566  &lt; 2e-16 ***
-## gdpPercap                    5.717e-04  2.226e-04   2.569   0.0113 *  
-## continentAmericas            1.055e+01  2.511e+00   4.203 4.83e-05 ***
-## continentAsia                8.955e+00  1.751e+00   5.113 1.09e-06 ***
-## continentEurope              1.826e+01  3.384e+00   5.398 3.03e-07 ***
-## continentOceania             1.430e+01  7.677e+01   0.186   0.8525    
-## gdpPercap:continentAmericas  2.088e-04  3.354e-04   0.623   0.5347    
-## gdpPercap:continentAsia     -2.439e-04  2.434e-04  -1.002   0.3181    
-## gdpPercap:continentEurope   -1.816e-04  3.047e-04  -0.596   0.5522    
-## gdpPercap:continentOceania   3.294e-05  4.439e-03   0.007   0.9941    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 6.584 on 132 degrees of freedom
-## Multiple R-squared:  0.678,  Adjusted R-squared:  0.6561 
-## F-statistic: 30.89 on 9 and 132 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>
+Call:
+lm(formula = lifeExp ~ gdpPercap * continent, data = gap_77)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-26.0089  -3.3857   0.0334   3.1294  16.4923 
+
+Coefficients:
+                              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                  4.810e+01  1.079e+00  44.566  &lt; 2e-16 ***
+gdpPercap                    5.717e-04  2.226e-04   2.569   0.0113 *  
+continentAmericas            1.055e+01  2.511e+00   4.203 4.83e-05 ***
+continentAsia                8.955e+00  1.751e+00   5.113 1.09e-06 ***
+continentEurope              1.826e+01  3.384e+00   5.398 3.03e-07 ***
+continentOceania             1.430e+01  7.677e+01   0.186   0.8525    
+gdpPercap:continentAmericas  2.088e-04  3.354e-04   0.623   0.5347    
+gdpPercap:continentAsia     -2.439e-04  2.434e-04  -1.002   0.3181    
+gdpPercap:continentEurope   -1.816e-04  3.047e-04  -0.596   0.5522    
+gdpPercap:continentOceania   3.294e-05  4.439e-03   0.007   0.9941    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 6.584 on 132 degrees of freedom
+Multiple R-squared:  0.678, Adjusted R-squared:  0.6561 
+F-statistic: 30.89 on 9 and 132 DF,  p-value: &lt; 2.2e-16</code></pre>
 <!-- ```{r} -->
 <!-- ggplot(gap_77, aes(x = gdpPercap, y = lifeExp, color = continent, group = continent)) +  -->
 <!--   geom_point() +  -->
@@ -2606,39 +2606,39 @@ block to more complex analyses</p>
 <p>Life expectancy is linearly related to log gdpPercap</p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> <span class="fu">log10</span>(gdpPercap), <span class="at">data =</span> gap_77) </span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mod)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = lifeExp ~ log10(gdpPercap), data = gap_77)
-## 
-## Coefficients:
-##      (Intercept)  log10(gdpPercap)  
-##           -2.739            17.382</code></pre>
+<pre><code>
+Call:
+lm(formula = lifeExp ~ log10(gdpPercap), data = gap_77)
+
+Coefficients:
+     (Intercept)  log10(gdpPercap)  
+          -2.739            17.382  </code></pre>
 </section>
 <section id="anova" class="slide level2 smaller">
 <h2 class="smaller">ANOVA</h2>
 <p>Testing for different life expectancies across continents</p>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(gap_77<span class="sc">$</span>continent)</span></code></pre></div>
-<pre><code>## [1] &quot;Asia&quot;     &quot;Europe&quot;   &quot;Africa&quot;   &quot;Americas&quot; &quot;Oceania&quot;</code></pre>
+<pre><code>[1] &quot;Asia&quot;     &quot;Europe&quot;   &quot;Africa&quot;   &quot;Americas&quot; &quot;Oceania&quot; </code></pre>
 <p>Recall what we get with <code>lm</code></p>
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> continent, <span class="at">data =</span> gap_77)</span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)<span class="sc">$</span>coefficients</span></code></pre></div>
-<pre><code>##                   Estimate Std. Error   t value     Pr(&gt;|t|)
-## (Intercept)       49.58042   0.995562 49.801441 1.224637e-89
-## continentAmericas 14.81114   1.747204  8.477050 3.265297e-14
-## continentAsia     10.03013   1.597794  6.277488 4.236877e-09
-## continentEurope   22.35734   1.645942 13.583309 3.749439e-27
-## continentOceania  23.27458   5.173092  4.499162 1.442787e-05</code></pre>
+<pre><code>                  Estimate Std. Error   t value     Pr(&gt;|t|)
+(Intercept)       49.58042   0.995562 49.801441 1.224637e-89
+continentAmericas 14.81114   1.747204  8.477050 3.265297e-14
+continentAsia     10.03013   1.597794  6.277488 4.236877e-09
+continentEurope   22.35734   1.645942 13.583309 3.749439e-27
+continentOceania  23.27458   5.173092  4.499162 1.442787e-05</code></pre>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>gap_77 <span class="sc">%&gt;%</span> </span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(continent) <span class="sc">%&gt;%</span> </span>
 <span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_lifeExp =</span> <span class="fu">mean</span>(lifeExp))</span></code></pre></div>
-<pre><code>## # A tibble: 5 × 2
-##   continent mean_lifeExp
-##   &lt;chr&gt;            &lt;dbl&gt;
-## 1 Africa            49.6
-## 2 Americas          64.4
-## 3 Asia              59.6
-## 4 Europe            71.9
-## 5 Oceania           72.9</code></pre>
+<pre><code># A tibble: 5 × 2
+  continent mean_lifeExp
+  &lt;chr&gt;            &lt;dbl&gt;
+1 Africa            49.6
+2 Americas          64.4
+3 Asia              59.6
+4 Europe            71.9
+5 Oceania           72.9</code></pre>
 </section>
 <section id="anova-1" class="slide level2 smaller">
 <h2 class="smaller">ANOVA</h2>
@@ -2646,21 +2646,21 @@ block to more complex analyses</p>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>gap_77 <span class="sc">%&gt;%</span> </span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(continent) <span class="sc">%&gt;%</span> </span>
 <span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_lifeExp =</span> <span class="fu">mean</span>(lifeExp))</span></code></pre></div>
-<pre><code>## # A tibble: 5 × 2
-##   continent mean_lifeExp
-##   &lt;chr&gt;            &lt;dbl&gt;
-## 1 Africa            49.6
-## 2 Americas          64.4
-## 3 Asia              59.6
-## 4 Europe            71.9
-## 5 Oceania           72.9</code></pre>
+<pre><code># A tibble: 5 × 2
+  continent mean_lifeExp
+  &lt;chr&gt;            &lt;dbl&gt;
+1 Africa            49.6
+2 Americas          64.4
+3 Asia              59.6
+4 Europe            71.9
+5 Oceania           72.9</code></pre>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)<span class="sc">$</span>coefficients</span></code></pre></div>
-<pre><code>##                   Estimate Std. Error   t value     Pr(&gt;|t|)
-## (Intercept)       49.58042   0.995562 49.801441 1.224637e-89
-## continentAmericas 14.81114   1.747204  8.477050 3.265297e-14
-## continentAsia     10.03013   1.597794  6.277488 4.236877e-09
-## continentEurope   22.35734   1.645942 13.583309 3.749439e-27
-## continentOceania  23.27458   5.173092  4.499162 1.442787e-05</code></pre>
+<pre><code>                  Estimate Std. Error   t value     Pr(&gt;|t|)
+(Intercept)       49.58042   0.995562 49.801441 1.224637e-89
+continentAmericas 14.81114   1.747204  8.477050 3.265297e-14
+continentAsia     10.03013   1.597794  6.277488 4.236877e-09
+continentEurope   22.35734   1.645942 13.583309 3.749439e-27
+continentOceania  23.27458   5.173092  4.499162 1.442787e-05</code></pre>
 </section>
 <section id="anova-2" class="slide level2 smaller">
 <h2 class="smaller">ANOVA</h2>
@@ -2672,11 +2672,11 @@ categorical variable</p></li>
 </ul>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">aov</span>(lifeExp <span class="sc">~</span> continent, <span class="at">data =</span> gap_77)</span>
 <span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code></pre></div>
-<pre><code>##              Df Sum Sq Mean Sq F value Pr(&gt;F)    
-## continent     4  10712  2678.1   51.96 &lt;2e-16 ***
-## Residuals   137   7061    51.5                   
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>             Df Sum Sq Mean Sq F value Pr(&gt;F)    
+continent     4  10712  2678.1   51.96 &lt;2e-16 ***
+Residuals   137   7061    51.5                   
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </section>
 <section id="anova-post-hoc-comparing-group-means" class="slide level2 smaller">
 <h2 class="smaller">ANOVA (post-hoc comparing group means)</h2>
@@ -2684,23 +2684,23 @@ categorical variable</p></li>
 <p>Several ways of doing this that account for ‘multiple comparisons’,
 e.g.:</p>
 <div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(mod)</span></code></pre></div>
-<pre><code>##   Tukey multiple comparisons of means
-##     95% family-wise confidence level
-## 
-## Fit: aov(formula = lifeExp ~ continent, data = gap_77)
-## 
-## $continent
-##                        diff        lwr        upr     p adj
-## Americas-Africa  14.8111369   9.981085 19.6411886 0.0000000
-## Asia-Africa      10.0301333   5.613118 14.4471486 0.0000000
-## Europe-Africa    22.3573436  17.807225 26.9074622 0.0000000
-## Oceania-Africa   23.2745769   8.973844 37.5753099 0.0001392
-## Asia-Americas    -4.7810036 -10.043176  0.4811692 0.0939753
-## Europe-Americas   7.5462067   2.171821 12.9205920 0.0014901
-## Oceania-Americas  8.4634400  -6.120503 23.0473833 0.4972445
-## Europe-Asia      12.3272103   7.320750 17.3336705 0.0000000
-## Oceania-Asia     13.2444436  -1.207962 27.6968492 0.0892523
-## Oceania-Europe    0.9172333 -13.576406 15.4108727 0.9997878</code></pre>
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = lifeExp ~ continent, data = gap_77)
+
+$continent
+                       diff        lwr        upr     p adj
+Americas-Africa  14.8111369   9.981085 19.6411886 0.0000000
+Asia-Africa      10.0301333   5.613118 14.4471486 0.0000000
+Europe-Africa    22.3573436  17.807225 26.9074622 0.0000000
+Oceania-Africa   23.2745769   8.973844 37.5753099 0.0001392
+Asia-Americas    -4.7810036 -10.043176  0.4811692 0.0939753
+Europe-Americas   7.5462067   2.171821 12.9205920 0.0014901
+Oceania-Americas  8.4634400  -6.120503 23.0473833 0.4972445
+Europe-Asia      12.3272103   7.320750 17.3336705 0.0000000
+Oceania-Asia     13.2444436  -1.207962 27.6968492 0.0892523
+Oceania-Europe    0.9172333 -13.576406 15.4108727 0.9997878</code></pre>
 <!-- ## References for stats in R -->
 <!-- - tidyverse modeling? -->
 <!-- ```{r} -->
@@ -2727,16 +2727,16 @@ e.g.:</p>
 <section id="apply-example" class="slide level2 smaller">
 <h2 class="smaller">apply example</h2>
 <div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">corner</span>(RNAseq_mat)</span></code></pre></div>
-<pre><code>##                ABL1     ACVR1    ACVR1B     ACVR2A     AJUBA
-## ACH-001097 2.981853 1.1634987 1.3391374 0.01435529 0.9030383
-## ACH-001485 2.341986 0.0000000 0.1505597 1.72683122 0.2509616
-## ACH-001396 2.563158 1.9030383 3.8836208 0.99276843 3.0268001
-## ACH-000534 3.867896 0.4005379 0.8073549 0.07038933 0.8875253
-## ACH-000742 5.422906 4.4222330 3.1043367 1.96347412 4.6604951</code></pre>
+<pre><code>               ABL1     ACVR1    ACVR1B     ACVR2A     AJUBA
+ACH-001097 2.981853 1.1634987 1.3391374 0.01435529 0.9030383
+ACH-001485 2.341986 0.0000000 0.1505597 1.72683122 0.2509616
+ACH-001396 2.563158 1.9030383 3.8836208 0.99276843 3.0268001
+ACH-000534 3.867896 0.4005379 0.8073549 0.07038933 0.8875253
+ACH-000742 5.422906 4.4222330 3.1043367 1.96347412 4.6604951</code></pre>
 <div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>gene_medians <span class="ot">&lt;-</span> <span class="fu">apply</span>(RNAseq_mat, <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN =</span> median, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
 <span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gene_medians, <span class="dv">5</span>)</span></code></pre></div>
-<pre><code>##     ABL1    ACVR1   ACVR1B   ACVR2A    AJUBA 
-## 4.675529 3.523562 3.438958 2.000000 4.691813</code></pre>
+<pre><code>    ABL1    ACVR1   ACVR1B   ACVR2A    AJUBA 
+4.675529 3.523562 3.438958 2.000000 4.691813 </code></pre>
 <ul>
 <li>NOTE: <code>na.rm=TRUE</code> is an additional argument to
 <code>median()</code></li>
@@ -2749,8 +2749,8 @@ e.g.:</p>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">median</span>(vec)<span class="sc">^</span><span class="dv">2</span>)</span>
 <span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(RNAseq_mat, <span class="dv">2</span>, get_squared_median) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
-<pre><code>##     ABL1    ACVR1   ACVR1B   ACVR2A    AJUBA 
-## 21.86057 12.41549 11.82643  4.00000 22.01311</code></pre>
+<pre><code>    ABL1    ACVR1   ACVR1B   ACVR2A    AJUBA 
+21.86057 12.41549 11.82643  4.00000 22.01311 </code></pre>
 </section>
 <section id="scale-column-wise-normalization" class="slide level2 smaller">
 <h2 class="smaller">scale (column-wise normalization)</h2>
@@ -2784,9 +2784,9 @@ or a vector to be ‘subtracted’ or ‘scaled’ by</li>
 <h2>str_to_upper str_to_lower</h2>
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>str_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Why&quot;</span>, <span class="st">&quot;Video&quot;</span>, <span class="st">&quot;Cross&quot;</span>, <span class="st">&quot;Extra&quot;</span>, <span class="st">&quot;Deal&quot;</span>, <span class="st">&quot;Authority&quot;</span>)</span>
 <span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str_to_upper</span>(str_vec)</span></code></pre></div>
-<pre><code>## [1] &quot;WHY&quot;       &quot;VIDEO&quot;     &quot;CROSS&quot;     &quot;EXTRA&quot;     &quot;DEAL&quot;      &quot;AUTHORITY&quot;</code></pre>
+<pre><code>[1] &quot;WHY&quot;       &quot;VIDEO&quot;     &quot;CROSS&quot;     &quot;EXTRA&quot;     &quot;DEAL&quot;      &quot;AUTHORITY&quot;</code></pre>
 <div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_to_lower</span>(str_vec)</span></code></pre></div>
-<pre><code>## [1] &quot;why&quot;       &quot;video&quot;     &quot;cross&quot;     &quot;extra&quot;     &quot;deal&quot;      &quot;authority&quot;</code></pre>
+<pre><code>[1] &quot;why&quot;       &quot;video&quot;     &quot;cross&quot;     &quot;extra&quot;     &quot;deal&quot;      &quot;authority&quot;</code></pre>
 </section>
 <section id="str_sub" class="slide level2">
 <h2>str_sub</h2>
@@ -2795,14 +2795,14 @@ or a vector to be ‘subtracted’ or ‘scaled’ by</li>
 </ul>
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>str_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;why&quot;</span>, <span class="st">&quot;video&quot;</span>, <span class="st">&quot;cross&quot;</span>, <span class="st">&quot;extra&quot;</span>, <span class="st">&quot;deal&quot;</span>, <span class="st">&quot;authority&quot;</span>)</span>
 <span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str_sub</span>(str_vec, <span class="at">start =</span> <span class="dv">2</span>, <span class="at">end =</span> <span class="dv">3</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;hy&quot; &quot;id&quot; &quot;ro&quot; &quot;xt&quot; &quot;ea&quot; &quot;ut&quot;</code></pre>
+<pre><code>[1] &quot;hy&quot; &quot;id&quot; &quot;ro&quot; &quot;xt&quot; &quot;ea&quot; &quot;ut&quot;</code></pre>
 </section>
 <section id="str_subset" class="slide level2 smaller">
 <h2 class="smaller">str_subset</h2>
 <p>Restrict list to strings that contain a pattern match</p>
 <div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>str_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;why&quot;</span>, <span class="st">&quot;video&quot;</span>, <span class="st">&quot;cross&quot;</span>, <span class="st">&quot;extra&quot;</span>, <span class="st">&quot;deal&quot;</span>, <span class="st">&quot;adapt&quot;</span>)</span>
 <span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str_subset</span>(str_vec, <span class="at">pattern =</span> <span class="st">&#39;d&#39;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;video&quot; &quot;deal&quot;  &quot;adapt&quot;</code></pre>
+<pre><code>[1] &quot;video&quot; &quot;deal&quot;  &quot;adapt&quot;</code></pre>
 <p><code>str_detect</code> returns a TRUE/FALSE vector (useful with
 <code>filter()</code>)</p>
 </section>
@@ -2814,9 +2814,9 @@ or a vector to be ‘subtracted’ or ‘scaled’ by</li>
 </ul>
 <div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>strings <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;abcd&quot;</span>, <span class="st">&quot;cdab&quot;</span>, <span class="st">&quot;cabd&quot;</span>, <span class="st">&quot;c abd&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_subset</span>(strings, <span class="st">&#39;ab&#39;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;abcd&quot;  &quot;cdab&quot;  &quot;cabd&quot;  &quot;c abd&quot;</code></pre>
+<pre><code>[1] &quot;abcd&quot;  &quot;cdab&quot;  &quot;cabd&quot;  &quot;c abd&quot;</code></pre>
 <div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_subset</span>(strings, <span class="st">&#39;^ab&#39;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;abcd&quot;</code></pre>
+<pre><code>[1] &quot;abcd&quot;</code></pre>
 </section>
 <section id="regexp-quantifiers" class="slide level2 smaller">
 <h2 class="smaller">regexp (quantifiers)</h2>
@@ -2826,9 +2826,9 @@ or a vector to be ‘subtracted’ or ‘scaled’ by</li>
 </ul>
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>strings <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;ab&quot;</span>, <span class="st">&quot;acb&quot;</span>, <span class="st">&quot;accb&quot;</span>, <span class="st">&quot;acccb&quot;</span>, <span class="st">&quot;accccb&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_subset</span>(strings, <span class="st">&quot;ac*b&quot;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;ab&quot;     &quot;acb&quot;    &quot;accb&quot;   &quot;acccb&quot;  &quot;accccb&quot;</code></pre>
+<pre><code>[1] &quot;ab&quot;     &quot;acb&quot;    &quot;accb&quot;   &quot;acccb&quot;  &quot;accccb&quot;</code></pre>
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_subset</span>(strings, <span class="st">&quot;ac+b&quot;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;acb&quot;    &quot;accb&quot;   &quot;acccb&quot;  &quot;accccb&quot;</code></pre>
+<pre><code>[1] &quot;acb&quot;    &quot;accb&quot;   &quot;acccb&quot;  &quot;accccb&quot;</code></pre>
 </section>
 <section id="regexp-operators" class="slide level2 smaller">
 <h2 class="smaller">regexp (operators)</h2>
@@ -2839,9 +2839,9 @@ or a vector to be ‘subtracted’ or ‘scaled’ by</li>
 </ul>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>strings <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ab&quot;</span>, <span class="st">&quot;abc&quot;</span>, <span class="st">&quot;adc&quot;</span>, <span class="st">&quot;abd&quot;</span>, <span class="st">&quot;abe&quot;</span>, <span class="st">&quot;ab 12&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_subset</span>(strings, <span class="st">&#39;a.c&#39;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;abc&quot; &quot;adc&quot;</code></pre>
+<pre><code>[1] &quot;abc&quot; &quot;adc&quot;</code></pre>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_subset</span>(strings, <span class="st">&#39;ab[cde]&#39;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;abc&quot; &quot;abd&quot; &quot;abe&quot;</code></pre>
+<pre><code>[1] &quot;abc&quot; &quot;abd&quot; &quot;abe&quot;</code></pre>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># str_subset(strings, &#39;ab[c-e]&#39;) #same using a range</span></span></code></pre></div>
 </section>
 <section id="regexp-character-classes" class="slide level2 smaller">
@@ -2854,7 +2854,7 @@ or a vector to be ‘subtracted’ or ‘scaled’ by</li>
 </ul>
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>strings <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ab&quot;</span>, <span class="st">&quot;abc&quot;</span>, <span class="st">&quot;adc&quot;</span>, <span class="st">&quot;abd&quot;</span>, <span class="st">&quot;abe&quot;</span>, <span class="st">&quot;ab 12&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_subset</span>(strings, <span class="st">&#39;ab[:alnum:]&#39;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;abc&quot; &quot;abd&quot; &quot;abe&quot;</code></pre>
+<pre><code>[1] &quot;abc&quot; &quot;abd&quot; &quot;abe&quot;</code></pre>
 </section>
 <section id="regexp-escaping" class="slide level2 smaller">
 <h2 class="smaller">regexp (escaping)</h2>
@@ -2864,16 +2864,16 @@ or a vector to be ‘subtracted’ or ‘scaled’ by</li>
 <p>Need to ‘escape’ the interpretation of ’*’ by preceeding it with
 <code>\\</code></p>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_subset</span>(strings, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">*&quot;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;th*s&quot;</code></pre>
+<pre><code>[1] &quot;th*s&quot;</code></pre>
 <div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
 <span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(country, <span class="st">&#39;^New &#39;</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb125-3"><a href="#cb125-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 3 × 6
-##   country     continent  year lifeExp     pop gdpPercap
-##   &lt;chr&gt;       &lt;chr&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
-## 1 New Zealand Oceania    1952    69.4 1994794    10557.
-## 2 New Zealand Oceania    1957    70.3 2229407    12247.
-## 3 New Zealand Oceania    1962    71.2 2488550    13176.</code></pre>
+<pre><code># A tibble: 3 × 6
+  country     continent  year lifeExp     pop gdpPercap
+  &lt;chr&gt;       &lt;chr&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
+1 New Zealand Oceania    1952    69.4 1994794    10557.
+2 New Zealand Oceania    1957    70.3 2229407    12247.
+3 New Zealand Oceania    1962    71.2 2488550    13176.</code></pre>
 </section>
 <section id="thanks" class="slide level2">
 <h2>Thanks!</h2>

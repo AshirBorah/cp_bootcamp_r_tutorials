@@ -19,7 +19,10 @@ library(tidyverse)
 library(gapminder)
 library(useful)
 library(data.table)
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE,
+                      comment = "")
 
 
 gapminder <- gapminder %>% 

@@ -59,7 +59,11 @@ Weekend Practice [RNAseq analysis](https://drive.google.com/uc?export=download&i
 
 [Presentation 5](https://drive.google.com/uc?export=download&id=1WYbge5sJ8AO0kQ_ZCE1QrceEdl4GZKQp)
 
+[Presentation 5 HTML version](https://ashirborah.github.io/Bootcamp_R_tutorials/presentations/lesson5.html)
+
+
 [Practice 5](https://drive.google.com/uc?export=download&id=1Ea3qvDyg9XzqYoXxAW5petsJTDEr9gVZ)
+
 
 <!-- 
 Weekend Practice Solutions [RNAseq analysis solutions](https://drive.google.com/uc?export=download&id=1uyWYZTmlk71WqHg6faf-o2HU7qajmQ-k)
