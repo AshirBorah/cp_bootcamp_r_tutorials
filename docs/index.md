@@ -57,6 +57,10 @@ Weekend Practice [RNAseq analysis](https://drive.google.com/uc?export=download&i
 
 [Practice 4](https://drive.google.com/uc?export=download&id=1eq7U7b4VmGPxRLSXpJ0sg5SCqux11bT1)
 
+[Presentation 5](https://drive.google.com/uc?export=download&id=1WYbge5sJ8AO0kQ_ZCE1QrceEdl4GZKQp)
+
+[Practice 5](https://drive.google.com/uc?export=download&id=1Ea3qvDyg9XzqYoXxAW5petsJTDEr9gVZ)
+
 <!-- 
 Weekend Practice Solutions [RNAseq analysis solutions](https://drive.google.com/uc?export=download&id=1uyWYZTmlk71WqHg6faf-o2HU7qajmQ-k)
 
