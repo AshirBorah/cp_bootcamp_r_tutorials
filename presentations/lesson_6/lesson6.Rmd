@@ -398,8 +398,13 @@ country_codes %>%
 ## Use a `join` 
 
 Matches rows of the two data frames based on the values of `country`.
+```{r, echo=TRUE, eval=FALSE}
+gapminder %>% 
+  left_join(country_codes, by = 'country') %>% 
+  head(4) 
+```
 
-```{r, eval=FALSE}
+```{r, eval=TRUE, echo=FALSE}
 gapminder %>% 
   left_join(country_codes, by = 'country') %>% 
   head(4) %>% 
@@ -407,11 +412,7 @@ gapminder %>%
   scroll_box(width = "100%")
 ```
 
-```{r, echo=TRUE}
-gapminder %>% 
-  left_join(country_codes, by = 'country') %>% 
-  head(4) 
-```
+
 
 
 ## Elements of a join:
