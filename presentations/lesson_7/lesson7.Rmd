@@ -17,38 +17,46 @@ output:
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(gapminder)
-library(useful)
-library(data.table)
 knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE,
                       warning = FALSE,
                       comment = "")
 
-
-gapminder <- gapminder %>% 
-  mutate(country = as.character(country),
-         continent = as.character(continent))
 ```
 
 ## 
 
 <center>Press the "?" key for tips on navigating these slides</center>
 
-## Overview
+# Overview
 
-- Key programming concepts
+-   R Markdown 
+-   Iteration 
+-   Coding Best Practices
+-   How to Find Bioinformatics R Packages
 
-  - Loops
-  
-  - Conditionals
+# R Markdown
 
-- Working with Strings
+## R Markdown
 
-- Basic stats in R
 
-# Basic programming in R
+-   A file format combining `R` code with [Markdown](https://www.markdownguide.org/basic-syntax/) for text formatting.
+-   Designed for creating reproducible research reports in various formats (HTML, PDF, Word).
+-   For more info check out this free book : [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/how-to-read-this-book.html) 
 
-## For loop {.smaller}
+
+## R Markdown Advanced Usage
+
+-   **Presentations:** Creating slides (like these) with [revealjs](https://github.com/rstudio/revealjs).
+-   **Publications:** Authoring online books that combine narrative, code, and output with [bookdown](https://bookdown.org/).
+-   **Interactive Documents:** Developing interactive tutorials or dashboards with [learnR](https://rstudio.github.io/learnr/) and other embedded applications.
+
+
+
+
+# Iteration
+
+## For loop 
 
 When you want to do some operation repeatedly 
 
@@ -58,70 +66,23 @@ for (element in my_vector) {
 }
 ```
 
-```{r forloop_1, exercise = TRUE}
-my_vector <- c(2,5,3)
-for (element in my_vector) {
-    print(element)
+## For loop example
+
+```{r forloop_1}
+country_data <- gapminder %>% filter(country == "United States")
+
+# Simple for loop to print life expectancy for each year
+for (i in 1:nrow(country_data)) {
+  
+  year <- country_data$year[i]
+  
+  life_exp <- country_data$lifeExp[i]
+  
+  print(paste("Year:", year, "- Life Expectancy:", life_exp))
 }
 ```
 
 
-## For loop 
-
-Using a loop to sum the values in a vector
-
-```{r forloop_2, exercise = TRUE}
-my_vector <- c(2,5,3,9,8,11,6)
-count <- 0 #initialize a counter
-for (val in my_vector) {
-  count <- count + val
-}
-print(count)
-```
-
-We've been using them (implicitly)
-
-```{r}
-my_vector <- c(2,5,3,9,8,11,6)
-sum(my_vector)
-```
-
-## Looping over indices of a vector
-
-```{r forloop_3, exercise = TRUE}
-my_vector <- c(2,5,3,9,8,11,6)
-
-mod_vector <- vector('double', length = length(my_vector))
-for (i in seq_along(my_vector)) {
-  mod_vector[i] <- my_vector[i] + 1
-}
-mod_vector
-```
-
-```{r}
-my_vector <- c(2,5,3,9,8,11,6)
-mod_vector <- my_vector + 1
-```
-
-## Loops to repeat something *N* times
-
-The function `seq` is helpful for generating a vector to loop over 
-
-```{r for_loop4, exercise = TRUE}
-my_vector <- c()
-for (i in seq(from = 1, to = 5)) {
-  my_vector <- c(my_vector, 'ha')
-}
-print(my_vector)
-```
-
-## Components of a for loop
-
-- **Output**: how are you storing the output? `output <- vector("double", length(x))` 
-
-- **Sequence**: What is being looped over. e.g. `i in seq_along(df)`
-
-- **body**: What is being done in each iteration: e.g. `mod_vector[i] = my_vector[i]+1`
 
 ## While loop
 
@@ -129,7 +90,10 @@ Rarely used in analysis, but good to be aware of
 
 ```{r, eval = FALSE}
 while (condition) {
-  # body
+  # Body
+  
+  # The condition should be set to FALSE at some point
+  # or this will never end
 }
 ```
 
@@ -155,19 +119,6 @@ if (logical_statement) {
 }
 ```
 
-```{r ifelse_1, exercise = TRUE}
-test_num <- function(x) {
-  if (x < 0) {
-    print("Negative number")
-  } else if (x > 0) {
-    print("Positive number")
-  } else {
-    print("Zero")
-  }
-}
-test_num(-1)
-```
-
 
 ## If example
 
@@ -185,701 +136,109 @@ print(count)
 ```
 
 
-## Example loop {.smaller}
+# Coding Best Practices
 
-Let's compute the median life expectancy for each country in gapminder
+## Use Git
 
-```{r ifelse_3, exercise = TRUE}
-unique_countries <- unique(gapminder$country) #list to iterate over
-med_lifeExp <- vector('double', length(unique_countries)) #initialize a list to store results
-for (i in seq_along(unique_countries)) {
-   gap_cur_country <- gapminder %>% 
-      filter(country == unique_countries[i]) 
-   med_lifeExp[i] <- median(gap_cur_country$lifeExp)
-}
-head(med_lifeExp)
-```
+-   Git is a tool used for version control
+-   Version control
+    -   Practice of controlling, organizing, and tracking different versions in history of computer files
+-   Git repositories (folders) are stored remotely on [GitHub](https://docs.github.com/en/get-started/start-your-journey/about-github-and-git)
+-   Git allows you to create snapshots of your code, taking the stress out of tracking changes
 
-## Often a better way {.smaller}
+## Use Templates
 
-There are typically multiple ways to accomplish the same goal, and when it comes to loops there are often more efficient ways
+-   Creating and updating .R and .Rmd templates will save you time and make documentation easier
+-   [Example .R template](https://www.dropbox.com/scl/fi/bsg9yf2o69hvf21kgjriq/Rscript_template.R?rlkey=dfedltx13fee8v9vp8n6v92j8&dl=1)
+-   [Example .Rmd template](https://www.dropbox.com/scl/fi/5lqwu8866fe3ayz40pvcr/RMD_template.Rmd?rlkey=jo7n348waj6kpzfv0p8up6yfr&dl=1)
 
-```{r}
-gapminder %>% 
-  group_by(country) %>% 
-  summarise(median = median(lifeExp))
-```
+## Maintain a Consistent Style
 
+-   Highly recommend the [tidyverse style guide](https://style.tidyverse.org/)
+-   Style guides are a way to maintain consistent readability 
+-   The trade-off is adhering to rules that are opinionated and sometimes arbitrary
+-   The package [styler](https://github.com/r-lib/styler) can automatically style your code files
 
-<!-- MORE REFS -->
+## Avoid Writing Large Code Files
 
+-   Keep code files **under 1000 lines** to ensure maintainability and readability
+-   Large files are harder to debug, review, and understand
+-   Not writing enough functions is a common cause of overly large files
+-   Example Strategy:   
 
-## Loops the tidyverse way {.smaller}
+Split a long analysis script into separate, logically divided files (e.g., `data_preprocessing.R`, `model_training.R`, `visualization.R`).
 
-`purrr` package has a family of `map` functions that can make 'for loops' simpler
+# How to Find Bioinformatics R Packages
 
-```{r, eval = FALSE}
-result <- map(my_vector, my_function)
-```
 
-Simpler replacement for this (also less prone to errors)
+## Key Questions
 
-```{r, eval = FALSE}
-result <- vector('double', length(my_vector))
-for (ii in seq_along(my_vector)) {
-  result[ii] <- my_function(my_vector[ii])
-}
-```
+-   <u>Is there a benchmarking paper?</u>
+-   What assay was the package designed for?
+-   Is it well documented?
+-   When was the last release?
+-   Is it maintained (frequent updates)?
+-   Does it work on all operating systems?
+-   Are other people using it?
+-   Do they respond to github issues?
 
+## BioConductor and CRAN
 
-## Loops the tidyverse way {.smaller}
+-   Both of these have requirements for packages they host (eg. for BioConductor they have to run on all major operating systems)
 
-- `map()`: returns a list
+-   Prefer BioConductor and CRAN packages over ones only hosted on GitHub
 
-- `map_chr()`, `map_int()`, `map_dbl()` and `map_lgl()`: returns a vector of this type (or die trying)
+## BioConductor
 
-- `map_dfr()` and `map_dfc()` combine results into a tibble (by row or column)
+-   Click [here](https://www.bioconductor.org/packages/release/BiocViews.html#___Sequencing) to go to BioC views
+-   Pick the Assay you want to analyse
+-   Pick the type of analysis you want to do
+-   Find a package that does it
+-   Find the vignette in on the package page to learn the basics
 
-- Lots more on purrr [here](https://purrr.tidyverse.org/)
+## Documentation
 
-<!-- ## Example of `map`ping -->
+-   Well-documented packages have detailed manuals, examples, and vignettes
+-   Use `browseVignettes("packageName")` in R to find vignettes that provide step-by-step usage
+-   Ensure the package has comprehensive help files using ?functionName or help(package = "packageName")
 
-<!-- ```{r} -->
-<!-- get_country_median <- function(cur_country) { -->
-<!--   cur_country_dat <- gapminder %>%  -->
-<!--     filter(country == cur_country) -->
-<!--   cur_result <- median(cur_country_dat$lifeExp) -->
-<!--   return(cur_result) -->
-<!-- } -->
-<!-- med_lifeExp <- map_dbl(unique_countries, get_country_median) -->
-<!-- ``` -->
+## Getting help
+-   Read the documentation to see how the authors want you to reach out about issues or bugs
+-   In many cases they want you to post a GitHub issue:
+    -   [Example issue in ggplot2](https://github.com/tidyverse/ggplot2/issues/6128)
+-   Be courteous, many packages are maintained by a single individual on top of their regular job
 
+<br></br>
 
-# Tools for working with text
+Sometimes a package is no longer maintained by anyone and you cannot get a response for your issue. Find another package if you can.
 
-## String manipulation
+# Additional Resources
 
-Imagine your genomic dataset has genes given like this:
+## R
 
-```{r}
-gene_name_IDs <- c('EML1 (2009)', 'ATG2B (55102)', 'STAG3 (10734)')
-```
+-   [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/how-to-read-this-book.html) : Excellent R markdown reference
 
-- How would you extract just the HUGO symbol?
+-   [R for Data Science](https://r4ds.hadley.nz/)
 
-- What about the Entrez ID?
+-   [ggplot2: elegant graphics for data analysis](https://ggplot2-book.org/)
 
+-   [Advanced R](https://adv-r.hadley.nz/)
 
-## String manipulation 
+## Statistics
 
-```{r, include = FALSE}
-GO <- read_tsv("data/gprofiler_results_Mov10oe.csv") %>% select(term.id, term.name, p.value)
-```
+-   [Data Analysis in R](https://bookdown.org/steve_midway/DAR) : This book has more statistics details than *R for Data Science*
+-   [Generalized Linear Models](https://bookdown.org/steve_midway/DAR/glms-generalized-linear-models.html)\
+-   [Random Effects](https://bookdown.org/steve_midway/DAR/random-effects.html)
 
-Or what if we have a list of pathway enrichment results
+## RNA-seq Analysis
 
-```{r}
-GO %>% select(term.name, p.value) %>% head(5)
-```
+-   [RNA-seqlopedia](https://rnaseq.uoregon.edu/) : Everything you need to know about RNA-seq experiments
+-   [RNA-seq Expression Units](https://luisvalesilva.com/datasimple/rna-seq_units.html) : Blog post on understanding common units
 
-How could we find results for pathways involving certain key terms, like 'interferon'?
 
+## Dimensional Reduction
 
-## Working with strings {.smaller}
+-   [Tutorial on PCA](https://uw.pressbooks.pub/appliedmultivariatestatistics/chapter/pca/) : PCA explained with R code examples
+-   [Understanding UMAP](https://pair-code.github.io/understanding-umap/) : Short explanation with great visualizations, mainly useful for scRNA-seq analysis
 
-- Manipulating strings
 
-  - Get length of strings: `str_length`
-  
-  - Combine strings, collapse: `str_c`
-
-  - Chop/subset: `str_sub`, `str_trunc`
-  
-  - Mutate/sort: `str_to_upper`, `str_sort`
-
-- Pattern matching
-  
-  - Replace one pattern of text with another: `str_replace`
-
-  - Extract/detect strings that match a pattern: `str_extract`, `str_detect`
-
-Read more [here](https://stringr.tidyverse.org/)
-
-
-## str_length
-
-- get length of each string in a vector
-
-```{r str_tests_1, exercise = TRUE}
-str_vec <- c("why", "video", "cross", "extra", "deal", "authority")
-
-str_length(str_vec)
-str_sub(str_vec, 2)
-```
-
-## str_c
-
-collapse vector of strings into a single string
-
-```{r str_tests_2, exercise = TRUE}
-str_c('a', 'dog', 'walked', 'into', 'a', 'bar')
-```
-
-```{r str_tests_3, exercise = TRUE}
-address <- c('Main St.', 'Ames St.', 'Brookline Ave.')
-nums <- c(415, 75, 450)
-str_c(nums, address, sep = ' ')
-```
-
-
-<!-- ## str_c -->
-
-<!-- Element-wise combining string vectors -->
-
-<!-- ```{r} -->
-<!-- address <- c('Main St.', 'Ames St.', 'Brookline Ave.') -->
-<!-- nums <- c(415, 75, 450) -->
-<!-- str_c(nums, address, sep = ' ') -->
-<!-- ``` -->
-
-## str_replace 
-
-- Replace pattern with a substitute pattern
-
-```{r str_tests_4, exercise = TRUE}
-str_vec <- c("why", "video", "cross", "extra", "deal", "authority")
-str_replace(str_vec, pattern = "y", replacement = "?")
-```
-
-
-## str_extract 
-
-Pull out the matching sequences from each string
-
-```{r str_tests_5, exercise = TRUE}
-str_vec <- c("why", "floss", "cross", "extra", "boss")
-str_extract(str_vec, 'oss')
-```
-
-
-
-## String manipulation with dplyr 
-
-```{r}
-db <- c('GO', 'KEGG', 'GO', 'GO', 'KEGG')
-gset <- c('interferon signaling', 'interferon signaling', 'NFKB signaling','ER-nucleus signaling', 'TP53 pathway')
-pathways <- tibble(db, gset)
-```
-
-```{r}
-pathways
-```
-
-## String manipulation with dplyr 
-
-Make a new column that combines multiple string columns (opposite of `separate`)
-
-```{r}
-pathways %>%
-  mutate(db_gset = str_c(db, gset, sep = ' '))
-```
-
-## String manipulation with dplyr 
-
-Modify text in a column
-
-```{r}
-pathways %>%
-  mutate(db_gset = str_replace(gset, 'signaling', 'sig.'))
-```
-
-## String manipulation with dplyr 
-
-```{r, include = FALSE}
-pathways <- pathways %>% 
-  mutate(db_gset = str_replace(gset, 'signaling', 'sig.'))
-```
-
-Filter based on properties of string column (e.g. its length)
-
-```{r}
-pathways %>%
-  filter(str_length(db) > 2)
-```
-
-
-## String manipulation with dplyr 
-
-Filter to rows matching a certain text pattern
-
-```{r}
-pathways %>%
-  filter(str_detect(gset, 'interferon'))
-```
-
-
-## regular expressions
-
-- Rules for extracting patterns in text using special syntax
-
-- Specify set of characters to seek out, possibly with info on repeats and location within the string, character sets, 'wildcards' etc.
-
-- [Regex tutorial](https://medium.com/factory-mind/regex-tutorial-a-simple-cheatsheet-by-examples-649dc1c3f285)
-
-
-## An example putting things together 
-
-
-```{r}
-head(GO, 5)
-```
-
-Let's find just the GO terms with 'bolic' in their name
-
-## An example putting things together 
-
-```{r}
-GO %>%
-  mutate(term.name = tolower(term.name)) %>%
-  filter(str_detect(term.name, 'bolic')) %>%
-  mutate(type_of_bolic = str_extract(term.name, '[:alnum:]+bolic')) %>%
-  head(5)
-```
-
-
-## Additional string refs
-
-- https://stringr.tidyverse.org/
-
-- [stringr cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/strings.pdf)
-
-- [R for data-sci strings section](https://r4ds.had.co.nz/strings.html)
-
-
-# Basic stats in R
-
-## Usesful statistical tests in R
-
-R has a TON of useful stats functions, e.g.:
-
-- `wilcox.test()` Wilcoxon rank sum test
-
-- `t.test()` t-test (one or two-sample)
-
-- `cor.test()` test whether correlation is significant (Pearson or Spearman)
-
-- `lm()` linear model
-
-- `aov()`, `anova()` ANOVA (analysis of variance)
-
-
---- 
-
-Many of these (e.g. `t.test` and `cor.test` are pretty easy to use.
-
-Fitting linear models to data is extremely useful, and a key building block to more complex analyses
-
-<img src="images/linear-regression-in-machine-learning.png" width = 40%>
-
-
-## Linear models in R 
-
-- Recall the basic linear model: `dep_var = slope * ind_var + intercept`
-
-- Use funky 'formula' notation: dep_var ~ ind_var
-
-- Read as "model `dep_var` as a function of `ind_var`"
-
-```{r, include = FALSE}
-gap_77 <- gapminder %>% dplyr::filter(year == 1977)
-```
-
-```{r}
-mod <- lm(lifeExp ~ gdpPercap, data = gap_77) 
-print(mod)
-```
-
-## Linear models in R {.smaller}
-
-Use the `summary` function to print more details
-
-```{r}
-summary(mod) 
-```
-
-
-
-<!-- ## Linear regression {.smaller} -->
-
-<!-- - `dep_var = a * ind_var + b` -->
-
-<!-- - Specifying the 'intercept' term explicitly:  -->
-
-<!-- ```{r} -->
-<!-- mod <- lm(lifeExp ~ 1 + gdpPercap, data = gap_77)  -->
-<!-- ``` -->
-
-<!-- - Without the 'intercept' term: -->
-
-<!-- ```{r} -->
-<!-- mod <- lm(lifeExp ~ 0 + gdpPercap, data = gap_77)  -->
-<!-- ``` -->
-
-
-## Linear models in R {.smaller}
-
-- Add more explanatory variables with `+`
-
-```{r}
-mod <- lm(lifeExp ~ gdpPercap + pop, data = gap_77) 
-summary(mod) 
-```
-
-
-## Linear models in R {.smaller}
-
-- Works easily with categorical or continuous variables
-
-```{r}
-mod <- lm(lifeExp ~ gdpPercap + continent, data = gap_77) 
-summary(mod)
-```
-
-## Linear models in R {.smaller}
-
-- Can include 'interaction' terms
-
-```{r}
-mod <- lm(lifeExp ~ gdpPercap * continent, data = gap_77) 
-summary(mod)
-```
-
-
-<!-- ```{r} -->
-<!-- ggplot(gap_77, aes(x = gdpPercap, y = lifeExp, color = continent, group = continent)) +  -->
-<!--   geom_point() +  -->
-<!--   geom_smooth(method = 'lm') + -->
-<!--   scale_x_log10() -->
-<!-- ``` -->
-
-
-## Always good to inspect relationships visually! {.smaller}
-
-```{r, fig.width=4, fig.height=3.5}
-ggplot(gap_77, aes(x = gdpPercap, y = lifeExp)) + 
-  geom_point() + 
-  geom_smooth(method = 'lm')
-```
-
-Relationship is not linear!
-
-
-## Always good to inspect relationships visually! {.smaller}
-
-```{r, fig.width=4, fig.height=3.5}
-ggplot(gap_77, aes(x = gdpPercap, y = lifeExp)) + 
-  geom_point() + 
-  geom_smooth(method = 'lm') +
-  scale_x_log10()
-```
-
-## Always good to inspect relationships visually! {.smaller}
-
-Life expectancy is linearly related to log gdpPercap
-
-```{r}
-mod <- lm(lifeExp ~ log10(gdpPercap), data = gap_77) 
-print(mod)
-```
-
-
-## ANOVA {.smaller}
-
-Testing for different life expectancies across continents
-
-```{r}
-unique(gap_77$continent)
-```
-
-Recall what we get with `lm`
-```{r}
-mod <- lm(lifeExp ~ continent, data = gap_77)
-summary(mod)$coefficients
-```
-
-```{r}
-gap_77 %>% 
-  group_by(continent) %>% 
-  summarise(mean_lifeExp = mean(lifeExp))
-```
-
-
-## ANOVA {.smaller}
-
-Compare to the group means?
-
-```{r}
-gap_77 %>% 
-  group_by(continent) %>% 
-  summarise(mean_lifeExp = mean(lifeExp))
-```
-
-```{r}
-summary(mod)$coefficients
-```
-
-
-
-## ANOVA {.smaller}
-
-- The `aov` function is helpful for traditional analysis of variance (ANOVA)
-
-- Testing for significant differences across group means of categorical variable
-
-```{r}
-mod <- aov(lifeExp ~ continent, data = gap_77)
-summary(mod)
-```
-
-
-## ANOVA (post-hoc comparing group means) {.smaller}
-
-Often interested in pairwise comparisons between group-means.
-
-Several ways of doing this that account for 'multiple comparisons', e.g.:
-
-```{r}
-TukeyHSD(mod)
-```
-
-<!-- ## References for stats in R -->
-
-<!-- - tidyverse modeling? -->
-
-
-<!-- ```{r} -->
-<!-- mod <- aov(lifeExp ~ gdpPercap*continent, data = gap_77) -->
-<!-- summary(mod) -->
-<!-- ``` -->
-
-
-
-# Additional material
-
-
-## apply
-
-- What 'loops' for matrices?
-
-- How to apply a function to each row or column?
-
-```{r, eval = FALSE}
-result <- apply(matrix, MARGIN, function, extra_arguments) 
-```
-
-- MARGIN = 1 (rows) or 2 (columns)
-
-## apply example {.smaller}
-
-```{r, include = FALSE}
-RNAseq_mat <- fread('data/CCLE_expression_subset.csv') %>% 
-  as_tibble() %>% 
-  column_to_rownames(var = 'V1') %>% 
-  as.matrix()
-```
-
-```{r}
-corner(RNAseq_mat)
-```
-
-
-```{r}
-gene_medians <- apply(RNAseq_mat, MARGIN = 2, FUN = median, na.rm=TRUE)
-head(gene_medians, 5)
-```
-
-- NOTE: `na.rm=TRUE` is an additional argument to `median()`
-
-
-## apply with custom functions
-
-Functions must take a vector and return a number
-
-```{r}
-get_squared_median <- function(vec) {
-  return(median(vec)^2)
-}
-apply(RNAseq_mat, 2, get_squared_median) %>% head(5)
-```
-
-## scale (column-wise normalization) {.smaller}
-
-The `scale` function is very useful for normalizing matrices
-
-- Subtract off `center` of each column (default = mean)
-
-- Divide each column by `scale` (default is std. dev.)
-
-```{r, eval = FALSE}
-new_mat <- scale(mat, center, scale)
-```
-
-- `center` and `scale` can be either TRUE/FALSE, or a vector to be 'subtracted' or 'scaled' by
-
-
-## scale example
-
-- mean subtraction
-
-```{r}
-norm_RNAseq <- scale(RNAseq_mat, center = TRUE, scale = FALSE)
-```
-
-- median subtraction
-
-```{r}
-gene_medians <- apply(RNAseq_mat, 2, median, na.rm=TRUE)
-norm_RNAseq <- scale(RNAseq_mat, center = gene_medians, scale = FALSE)
-```
-
-
-## str_to_upper str_to_lower
-
-```{r}
-str_vec <- c("Why", "Video", "Cross", "Extra", "Deal", "Authority")
-str_to_upper(str_vec)
-str_to_lower(str_vec)
-```
-
-
-## str_sub
-
-- pull out a subsequence of each string
-
-```{r}
-str_vec <- c("why", "video", "cross", "extra", "deal", "authority")
-str_sub(str_vec, start = 2, end = 3)
-```
-
-
-## str_subset {.smaller}
-
-Restrict list to strings that contain a pattern match
-
-```{r}
-str_vec <- c("why", "video", "cross", "extra", "deal", "adapt")
-str_subset(str_vec, pattern = 'd')
-```
-
-`str_detect` returns a TRUE/FALSE vector (useful with `filter()`)
-
-
-
-## regexp (position) {.smaller}
-
-- `^`: matches the start of the string.
-
-- `$`: matches the end of the string.
-
-```{r}
-strings <- c("abcd", "cdab", "cabd", "c abd")
-```
-
-```{r}
-str_subset(strings, 'ab')
-```
-
-```{r}
-str_subset(strings, '^ab')
-```
-
-## regexp (quantifiers) {.smaller}
-
-- `*`: matches at least 0 times.
-
-- `+`: matches at least 1 times.
-
-```{r}
-strings <- c("a", "ab", "acb", "accb", "acccb", "accccb")
-```
-
-```{r}
-str_subset(strings, "ac*b")
-```
-
-```{r}
-str_subset(strings, "ac+b")
-```
-
-
-## regexp (operators) {.smaller}
-
-- `.`: (wildcard) matches any single character
-
-- `[...]`: matches any character in a set
-
-- `|`: matches either pattern on either side
-
-```{r}
-strings <- c("ab", "abc", "adc", "abd", "abe", "ab 12")
-```
-
-```{r}
-str_subset(strings, 'a.c')
-```
-
-```{r}
-str_subset(strings, 'ab[cde]')
-# str_subset(strings, 'ab[c-e]') #same using a range
-```
-
-## regexp (character classes) {.smaller}
-
-- `[:digit:]` same as `[0-9]`
-- `[:alpha:]` all alphabetic characters (either case)
-- `[:alnum:]` all alphanumeric characters
-- `[:space:]` any whitespace character
-
-```{r}
-strings <- c("ab", "abc", "adc", "abd", "abe", "ab 12")
-```
-
-```{r}
-str_subset(strings, 'ab[:alnum:]')
-```
-
-
-## regexp (escaping) {.smaller}
-
-
-```{r}
-strings <- c('dog', 'cat', 'th*s')
-```
-
-This gives an error
-
-```{r, eval = FALSE}
-str_subset(strings, "*")
-```
-
-Need to 'escape' the interpretation of '*' by preceeding it with `\\`
-
-```{r}
-str_subset(strings, "\\*")
-```
-
-
-```{r}
-gapminder %>%
-  filter(str_detect(country, '^New ')) |>
-  head(3)
-```
-
-
-## Thanks!
-
-More cheat-sheet refs:
-
-[Rstudio2019](https://rstudio.com/wp-content/uploads/2019/01/Cheatsheets_2019.pdf)
-
-[BaseR](https://rstudio.com/wp-content/uploads/2016/10/r-cheat-sheet-3.pdf)
