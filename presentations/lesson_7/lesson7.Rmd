@@ -232,7 +232,7 @@ Sometimes a package is no longer maintained by anyone and you cannot get a respo
 
 ## RNA-seq Analysis
 
--   [RNA-seqlopedia](https://rnaseq.uoregon.edu/) : Everything you need to know about RNA-seq experiments
+-   [Brief guide to RNA sequencing analysis for nonexperts in bioinformatics](https://doi.org/10.1016/j.mocell.2024.100060) : A comprehensive paper for those new to RNA-seq
 -   [RNA-seq Expression Units](https://luisvalesilva.com/datasimple/rna-seq_units.html) : Blog post on understanding common units
 
 
